@@ -1,0 +1,114 @@
+---
+title: "R and RStudio"
+format: revealjs
+editor: visual
+---
+
+## R Statistical Computing & Graphics
+
+-   Free open souce software
+-   Available for Windows, Mac and Linux/Unix operating systems
+-   Large community of developers
+-   Many packages/libraries
+    -   CRAN repository
+
+    -   Bioconductor repository
+
+## Download and Install
+
+Download the latest stable release of R from<br>https://www.r-project.org, latest version is 4.2.3
+
+::: {layout-ncol=2}
+
+![](images/R_home_screen.png){width="70%"}
+
+![](images/R_download_versions.png){width="30%"}
+
+:::
+
+## RStudio
+-   Integrated development environment (IDE)
+    -   R
+    -   Python
+-   Console for running code
+-   Code editor with syntax colouring
+-   Workspace/file managment
+-   Records history of commands
+
+## RStudio
+Download from https://posit.co/download/rstudio-desktop/
+
+::: {.columns}
+
+:::{.column width="60%"}
+
+![](images/RStudio_download.png){width=7in}
+:::
+
+::: {.column width="5%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="35%"}
+::: {style="font-size: 80%;"}
+-   This page should detect your operating system 
+-   Download RStudio
+-   Click on the install package 
+-   Follow install instructions
+:::
+:::
+
+:::
+
+::: aside
+YouTube video on installing and setting up RStudio  
+https://www.youtube.com/watch?v=D6CunpqF04E
+:::
+## RStudio
+Set up Rstudio
+-   Set options in **Tools** and **Global Options...**
+
+:::: {.columns}
+
+::: {.column width="45%"}
+![](images/RStudio_settings.png){width=5in}
+:::
+
+::: {.column width="5%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="45%"}
+-   Uncheck the boxes as shown in the example
+-   Ensure that *Save workspace to .RData on exit* is set to **Never**
+:::
+
+::::
+
+## RStudio
+:::: {.columns}
+
+::: {.column width="55%"}
+![](images/RStudio_panels.png){width=6in}
+:::
+
+::: {.column width="5%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="40%"}
+::: {style="font-size: 80%;"}
+
+-   Source pane - Red
+    -   Write R commands as R scripts or Notebooks  
+-   Console Pane - Blue
+    -   Where the R commands are executed
+-   Environment pane - Green
+    -   Details of the R variables
+-   Files pane - Yellow
+    -   View the directory and file structure
+    
+:::
+:::
+
+::::
