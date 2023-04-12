@@ -27,6 +27,70 @@
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
     }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="RandRStudio_files/libs/revealjs/dist/theme/quarto.css" id="theme">
   <link href="RandRStudio_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -317,6 +381,9 @@
       margin-right: 0; 
     }
   </style>
+  
+  <script src="RandRStudio_files/libs/kePrint-0.0.1/kePrint.js"></script>
+  <link href="RandRStudio_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -374,10 +441,8 @@
 <h2>RStudio</h2>
 <p>Download from https://posit.co/download/rstudio-desktop/</p>
 <div class="columns">
-<div class="column" style="width:60%;">
-<p><img data-src="images/RStudio_download.png" style="width:7in"></p>
-</div><div class="column" style="width:5%;">
-<!-- empty column to create gap -->
+<div class="column" style="width:65%;">
+<p><img data-src="images/RStudio_download.png" style="width:100.0%"></p>
 </div><div class="column" style="width:35%;">
 <div style="font-size: 80%;">
 <ul>
@@ -389,19 +454,13 @@
 </div>
 </div>
 </div>
-
-<aside><div>
-<p>YouTube video on installing and setting up RStudio<br>
-https://www.youtube.com/watch?v=D6CunpqF04E</p>
-</div></aside></section>
+</section>
 <section id="rstudio-2" class="slide level2">
 <h2>RStudio</h2>
 <p>Set up Rstudio - Set options in <strong>Tools</strong> and <strong>Global Options…</strong></p>
 <div class="columns">
-<div class="column" style="width:45%;">
-<p><img data-src="images/RStudio_settings.png" style="width:5in"></p>
-</div><div class="column" style="width:5%;">
-<!-- empty column to create gap -->
+<div class="column" style="width:55%;">
+<p><img data-src="images/RStudio_settings.png" style="width:100.0%"></p>
 </div><div class="column" style="width:45%;">
 <ul>
 <li>Uncheck the boxes as shown in the example</li>
@@ -409,31 +468,33 @@ https://www.youtube.com/watch?v=D6CunpqF04E</p>
 </ul>
 </div>
 </div>
+<div class="footer">
+<p>YouTube video on installing and setting up RStudio<br>
+https://www.youtube.com/watch?v=D6CunpqF04E</p>
+</div>
 </section>
 <section id="rstudio-3" class="slide level2">
 <h2>RStudio</h2>
 <div class="columns">
-<div class="column" style="width:55%;">
-<p><img data-src="images/RStudio_panels.png" style="width:6in"></p>
-</div><div class="column" style="width:5%;">
-<!-- empty column to create gap -->
+<div class="column" style="width:60%;">
+<p><img data-src="images/RStudio_panels.png" style="width:100.0%"></p>
 </div><div class="column" style="width:40%;">
 <div style="font-size: 80%;">
 <ul>
-<li>Source pane - Red
+<li><span style="color:red;">Source pane</span>
 <ul>
 <li>Write R commands as R scripts or Notebooks<br>
 </li>
 </ul></li>
-<li>Console Pane - Blue
+<li><span style="color:blue;">Console Pane</span>
 <ul>
 <li>Where the R commands are executed</li>
 </ul></li>
-<li>Environment pane - Green
+<li><span style="color:green;">Environment pane</span>
 <ul>
 <li>Details of the R variables</li>
 </ul></li>
-<li>Files pane - Yellow
+<li><span style="color:yellow;">Files pane</span>
 <ul>
 <li>View the directory and file structure</li>
 </ul></li>
@@ -441,7 +502,221 @@ https://www.youtube.com/watch?v=D6CunpqF04E</p>
 </div>
 </div>
 </div>
-<div class="footer footer-default">
+</section>
+<section id="rstudio-libraries" class="slide level2">
+<h2>RStudio Libraries</h2>
+<p>R packages or libraries are extensions to the R language.<br>
+R packages contain:</p>
+<ul>
+<li>Code<br>
+</li>
+<li>Data<br>
+</li>
+<li>Documentation</li>
+</ul>
+<p>The packages are in a standardised format and can be installed from repositories</p>
+</section>
+<section id="r-repositories" class="slide level2">
+<h2>R Repositories</h2>
+<ul>
+<li>Comprehensive R Archive Network (CRAN)
+<ul>
+<li>Main software repositiry, supported by the R Foundation</li>
+</ul></li>
+<li>Bioconductor
+<ul>
+<li>R packages for the analysis of biological data</li>
+</ul></li>
+<li>GitHub
+<ul>
+<li>Alternative repository for R packages, often in active development</li>
+</ul></li>
+</ul>
+</section>
+<section id="installing-libraries" class="slide level2">
+<h2>Installing Libraries</h2>
+<h3 id="rstudio-4">RStudio</h3>
+<div class="r-stack">
+<p><img data-src="images/RStudio_tools.png" class="fragment" height="500"></p>
+<p><img data-src="images/RStudio_package_installer.png" class="fragment" width="346" height="238"></p>
+</div>
+</section>
+<section id="installing-packages" class="slide level2">
+<h2>Installing Packages</h2>
+<h3 id="terminal">Terminal</h3>
+<p>From CRAN using the R command install.packages</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">install.packages</span>(<span class="st">"ggplot2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>From Bioconductor First need to install a package manager program</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"BiocManager"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb2-2"><a href="#cb2-2"></a>    <span class="fu">install.packages</span>(<span class="st">"BiocManager"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Then can install specific packages</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="fu">c</span>(<span class="st">"GenomicFeatures"</span>, <span class="st">"AnnotationDbi"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="installing-packages-1" class="slide level2">
+<h2>Installing Packages</h2>
+<h3 id="terminal-1">Terminal</h3>
+<p>From GitHub First need to install devtools from CRAN</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="fu">require</span>(<span class="st">"devtools"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Then can install GitHub packages</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">install_github</span>(<span class="st">"GitHubPackage"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="loading-packages" class="slide level2">
+<h2>Loading Packages</h2>
+<p>Packages have to be loaded prior to use. There are two ways to load packages in R.</p>
+<ul>
+<li><strong>library()</strong>
+<ul>
+<li>library() will output an error and stop the execution of the code</li>
+</ul></li>
+<li><strong>require()</strong>
+<ul>
+<li>require() will output a warning if a package is not installed and then continue to execute the code</li>
+</ul></li>
+</ul>
+</section>
+<section id="loading-packages-1" class="slide level2">
+<h2>Loading Packages</h2>
+<p>Loading packages within a function from CRAN</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">#CRAN</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>cran.packages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"tidyverse"</span>,</span>
+<span id="cb6-3"><a href="#cb6-3"></a>                   <span class="st">"kableExtra"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4"></a></span>
+<span id="cb6-5"><a href="#cb6-5"></a>cran.load <span class="ot">&lt;-</span> <span class="cf">function</span>(pkg){</span>
+<span id="cb6-6"><a href="#cb6-6"></a>        new.pkg <span class="ot">&lt;-</span> pkg[<span class="sc">!</span>(pkg <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[, <span class="st">"Package"</span>])]</span>
+<span id="cb6-7"><a href="#cb6-7"></a>        <span class="cf">if</span> (<span class="fu">length</span>(new.pkg)){</span>
+<span id="cb6-8"><a href="#cb6-8"></a>          <span class="fu">install.packages</span>(new.pkg, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-9"><a href="#cb6-9"></a>          }</span>
+<span id="cb6-10"><a href="#cb6-10"></a>        <span class="fu">sapply</span>(pkg, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-11"><a href="#cb6-11"></a>}</span>
+<span id="cb6-12"><a href="#cb6-12"></a><span class="fu">cran.load</span>(cran.packages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> tidyverse kableExtra 
+      TRUE       TRUE </code></pre>
+</div>
+</div>
+</section>
+<section id="loading-packages-2" class="slide level2">
+<h2>Loading Packages</h2>
+<p>Loading packages within a function from Bioconductor</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># Biomart</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>biomart.packages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Rsubread"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3"></a></span>
+<span id="cb8-4"><a href="#cb8-4"></a>biomart.load <span class="ot">&lt;-</span> <span class="cf">function</span>(pkg){</span>
+<span id="cb8-5"><a href="#cb8-5"></a>        new.pkg <span class="ot">&lt;-</span> pkg[<span class="sc">!</span>(pkg <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[, <span class="st">"Package"</span>])]</span>
+<span id="cb8-6"><a href="#cb8-6"></a>        <span class="cf">if</span> (<span class="fu">length</span>(new.pkg)){</span>
+<span id="cb8-7"><a href="#cb8-7"></a>          <span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"BiocManager"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb8-8"><a href="#cb8-8"></a>            <span class="fu">install.packages</span>(<span class="st">"BiocManager"</span>)</span>
+<span id="cb8-9"><a href="#cb8-9"></a>            BiocManager<span class="sc">::</span><span class="fu">install</span>(new.pkg)</span>
+<span id="cb8-10"><a href="#cb8-10"></a>        }</span>
+<span id="cb8-11"><a href="#cb8-11"></a>        <span class="fu">sapply</span>(pkg, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-12"><a href="#cb8-12"></a>}</span>
+<span id="cb8-13"><a href="#cb8-13"></a><span class="fu">biomart.load</span>(biomart.packages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="r-notebooks" class="slide level2">
+<h2>R Notebooks</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>R Notebooks are Markdown documents with chunks of code that can be executed independantly. Output from the code is visible beneath the code in the Notebook.</p>
+</div><div class="column" style="width:50%;">
+<p><img data-src="images/R_notebook.png"></p>
+</div>
+</div>
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">head</span>(mpg, <span class="at">n =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a>  <span class="fu">kable_styling</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> manufacturer </th>
+   <th style="text-align:left;"> model </th>
+   <th style="text-align:right;"> displ </th>
+   <th style="text-align:right;"> year </th>
+   <th style="text-align:right;"> cyl </th>
+   <th style="text-align:left;"> trans </th>
+   <th style="text-align:left;"> drv </th>
+   <th style="text-align:right;"> cty </th>
+   <th style="text-align:right;"> hwy </th>
+   <th style="text-align:left;"> fl </th>
+   <th style="text-align:left;"> class </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> audi </td>
+   <td style="text-align:left;"> a4 </td>
+   <td style="text-align:right;"> 1.8 </td>
+   <td style="text-align:right;"> 1999 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:left;"> auto(l5) </td>
+   <td style="text-align:left;"> f </td>
+   <td style="text-align:right;"> 18 </td>
+   <td style="text-align:right;"> 29 </td>
+   <td style="text-align:left;"> p </td>
+   <td style="text-align:left;"> compact </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> audi </td>
+   <td style="text-align:left;"> a4 </td>
+   <td style="text-align:right;"> 1.8 </td>
+   <td style="text-align:right;"> 1999 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:left;"> manual(m5) </td>
+   <td style="text-align:left;"> f </td>
+   <td style="text-align:right;"> 21 </td>
+   <td style="text-align:right;"> 29 </td>
+   <td style="text-align:left;"> p </td>
+   <td style="text-align:left;"> compact </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> audi </td>
+   <td style="text-align:left;"> a4 </td>
+   <td style="text-align:right;"> 2.0 </td>
+   <td style="text-align:right;"> 2008 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:left;"> manual(m6) </td>
+   <td style="text-align:left;"> f </td>
+   <td style="text-align:right;"> 20 </td>
+   <td style="text-align:right;"> 31 </td>
+   <td style="text-align:left;"> p </td>
+   <td style="text-align:left;"> compact </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</section>
+<section id="section-1" class="slide level2">
+<h2></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> hwy, <span class="at">y =</span> cty, <span class="at">color =</span> cyl)) <span class="sc">+</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a>  <span class="fu">scale_color_viridis_c</span>() <span class="sc">+</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="RandRStudio_files/figure-revealjs/scatterplot-1.png" width="960" class="r-stretch"><div class="footer footer-default">
 
 </div>
 </section>
@@ -497,10 +772,10 @@ https://www.youtube.com/watch?v=D6CunpqF04E</p>
         progress: true,
 
         // Display the page number of the current slide
-        slideNumber: false,
+        slideNumber: 'c/t',
 
         // 'all', 'print', or 'speaker'
-        showSlideNumber: 'all',
+        showSlideNumber: 'print',
 
         // Add the current slide number to the URL hash so that reloading the
         // page/copying the URL will return you to the same slide
@@ -656,6 +931,44 @@ https://www.youtube.com/watch?v=D6CunpqF04E</p>
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {

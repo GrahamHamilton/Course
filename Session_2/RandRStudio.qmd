@@ -1,7 +1,11 @@
 ---
 title: "R and RStudio"
-format: revealjs
-editor: visual
+format:
+  revealjs:
+    slide-number: true
+    show-slide-number: print
+# format: beamer
+editor: source
 ---
 
 ## R Statistical Computing & Graphics
@@ -18,15 +22,14 @@ editor: visual
 
 Download the latest stable release of R from<br>https://www.r-project.org, latest version is 4.2.3
 
-::: {layout-ncol=2}
-
+::: {layout-ncol="2"}
 ![](images/R_home_screen.png){width="70%"}
 
 ![](images/R_download_versions.png){width="30%"}
-
 :::
 
 ## RStudio
+
 -   Integrated development environment (IDE)
     -   R
     -   Python
@@ -36,79 +39,218 @@ Download the latest stable release of R from<br>https://www.r-project.org, lates
 -   Records history of commands
 
 ## RStudio
+
 Download from https://posit.co/download/rstudio-desktop/
 
-::: {.columns}
-
-:::{.column width="60%"}
-
-![](images/RStudio_download.png){width=7in}
-:::
-
-::: {.column width="5%"}
-<!-- empty column to create gap -->
+::: columns
+::: {.column width="65%"}
+![](images/RStudio_download.png){width="100%"}
 :::
 
 ::: {.column width="35%"}
 ::: {style="font-size: 80%;"}
--   This page should detect your operating system 
+-   This page should detect your operating system
 -   Download RStudio
--   Click on the install package 
+-   Click on the install package
 -   Follow install instructions
 :::
 :::
-
 :::
 
-::: aside
-YouTube video on installing and setting up RStudio  
-https://www.youtube.com/watch?v=D6CunpqF04E
-:::
 ## RStudio
-Set up Rstudio
--   Set options in **Tools** and **Global Options...**
 
-:::: {.columns}
+Set up Rstudio - Set options in **Tools** and **Global Options...**
 
-::: {.column width="45%"}
-![](images/RStudio_settings.png){width=5in}
-:::
-
-::: {.column width="5%"}
-<!-- empty column to create gap -->
+::: columns
+::: {.column width="55%"}
+![](images/RStudio_settings.png){width="100%"}
 :::
 
 ::: {.column width="45%"}
 -   Uncheck the boxes as shown in the example
 -   Ensure that *Save workspace to .RData on exit* is set to **Never**
 :::
+:::
 
-::::
+::: footer
+YouTube video on installing and setting up RStudio\
+https://www.youtube.com/watch?v=D6CunpqF04E
+:::
 
 ## RStudio
-:::: {.columns}
 
-::: {.column width="55%"}
-![](images/RStudio_panels.png){width=6in}
+::: columns
+::: {.column width="60%"}
+![](images/RStudio_panels.png){width="100%"}
 :::
-
-::: {.column width="5%"}
-<!-- empty column to create gap -->
-:::
-
 ::: {.column width="40%"}
 ::: {style="font-size: 80%;"}
-
--   Source pane - Red
-    -   Write R commands as R scripts or Notebooks  
--   Console Pane - Blue
+-   <span style="color:red;">Source pane</span>
+    -   Write R commands as R scripts or Notebooks\
+-   <span style="color:blue;">Console Pane</span>
     -   Where the R commands are executed
--   Environment pane - Green
+-   <span style="color:green;">Environment pane</span>
     -   Details of the R variables
--   Files pane - Yellow
+-   <span style="color:yellow;">Files pane</span>
     -   View the directory and file structure
-    
+:::
 :::
 :::
 
-::::
+## RStudio Libraries
+
+R packages or libraries are extensions to the R language.\
+R packages contain:
+
+-   Code\
+-   Data\
+-   Documentation
+
+The packages are in a standardised format and can be installed from repositories
+
+## R Repositories
+
+-   Comprehensive R Archive Network (CRAN)
+    -   Main software repositiry, supported by the R Foundation
+-   Bioconductor
+    -   R packages for the analysis of biological data
+-   GitHub
+    -   Alternative repository for R packages, often in active development
+
+## Installing Libraries
+
+### RStudio
+
+::: r-stack
+![](images/RStudio_tools.png){.fragment height="500"}
+
+![](images/RStudio_package_installer.png){.fragment width="346" height="238"}
+:::
+
+## Installing Packages
+
+### Terminal
+
+From CRAN using the R command install.packages
+
+```{r}
+#| echo: true
+#| eval: false
+install.packages("ggplot2")
+```
+
+From Bioconductor First need to install a package manager program
+
+```{r}
+#| echo: true
+#| eval: false
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install()
+```
+
+Then can install specific packages
+
+```{r}
+#| echo: true
+#| eval: false
+BiocManager::install(c("GenomicFeatures", "AnnotationDbi"))
+```
+
+## Installing Packages
+
+### Terminal
+
+From GitHub First need to install devtools from CRAN
+
+```{r}
+#| echo: true
+#| eval: false
+install.packages("devtools")
+require("devtools")
+```
+
+Then can install GitHub packages
+
+```{r}
+#| echo: true
+#| eval: false
+install_github("GitHubPackage")
+```
+
+## Loading Packages
+Packages have to be loaded prior to use.
+There are two ways to load packages in R.  
+
+-   **library()**  
+    -   library() will output an error and stop the execution of the code
+-   **require()**  
+    -   require() will output a warning if a package is not installed and then continue to execute the code
+    
+## Loading Packages
+Loading packages within a function from CRAN
+```{r}
+#| echo: true
+#CRAN
+cran.packages <- c("tidyverse",
+                   "kableExtra")
+
+cran.load <- function(pkg){
+        new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+        if (length(new.pkg)){
+          install.packages(new.pkg, dependencies = TRUE)
+          }
+        sapply(pkg, require, character.only = TRUE)
+}
+cran.load(cran.packages)
+```
+
+## Loading Packages
+Loading packages within a function from Bioconductor
+```{r}
+#| echo: true
+#| eval: false
+# Biomart
+biomart.packages <- c("Rsubread")
+
+biomart.load <- function(pkg){
+        new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+        if (length(new.pkg)){
+          if (!requireNamespace("BiocManager", quietly = TRUE))
+            install.packages("BiocManager")
+            BiocManager::install(new.pkg)
+        }
+        sapply(pkg, require, character.only = TRUE)
+}
+biomart.load(biomart.packages)
+```
+
+## R Notebooks
+::: columns
+::: {.column width="50%"}
+R Notebooks are Markdown documents with chunks of code that can be executed independantly. Output from the code is visible beneath the code in the Notebook.
+:::
+
+::: {.column width="50%"}
+![](images/R_notebook.png) 
+:::
+:::
+
+##
+```{r}
+#| echo: true
+head(mpg, n = 3) %>%
+  kbl() %>%
+  kable_styling()
+```
+##
+```{r}
+#| label: scatterplot
+#| echo: true
+
+ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
+  geom_point(alpha = 0.5, size = 2) +
+  scale_color_viridis_c() +
+  theme_minimal()
+```
+

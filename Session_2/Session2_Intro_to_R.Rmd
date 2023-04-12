@@ -1,0 +1,77 @@
+---
+title: "Session 2 - Intro to R"
+output: html_notebook
+---
+
+This is a beginners tutorial for R. It is a powerful tool for all manner of calculations, data manipulation, scientific computations and can also be used to visualise your data.
+
+This tutorial uses R notebooks which consists of notes that are on a white back ground, "code chunks" that start with three backticks (`) then curly brackets around the coding language, in this case R (like this {r}) and the code block end is defined by a further set of three backticks(`). 
+You can create code chunks manually or by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+The code blocks can be run by clicking on the green start arrow or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. The results of the code block will be shown below the code block.
+
+## First the basics of R.
+Basic calculations
+```{r}
+4 * 5 + 2
+```
+
+For readability it is best to add spaces between the operators (e.g. 4 * 5), however, these are not required and can be omitted.
+
+## Variables
+Variables are an integral part of any programming language and R offers a great deal of flexibility. R does not require variable types to be declared and can take on any available data type. It can also hold any R object such as a function, the result of an analysis or a plot.
+There are a number of ways to assign a value to a variable, and again, this does not depend on the type of value being assigned. 
+The valid assignment operators are <- and =, with the first being preferred. 
+
+For example, let’s save 2 to the variable x and 5 to the variable y. The arrow operator can also point in the other direction.
+```{r}
+x <- 2
+y <- 5
+x
+y
+```
+Now we can use the variables
+```{r}
+x + y
+```
+Variables can hold any type of data
+Characters
+Note the use of the paste command. This is my preferred way to join variables or text.
+```{r}
+greeting <- "Hello"
+name <- "Graham"
+print(paste(greeting,name, sep = " "))
+
+```
+Lists
+```{r}
+list <- c(1,2,3,4)
+list
+```
+
+```{r}
+z <- c(1, 2, NA, 8, 3, NA, 3)
+z %>% mean(na.rm=TRUE)
+```
+
+## Read in data from file
+
+It is very common that you will need to read in data to R from a file. There are a few ways to do this, base R has a read.table() function. That allows you to read in table data with various delimiters, for example spaces, tabs or commas. Spaces are denoted like this " ". tabs by "\t" and commas by ",".
+The file will be read in as a data frame. A data frame is a table or a two-dimensional array-like structure, similar to an excel spreadshet, in which each column contains values of one variable and each row contains one set of values from each column.
+
+The code below reads in a space separated file, that has named columns,(hence the header = TRUE parameter)
+
+```{r}
+table <- read.table("data/example_table.txt", header = TRUE, sep = " ") # This will read in a space separated data table
+table
+```
+Now try reading in th comma separated file in data/example-table.csv.
+```{r}
+
+```
+
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
