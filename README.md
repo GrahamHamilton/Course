@@ -1,6 +1,11 @@
+---
+output:
+  word_document: default
+  html_document: default
+---
 # Course
 ## Repository for course files
-### Day 1
+### Session 1
 * Galaxy
   +	Introduction
   +	Transcriptomics
@@ -11,20 +16,20 @@
     -	Counting features
     -	DESeq2
 
-### Day 2
+### Session 2
 *	R & RStudio
     +	Download and install
     +	Using R notebooks
     +	Introduction to R and Tidyverse
 
-### Day3
+### Session3
 *	DESeq2 - RStudio
     +	Reading in data
     +	Experimantal design
     +	Normalisation
     +	Differential expression
 
-### Day 4
+### Session 4
 *	Visualising DESeq2 results
     +	ggplot2
         -	PCA plots
@@ -34,6 +39,6 @@
         -	Volcano plots
         -	MA plots
 
-### Day 5
+### Session 5
 *	Pathway analysis
 *	Gene Ontology analysis
