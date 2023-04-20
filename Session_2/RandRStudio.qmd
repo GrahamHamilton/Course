@@ -57,6 +57,8 @@ Download from https://posit.co/download/rstudio-desktop/
 :::
 :::
 
+##
+
 ## RStudio
 
 Set up Rstudio - Set options in **Tools** and **Global Options...**
@@ -69,13 +71,16 @@ Set up Rstudio - Set options in **Tools** and **Global Options...**
 ::: {.column width="45%"}
 -   Uncheck the boxes as shown in the example
 -   Ensure that *Save workspace to .RData on exit* is set to **Never**
+
+<span style="color:grey; font-size: 20px;"><br><br>YouTube video on installing and setting up RStudio<br>
+https://www.youtube.com/watch?v=D6CunpqF04E</span>
 :::
 :::
 
-::: footer
-YouTube video on installing and setting up RStudio\
-https://www.youtube.com/watch?v=D6CunpqF04E
-:::
+<!-- ::: footer -->
+<!-- YouTube video on installing and setting up RStudio\ -->
+<!-- https://www.youtube.com/watch?v=D6CunpqF04E -->
+<!-- ::: -->
 
 ## RStudio
 
@@ -191,6 +196,7 @@ There are two ways to load packages in R.
 Loading packages within a function from CRAN
 ```{r}
 #| echo: true
+
 #CRAN
 cran.packages <- c("tidyverse",
                    "kableExtra")
@@ -243,14 +249,304 @@ head(mpg, n = 3) %>%
   kbl() %>%
   kable_styling()
 ```
-##
+## ggplot2 - Themes
 ```{r}
-#| label: scatterplot
-#| echo: true
+#| echo: false
 
-ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
+library("patchwork")
+
+default <- ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
+  geom_point(alpha = 0.5, size = 2) +
+  labs(title = "Default Theme") +
+  scale_color_viridis_c() +
+  theme(legend.position = "none")
+
+bw <- ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
   geom_point(alpha = 0.5, size = 2) +
   scale_color_viridis_c() +
-  theme_minimal()
+  labs(title = "BW Theme") +
+  theme_bw() +
+  theme(legend.position = "none")
+
+linedraw <- ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
+  geom_point(alpha = 0.5, size = 2) +
+  scale_color_viridis_c() +
+  labs(title = "Linedraw Theme") +
+  theme_linedraw() +
+  theme(legend.position = "none")
+
+light <- ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
+  geom_point(alpha = 0.5, size = 2) +
+  scale_color_viridis_c() +
+  labs(title = "Light Theme") +
+  theme_light() +
+  theme(legend.position = "none")
+
+dark <- ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
+  geom_point(alpha = 0.5, size = 2) +
+  scale_color_viridis_c() +
+  labs(title = "Dark Theme") +
+  theme_dark() +
+  theme(legend.position = "none")
+
+minimal <- ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
+  geom_point(alpha = 0.5, size = 2) +
+  scale_color_viridis_c() +
+  labs(title = "Minimal Theme") +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+classic <- ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
+  geom_point(alpha = 0.5, size = 2) +
+  scale_color_viridis_c() +
+  labs(title = "Classic Theme") +
+  theme_classic() +
+  theme(legend.position = "none")
+
+void <- ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
+  geom_point(alpha = 0.5, size = 2) +
+  scale_color_viridis_c() +
+  labs(title = "Void Theme") +
+  theme_void() +
+  theme(legend.position = "none")
+
+(default | bw | linedraw | light) /
+  (dark | minimal | classic | void)
+```
+## Download Course Material
+
+::: r-stack
+![](images/Github.png){.fragment height="500"}
+
+![](images/Github_download.png){.fragment height="300"}
+:::
+
+## Download Course Material
+-   Unzip the downloaded file
+-   Move the folder to a suitable place on computer
+-   Open RStudio and, using the files pane, navigate to the Course-main folder
+-   Double click on the Course.Rproj
+
+## ggplot2
+ggplot2 is a package for creating graphics 
+
+-   Based on the Grammar of Graphics  
+-   Part of the tidyverse set of tools
+-   Call ggplot()  
+    -   Supply a suitably formatted data set  
+    -   What to plot from the data via aes (aesthetics), can also add colour, size, shape and transparency  
+    -   How the data is represented via the geom_
+    
+## ggplot2 {.smaller}
+Set the data a plotting area, with ggplot and the aesthetics, to plot the miles per gallon on the motorway on the x axis and miles per gallon on the y axis
+```{r}
+#| echo: true
+#| eval: true
+#| fig-width: 8
+#| fig-height: 6
+#| output-location: column
+ggplot(mpg, aes(x = hwy, y = cty, color = cyl))
+```
+
+## ggplot2 {.smaller}
+Scatter plot with geom_point
+```{r}
+#| echo: true
+#| eval: true
+#| fig-width: 8
+#| fig-height: 6
+#| code-line-numbers: "2"
+#| output-location: column
+ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
+  geom_point()
+```
+
+## ggplot2 {.smaller}
+Change the transparency and size of the points
+```{r}
+#| echo: true
+#| eval: true
+#| fig-width: 8
+#| fig-height: 6
+#| code-line-numbers: "2"
+#| output-location: column
+ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
+  geom_point(alpha = 0.5, size = 2)
+```
+
+## ggplot2 {.smaller}
+Change the point colours
+```{r}
+#| echo: true
+#| eval: true
+#| fig-width: 8
+#| fig-height: 6
+#| code-line-numbers: "3"
+#| output-location: column
+ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
+  geom_point(alpha = 0.5, size = 2)  +
+  scale_color_viridis_c()
+```
+
+## ggplot2 {.smaller}
+Add title and change axis labels
+```{r}
+#| echo: true
+#| eval: true
+#| fig-width: 8
+#| fig-height: 6
+#| code-line-numbers: "4-6"
+#| output-location: column
+
+ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
+  geom_point(alpha = 0.5, size = 2)  +
+  scale_color_viridis_c() +
+  labs(title = "Miles per gallon",
+       x = "Motorway miles per gallon",
+       y = "City miles per gallon")
+```
+
+## ggplot2 {.smaller}
+Box plot
+```{r}
+#| echo: true
+#| eval: true
+#| fig-width: 8
+#| fig-height: 6
+#| output-location: column
+mpg <- mpg %>% mutate_at(vars(cyl), factor)
+
+ggplot(mpg, aes(x = cyl, y = hwy, fill = cyl)) +
+  geom_boxplot() +
+  scale_fill_viridis_d()
+```
+
+## ggplot2 {.smaller}
+Box plot
+```{r}
+#| echo: true
+#| eval: true
+#| fig-width: 8
+#| fig-height: 6
+#| output-location: column
+mpg <- mpg %>% mutate_at(vars(cyl), factor)
+
+ggplot(mpg, aes(x = cyl, y = hwy, fill = cyl)) +
+  geom_boxplot() +
+  geom_jitter(alpha = 0.5, size = 2) +
+  scale_fill_viridis_d()
+```
+
+## ggplot2 {.smaller}
+Violin plot
+```{r}
+#| echo: true
+#| eval: true
+#| fig-width: 8
+#| fig-height: 6
+#| output-location: column
+mpg <- mpg %>% mutate_at(vars(cyl), factor)
+
+ggplot(mpg, aes(x = cyl, y = hwy, fill = cyl)) +
+  geom_violin() +
+  scale_fill_viridis_d()
+```
+
+## Tidyverse {.smaller}
+### Data Tidying  
+-   First steps cleaning and preparing data
+-    Can be time consuming
+-    Tidyr - Standard way to organise data values within a data set  
+    -   Links data structure to the meaning
+-    Tidy data has:  
+    -   Value, usually numbers  
+    -   Name, of a group to which the value belongs
+
+
+## Tidyverse {.smaller}
+```{r}
+#| echo: true
+#| eval: true
+example_table <- read.table("data/example_table.txt", header = TRUE, sep = " ")
+example_table  %>%
+  kbl() %>%
+  kable_styling()
+```
+
+```{r}
+#| echo: true
+#| eval: true
+pivot_table <- example_table %>% pivot_longer(cols = -Gene, names_to = "Sample", values_to = "Expression")
+pivot_table %>%
+  kbl() %>%
+  kable_styling()
+```
+## Tidyverse
+```{r}
+ggplot(pivot_table, aes(x = Gene, y = Expression, colour = Gene)) +
+  geom_point(size = 5) +
+  scale_color_viridis_d()
+```
+##
+
+## Tidyverse {.smaller}
+```{r}
+#| echo: true
+#| eval: true
+real_data <- read.table("data/real_data_example.tsv", header = TRUE, sep = "\t")
+head(real_data)  %>%
+  kbl() %>%
+  kable_styling()
+```
+
+## Tidyverse {.smaller}
+Tidy the data
+```{r}
+#| echo: true
+#| eval: true
+
+pivot_real_data <- real_data %>% 
+  pivot_longer(-Gene_names, names_to = "Samples", values_to = "Expression")
+
+head(pivot_real_data)  %>%
+  kbl() %>%
+  kable_styling()
+```
+
+## Tidyverse {.smaller}
+Plot the data
+```{r}
+#| echo: true
+#| eval: true
+ggplot(pivot_real_data, aes(x = Samples, y = Expression, fill = Samples)) +
+  geom_boxplot() 
+```
+
+## Tidyverse {.smaller}
+Log transform the expression values
+```{r}
+#| echo: true
+#| eval: true
+#| code-line-numbers: "3"
+ggplot(pivot_real_data, aes(x = Samples, y = Expression, fill = Samples)) +
+  geom_boxplot() +
+  scale_y_log10() 
+```
+
+## Tidyverse {.smaller}
+
+Make the plot look prettier
+```{r}
+#| echo: true
+#| eval: true
+#| code-line-numbers: "4-8"
+ggplot(pivot_real_data, aes(x = Samples, y = Expression, fill = Samples)) +
+  geom_boxplot() +
+  scale_y_log10() +
+  labs(x = NULL,
+       y = "Log10(Expression)") +
+  theme_classic() +
+  theme(legend.position = "none",
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 ```
 
