@@ -662,3 +662,25 @@ pivot_table %>%
 ```
 :::
 :::
+
+##
+
+## Tidyverse
+
+```{r}
+expression_table <- pivot_real_data %>%
+  separate_wider_delim(Samples, delim = "_", names = c("Sample", "Replicate")) %>%
+  filter(Gene_names == "CHAC1_1279")
+```
+
+```{r}
+ggplot(expression_table, aes(x = Sample, y = Expression, fill = Sample)) +
+  geom_boxplot() +
+  scale_y_log10() +
+  labs(x = NULL,
+       y = "Log10(Expression)") +
+  scale_fill_viridis_d() +
+  theme_classic() +
+  theme(legend.position = "none")
+```
+
