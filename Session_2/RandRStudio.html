@@ -879,15 +879,52 @@ R packages contain:</p>
 <h3 id="data-tidying">Data Tidying</h3>
 <ul>
 <li>First steps cleaning and preparing data</li>
-<li>Can be time consuming</li>
-<li>Tidyr - Standard way to organise data values within a data set<br>
-- Links data structure to the meaning</li>
-<li>Tidy data has:<br>
-- Value, usually numbers<br>
-- Name, of a group to which the value belongs</li>
+<li>Time consuming</li>
+<li>Packages supplied by the Tidyverse
+<ul>
+<li><p>Share an underlying grammer and styructure</p></li>
+<li><p>Standardises data tidying</p></li>
+</ul></li>
+<li>Tidy data has:
+<ul>
+<li>Value, usually numbers</li>
+<li>Name, of a group to which the value belongs</li>
+</ul></li>
 </ul>
 </section>
 <section id="tidyverse-1" class="slide level2 smaller">
+<h2>Tidyverse</h2>
+<p>The tidyverse is a collection of R packages designed for data science</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li><p>ggplot2 <img data-src="images/ggplot2.png" width="100"></p>
+<ul>
+<li>Package for creating graphics</li>
+</ul></li>
+<li><p>dplyr <img data-src="images/dplyr.png" width="100"></p>
+<ul>
+<li>Package for data manipulation</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<ul>
+<li><p>tidyr <img data-src="images/tidyr.png" width="100"></p>
+<ul>
+<li>Package for tidying data</li>
+</ul></li>
+<li><p>readr <img data-src="images/readr.png" width="100"></p>
+<ul>
+<li>Package for reading in data</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div class="footer">
+<p>https://www.tidyverse.org</p>
+</div>
+</section>
+<section id="tidyverse-2" class="slide level2 smaller">
 <h2>Tidyverse</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>example_table <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"data/example_table.txt"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">" "</span>)</span>
@@ -962,14 +999,14 @@ R packages contain:</p>
 </div>
 </div>
 </section>
-<section id="tidyverse-2" class="slide level2">
+<section id="tidyverse-3" class="slide level2">
 <h2>Tidyverse</h2>
 
 <img data-src="RandRStudio_files/figure-revealjs/unnamed-chunk-20-1.png" width="960" class="r-stretch"></section>
 <section id="section-2" class="slide level2">
 <h2></h2>
 </section>
-<section id="tidyverse-3" class="slide level2 smaller">
+<section id="tidyverse-4" class="slide level2 smaller">
 <h2>Tidyverse</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>real_data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"data/real_data_example.tsv"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span>
@@ -982,31 +1019,31 @@ R packages contain:</p>
  <thead>
   <tr>
    <th style="text-align:left;"> Gene_names </th>
-   <th style="text-align:right;"> Samples_1 </th>
-   <th style="text-align:right;"> Samples_2 </th>
-   <th style="text-align:right;"> Samples_3 </th>
-   <th style="text-align:right;"> Samples_4 </th>
-   <th style="text-align:right;"> Samples_5 </th>
-   <th style="text-align:right;"> Samples_6 </th>
-   <th style="text-align:right;"> Samples_7 </th>
-   <th style="text-align:right;"> Samples_8 </th>
-   <th style="text-align:right;"> Samples_9 </th>
-   <th style="text-align:right;"> Samples_10 </th>
-   <th style="text-align:right;"> Samples_11 </th>
-   <th style="text-align:right;"> Samples_12 </th>
-   <th style="text-align:right;"> Samples_13 </th>
-   <th style="text-align:right;"> Samples_14 </th>
-   <th style="text-align:right;"> Samples_15 </th>
-   <th style="text-align:right;"> Samples_16 </th>
-   <th style="text-align:right;"> Samples_17 </th>
-   <th style="text-align:right;"> Samples_18 </th>
-   <th style="text-align:right;"> Samples_19 </th>
-   <th style="text-align:right;"> Samples_20 </th>
-   <th style="text-align:right;"> Samples_21 </th>
-   <th style="text-align:right;"> Samples_22 </th>
-   <th style="text-align:right;"> Samples_23 </th>
-   <th style="text-align:right;"> Samples_24 </th>
-   <th style="text-align:right;"> Samples_25 </th>
+   <th style="text-align:right;"> Sample1_1 </th>
+   <th style="text-align:right;"> Sample1_2 </th>
+   <th style="text-align:right;"> Sample1_3 </th>
+   <th style="text-align:right;"> Sample1_4 </th>
+   <th style="text-align:right;"> Sample1_5 </th>
+   <th style="text-align:right;"> Sample2_1 </th>
+   <th style="text-align:right;"> Sample2_2 </th>
+   <th style="text-align:right;"> Sample2_3 </th>
+   <th style="text-align:right;"> Sample2_4 </th>
+   <th style="text-align:right;"> Sample2_5 </th>
+   <th style="text-align:right;"> Sample3_1 </th>
+   <th style="text-align:right;"> Sample3_2 </th>
+   <th style="text-align:right;"> Sample3_3 </th>
+   <th style="text-align:right;"> Sample3_4 </th>
+   <th style="text-align:right;"> Sample3_5 </th>
+   <th style="text-align:right;"> Sample4_1 </th>
+   <th style="text-align:right;"> Sample4_2 </th>
+   <th style="text-align:right;"> Sample4_3 </th>
+   <th style="text-align:right;"> Sample4_4 </th>
+   <th style="text-align:right;"> Sample4_5 </th>
+   <th style="text-align:right;"> Sample5_1 </th>
+   <th style="text-align:right;"> Sample5_2 </th>
+   <th style="text-align:right;"> Sample5_3 </th>
+   <th style="text-align:right;"> Sample5_4 </th>
+   <th style="text-align:right;"> Sample5_5 </th>
   </tr>
  </thead>
 <tbody>
@@ -1184,7 +1221,7 @@ R packages contain:</p>
 </div>
 </div>
 </section>
-<section id="tidyverse-4" class="slide level2 smaller">
+<section id="tidyverse-5" class="slide level2 smaller">
 <h2>Tidyverse</h2>
 <p>Tidy the data</p>
 <div class="cell">
@@ -1207,32 +1244,32 @@ R packages contain:</p>
 <tbody>
   <tr>
    <td style="text-align:left;"> CHAC1_1279 </td>
-   <td style="text-align:left;"> Samples_1 </td>
+   <td style="text-align:left;"> Sample1_1 </td>
    <td style="text-align:right;"> 49 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> CHAC1_1279 </td>
-   <td style="text-align:left;"> Samples_2 </td>
+   <td style="text-align:left;"> Sample1_2 </td>
    <td style="text-align:right;"> 11 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> CHAC1_1279 </td>
-   <td style="text-align:left;"> Samples_3 </td>
+   <td style="text-align:left;"> Sample1_3 </td>
    <td style="text-align:right;"> 0 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> CHAC1_1279 </td>
-   <td style="text-align:left;"> Samples_4 </td>
+   <td style="text-align:left;"> Sample1_4 </td>
    <td style="text-align:right;"> 254 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> CHAC1_1279 </td>
-   <td style="text-align:left;"> Samples_5 </td>
+   <td style="text-align:left;"> Sample1_5 </td>
    <td style="text-align:right;"> 11 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> CHAC1_1279 </td>
-   <td style="text-align:left;"> Samples_6 </td>
+   <td style="text-align:left;"> Sample2_1 </td>
    <td style="text-align:right;"> 30 </td>
   </tr>
 </tbody>
@@ -1241,7 +1278,7 @@ R packages contain:</p>
 </div>
 </div>
 </section>
-<section id="tidyverse-5" class="slide level2 smaller">
+<section id="tidyverse-6" class="slide level2 smaller">
 <h2>Tidyverse</h2>
 <p>Plot the data</p>
 <div class="cell">
@@ -1250,7 +1287,7 @@ R packages contain:</p>
 
 </div>
 <img data-src="RandRStudio_files/figure-revealjs/unnamed-chunk-23-1.png" width="960" class="r-stretch"></section>
-<section id="tidyverse-6" class="slide level2 smaller">
+<section id="tidyverse-7" class="slide level2 smaller">
 <h2>Tidyverse</h2>
 <p>Log transform the expression values</p>
 <div class="cell">
@@ -1260,7 +1297,7 @@ R packages contain:</p>
 
 </div>
 <img data-src="RandRStudio_files/figure-revealjs/unnamed-chunk-24-1.png" width="960" class="r-stretch"></section>
-<section id="tidyverse-7" class="slide level2 smaller">
+<section id="tidyverse-8" class="slide level2 smaller">
 <h2>Tidyverse</h2>
 <p>Make the plot look prettier</p>
 <div class="cell">
@@ -1275,7 +1312,86 @@ R packages contain:</p>
 <span id="cb24-9"><a href="#cb24-9"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">hjust=</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="RandRStudio_files/figure-revealjs/unnamed-chunk-25-1.png" width="960" class="r-stretch"><div class="footer footer-default">
+<img data-src="RandRStudio_files/figure-revealjs/unnamed-chunk-25-1.png" width="960" class="r-stretch"></section>
+<section id="tidyverse-9" class="slide level2 smaller">
+<h2>Tidyverse</h2>
+<p>Dplyr simplifies data manipulation</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>Original table</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Gene </th>
+   <th style="text-align:left;"> Sample </th>
+   <th style="text-align:right;"> Expression </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> ACT1 </td>
+   <td style="text-align:left;"> Sample1 </td>
+   <td style="text-align:right;"> 100 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ACT1 </td>
+   <td style="text-align:left;"> Sample2 </td>
+   <td style="text-align:right;"> 120 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> NOTCH </td>
+   <td style="text-align:left;"> Sample1 </td>
+   <td style="text-align:right;"> 2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> NOTCH </td>
+   <td style="text-align:left;"> Sample2 </td>
+   <td style="text-align:right;"> 30 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<ul>
+<li>Select columns from a dataframe</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>pivot_table <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a>  <span class="fu">select</span>(<span class="fu">c</span>(Sample,Expression))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+  Sample  Expression
+  &lt;chr&gt;        &lt;int&gt;
+1 Sample1        100
+2 Sample2        120
+3 Sample1          2
+4 Sample2         30</code></pre>
+</div>
+</div>
+<ul>
+<li>Filter rows that match a value in a column</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>pivot_table <span class="sc">%&gt;%</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a>  <span class="fu">filter</span>(Gene <span class="sc">==</span> <span class="st">"ACT1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  Gene  Sample  Expression
+  &lt;chr&gt; &lt;chr&gt;        &lt;int&gt;
+1 ACT1  Sample1        100
+2 ACT1  Sample2        120</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="footer footer-default">
 
 </div>
 </section>
@@ -1334,7 +1450,7 @@ R packages contain:</p>
         slideNumber: 'c/t',
 
         // 'all', 'print', or 'speaker'
-        showSlideNumber: 'print',
+        showSlideNumber: 'all',
 
         // Add the current slide number to the URL hash so that reloading the
         // page/copying the URL will return you to the same slide

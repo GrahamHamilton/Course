@@ -2,9 +2,9 @@
 title: "R and RStudio"
 format:
   revealjs:
-    slide-number: true
-    show-slide-number: print
-# format: beamer
+    slide-number: c/t
+    show-slide-number: all
+
 editor: source
 ---
 
@@ -57,7 +57,7 @@ Download from https://posit.co/download/rstudio-desktop/
 :::
 :::
 
-##
+## 
 
 ## RStudio
 
@@ -72,14 +72,16 @@ Set up Rstudio - Set options in **Tools** and **Global Options...**
 -   Uncheck the boxes as shown in the example
 -   Ensure that *Save workspace to .RData on exit* is set to **Never**
 
-<span style="color:grey; font-size: 20px;"><br><br>YouTube video on installing and setting up RStudio<br>
-https://www.youtube.com/watch?v=D6CunpqF04E</span>
+[<br><br>YouTube video on installing and setting up RStudio<br> https://www.youtube.com/watch?v=D6CunpqF04E]{style="color:grey; font-size: 20px;"}
 :::
 :::
 
 <!-- ::: footer -->
+
 <!-- YouTube video on installing and setting up RStudio\ -->
+
 <!-- https://www.youtube.com/watch?v=D6CunpqF04E -->
+
 <!-- ::: -->
 
 ## RStudio
@@ -88,15 +90,16 @@ https://www.youtube.com/watch?v=D6CunpqF04E</span>
 ::: {.column width="60%"}
 ![](images/RStudio_panels.png){width="100%"}
 :::
+
 ::: {.column width="40%"}
 ::: {style="font-size: 80%;"}
--   <span style="color:red;">Source pane</span>
+-   [Source pane]{style="color:red;"}
     -   Write R commands as R scripts or Notebooks\
--   <span style="color:blue;">Console Pane</span>
+-   [Console Pane]{style="color:blue;"}
     -   Where the R commands are executed
--   <span style="color:green;">Environment pane</span>
+-   [Environment pane]{style="color:green;"}
     -   Details of the R variables
--   <span style="color:yellow;">Files pane</span>
+-   [Files pane]{style="color:yellow;"}
     -   View the directory and file structure
 :::
 :::
@@ -184,16 +187,18 @@ install_github("GitHubPackage")
 ```
 
 ## Loading Packages
-Packages have to be loaded prior to use.
-There are two ways to load packages in R.  
 
--   **library()**  
+Packages have to be loaded prior to use. There are two ways to load packages in R.
+
+-   **library()**
     -   library() will output an error and stop the execution of the code
--   **require()**  
+-   **require()**
     -   require() will output a warning if a package is not installed and then continue to execute the code
-    
+
 ## Loading Packages
+
 Loading packages within a function from CRAN
+
 ```{r}
 #| echo: true
 
@@ -212,7 +217,9 @@ cran.load(cran.packages)
 ```
 
 ## Loading Packages
+
 Loading packages within a function from Bioconductor
+
 ```{r}
 #| echo: true
 #| eval: false
@@ -232,24 +239,28 @@ biomart.load(biomart.packages)
 ```
 
 ## R Notebooks
+
 ::: columns
 ::: {.column width="50%"}
 R Notebooks are Markdown documents with chunks of code that can be executed independantly. Output from the code is visible beneath the code in the Notebook.
 :::
 
 ::: {.column width="50%"}
-![](images/R_notebook.png) 
+![](images/R_notebook.png)
 :::
 :::
 
-##
+## 
+
 ```{r}
 #| echo: true
 head(mpg, n = 3) %>%
   kbl() %>%
   kable_styling()
 ```
+
 ## ggplot2 - Themes
+
 ```{r}
 #| echo: false
 
@@ -313,6 +324,7 @@ void <- ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
 (default | bw | linedraw | light) /
   (dark | minimal | classic | void)
 ```
+
 ## Download Course Material
 
 ::: r-stack
@@ -322,23 +334,27 @@ void <- ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
 :::
 
 ## Download Course Material
+
 -   Unzip the downloaded file
 -   Move the folder to a suitable place on computer
 -   Open RStudio and, using the files pane, navigate to the Course-main folder
 -   Double click on the Course.Rproj
 
 ## ggplot2
-ggplot2 is a package for creating graphics 
 
--   Based on the Grammar of Graphics  
+ggplot2 is a package for creating graphics
+
+-   Based on the Grammar of Graphics\
 -   Part of the tidyverse set of tools
--   Call ggplot()  
-    -   Supply a suitably formatted data set  
-    -   What to plot from the data via aes (aesthetics), can also add colour, size, shape and transparency  
-    -   How the data is represented via the geom_
-    
+-   Call ggplot()
+    -   Supply a suitably formatted data set\
+    -   What to plot from the data via aes (aesthetics), can also add colour, size, shape and transparency\
+    -   How the data is represented via the geom\_
+
 ## ggplot2 {.smaller}
+
 Set the data a plotting area, with ggplot and the aesthetics, to plot the miles per gallon on the motorway on the x axis and miles per gallon on the y axis
+
 ```{r}
 #| echo: true
 #| eval: true
@@ -349,7 +365,9 @@ ggplot(mpg, aes(x = hwy, y = cty, color = cyl))
 ```
 
 ## ggplot2 {.smaller}
+
 Scatter plot with geom_point
+
 ```{r}
 #| echo: true
 #| eval: true
@@ -362,7 +380,9 @@ ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
 ```
 
 ## ggplot2 {.smaller}
+
 Change the transparency and size of the points
+
 ```{r}
 #| echo: true
 #| eval: true
@@ -375,7 +395,9 @@ ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
 ```
 
 ## ggplot2 {.smaller}
+
 Change the point colours
+
 ```{r}
 #| echo: true
 #| eval: true
@@ -389,7 +411,9 @@ ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
 ```
 
 ## ggplot2 {.smaller}
+
 Add title and change axis labels
+
 ```{r}
 #| echo: true
 #| eval: true
@@ -407,7 +431,9 @@ ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
 ```
 
 ## ggplot2 {.smaller}
+
 Box plot
+
 ```{r}
 #| echo: true
 #| eval: true
@@ -422,7 +448,9 @@ ggplot(mpg, aes(x = cyl, y = hwy, fill = cyl)) +
 ```
 
 ## ggplot2 {.smaller}
+
 Box plot
+
 ```{r}
 #| echo: true
 #| eval: true
@@ -438,7 +466,9 @@ ggplot(mpg, aes(x = cyl, y = hwy, fill = cyl)) +
 ```
 
 ## ggplot2 {.smaller}
+
 Violin plot
+
 ```{r}
 #| echo: true
 #| eval: true
@@ -453,17 +483,52 @@ ggplot(mpg, aes(x = cyl, y = hwy, fill = cyl)) +
 ```
 
 ## Tidyverse {.smaller}
-### Data Tidying  
+
+### Data Tidying
+
 -   First steps cleaning and preparing data
--    Can be time consuming
--    Tidyr - Standard way to organise data values within a data set  
-    -   Links data structure to the meaning
--    Tidy data has:  
-    -   Value, usually numbers  
+-   Time consuming
+-   Packages supplied by the Tidyverse
+    -   Share an underlying grammer and styructure
+
+    -   Standardises data tidying
+    
+-   Tidy data has:
+    -   Value, usually numbers
     -   Name, of a group to which the value belongs
 
+## Tidyverse {.smaller}
+
+The tidyverse is a collection of R packages designed for data science
+
+::: columns
+::: {.column width="50%"}
+-   ggplot2 ![](images/ggplot2.png){width="100"}
+
+    -   Package for creating graphics
+
+-   dplyr ![](images/dplyr.png){width="100"}
+
+    -   Package for data manipulation
+:::
+
+::: {.column width="50%"}
+-   tidyr ![](images/tidyr.png){width="100"}
+
+    -   Package for tidying data
+
+-   readr ![](images/readr.png){width="100"}
+
+    -   Package for reading in data
+:::
+:::
+
+::: footer
+https://www.tidyverse.org
+:::
 
 ## Tidyverse {.smaller}
+
 ```{r}
 #| echo: true
 #| eval: true
@@ -481,15 +546,19 @@ pivot_table %>%
   kbl() %>%
   kable_styling()
 ```
+
 ## Tidyverse
+
 ```{r}
 ggplot(pivot_table, aes(x = Gene, y = Expression, colour = Gene)) +
   geom_point(size = 5) +
   scale_color_viridis_d()
 ```
-##
+
+## 
 
 ## Tidyverse {.smaller}
+
 ```{r}
 #| echo: true
 #| eval: true
@@ -500,7 +569,9 @@ head(real_data)  %>%
 ```
 
 ## Tidyverse {.smaller}
+
 Tidy the data
+
 ```{r}
 #| echo: true
 #| eval: true
@@ -514,7 +585,9 @@ head(pivot_real_data)  %>%
 ```
 
 ## Tidyverse {.smaller}
+
 Plot the data
+
 ```{r}
 #| echo: true
 #| eval: true
@@ -523,7 +596,9 @@ ggplot(pivot_real_data, aes(x = Samples, y = Expression, fill = Samples)) +
 ```
 
 ## Tidyverse {.smaller}
+
 Log transform the expression values
+
 ```{r}
 #| echo: true
 #| eval: true
@@ -536,6 +611,7 @@ ggplot(pivot_real_data, aes(x = Samples, y = Expression, fill = Samples)) +
 ## Tidyverse {.smaller}
 
 Make the plot look prettier
+
 ```{r}
 #| echo: true
 #| eval: true
@@ -551,3 +627,38 @@ ggplot(pivot_real_data, aes(x = Samples, y = Expression, fill = Samples)) +
         axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 ```
 
+## Tidyverse {.smaller}
+
+Dplyr simplifies data manipulation
+
+::: columns
+::: {.column width="50%"}
+-   Original table
+
+```{r}
+head(pivot_table) %>%
+  kbl() %>%
+  kable_styling()
+```
+:::
+
+::: {.column width="50%"}
+-   Select columns from a dataframe
+
+```{r}
+#| echo: true
+#| eval: true
+pivot_table %>%
+  select(c(Sample,Expression))
+```
+
+-   Filter rows that match a value in a column
+
+```{r}
+#| echo: true
+#| eval: true
+pivot_table %>%
+  filter(Gene == "ACT1")
+```
+:::
+:::
