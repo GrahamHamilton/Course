@@ -10,6 +10,9 @@ You can create code chunks manually or by clicking the *Insert Chunk* button on 
 
 The code blocks can be run by clicking on the green start arrow or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. The results of the code block will be shown below the code block.
 
+# Base R
+All the following are available in the version of R without installing any additional packages
+
 ## First the basics of R.
 Basic calculations
 ```{r}
@@ -43,7 +46,8 @@ name <- "Graham"
 print(paste(greeting,name, sep = " "))
 
 ```
-Lists
+
+Lists or as R calls them vectors. Lists or vectors must be of the same type
 ```{r}
 list <- c(1,2,3,4)
 list

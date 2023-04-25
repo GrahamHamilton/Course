@@ -144,7 +144,7 @@ From CRAN using the R command install.packages
 ```{r}
 #| echo: true
 #| eval: false
-install.packages("ggplot2")
+install.packages("tidyverse")
 ```
 
 From Bioconductor First need to install a package manager program
@@ -178,13 +178,27 @@ install.packages("devtools")
 require("devtools")
 ```
 
-Then can install GitHub packages
+Then can install GitHub packages.
+Github packages are usually named after the repository name then the package name e.g. grahamhamilton/Rpackage
 
 ```{r}
 #| echo: true
 #| eval: false
 install_github("GitHubPackage")
 ```
+
+## Installing Packages
+
+Now install these packages
+
+-   CRAN
+
+    -   tidyverse
+
+    -   devtools
+    
+
+##
 
 ## Loading Packages
 
@@ -197,12 +211,26 @@ Packages have to be loaded prior to use. There are two ways to load packages in 
 
 ## Loading Packages
 
+Load the libraries seperately
+```{r}
+#| echo: true
+library("tidyverse")
+library("Rsubread")
+```
+Or as a comma seperated list
+```{r}
+#| echo: true
+library("tidyverse","Rsubread")
+```
+
+
+## Loading Packages
+
 Loading packages within a function from CRAN
 
 ```{r}
 #| echo: true
-
-#CRAN
+#| code-line-numbers: "|1-2|9"
 cran.packages <- c("tidyverse",
                    "kableExtra")
 
@@ -216,6 +244,7 @@ cran.load <- function(pkg){
 cran.load(cran.packages)
 ```
 
+
 ## Loading Packages
 
 Loading packages within a function from Bioconductor
@@ -223,7 +252,7 @@ Loading packages within a function from Bioconductor
 ```{r}
 #| echo: true
 #| eval: false
-# Biomart
+#| code-line-numbers: "|1|10"
 biomart.packages <- c("Rsubread")
 
 biomart.load <- function(pkg){
@@ -492,7 +521,6 @@ ggplot(mpg, aes(x = cyl, y = hwy, fill = cyl)) +
     -   Share an underlying grammer and styructure
 
     -   Standardises data tidying
-    
 -   Tidy data has:
     -   Value, usually numbers
     -   Name, of a group to which the value belongs
@@ -555,7 +583,7 @@ ggplot(pivot_table, aes(x = Gene, y = Expression, colour = Gene)) +
   scale_color_viridis_d()
 ```
 
-## 
+\newpage
 
 ## Tidyverse {.smaller}
 
@@ -663,7 +691,7 @@ pivot_table %>%
 :::
 :::
 
-##
+## 
 
 ## Tidyverse
 
@@ -683,4 +711,3 @@ ggplot(expression_table, aes(x = Sample, y = Expression, fill = Sample)) +
   theme_classic() +
   theme(legend.position = "none")
 ```
-
