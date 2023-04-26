@@ -1764,194 +1764,209 @@ Chunk</em> button on the toolbar or by pressing
 <p>The code blocks can be run by clicking on the green start arrow or by
 placing your cursor inside it and pressing <em>Cmd+Shift+Enter</em>. The
 results of the code block will be shown below the code block.</p>
+<div id="base-r" class="section level1">
+<h1>Base R</h1>
+<p>All the following are available in the version of R without
+installing any additional packages</p>
 <div id="first-the-basics-of-r." class="section level2">
 <h2>First the basics of R.</h2>
 <p>Basic calculations</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuNCAqIDUgKyAyXG5gYGBcbmBgYCJ9 -->
-<pre class="r"><code>```r
-4 * 5 + 2</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-output-begin eyJkYXRhIjoiWzFdIDIyXG4ifQ== --&gt;
-</code></pre>
-<p>[1] 22</p>
-<pre><code>
-
-
-&lt;!-- rnb-output-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-For readability it is best to add spaces between the operators (e.g. 4 * 5), however, these are not required and can be omitted.
-
-## Variables
-Variables are an integral part of any programming language and R offers a great deal of flexibility. R does not require variable types to be declared and can take on any available data type. It can also hold any R object such as a function, the result of an analysis or a plot.
-There are a number of ways to assign a value to a variable, and again, this does not depend on the type of value being assigned. 
-The valid assignment operators are &lt;- and =, with the first being preferred. 
-
-For example, let’s save 2 to the variable x and 5 to the variable y. The arrow operator can also point in the other direction.
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxueCA8LSAyXG55IDwtIDVcbnhcbmBgYFxuYGBgIn0= --&gt;
-
-```r
-```r
-x &lt;- 2
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuNCAqIDUgKyAyXG5gYGAifQ== -->
+<pre class="r"><code>4 * 5 + 2</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDIyXG4ifQ== -->
+<pre><code>[1] 22</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>For readability it is best to add spaces between the operators
+(e.g. 4 * 5), however, these are not required and can be omitted.</p>
+</div>
+<div id="variables" class="section level2">
+<h2>Variables</h2>
+<p>Variables are an integral part of any programming language and R
+offers a great deal of flexibility. R does not require variable types to
+be declared and can take on any available data type. It can also hold
+any R object such as a function, the result of an analysis or a plot.
+There are a number of ways to assign a value to a variable, and again,
+this does not depend on the type of value being assigned. The valid
+assignment operators are &lt;- and =, with the first being
+preferred.</p>
+<p>For example, let’s save 2 to the variable x and 5 to the variable y.
+The arrow operator can also point in the other direction.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueCA8LSAyXG55IDwtIDVcbnhcbmBgYCJ9 -->
+<pre class="r"><code>x &lt;- 2
 y &lt;- 5
 x</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-output-begin eyJkYXRhIjoiWzFdIDJcbiJ9 --&gt;
-</code></pre>
-<p>[1] 2</p>
-<pre><code>
-
-
-&lt;!-- rnb-output-end --&gt;
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxueVxuYGBgXG5gYGAifQ== --&gt;
-
-```r
-```r
-y</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-output-begin eyJkYXRhIjoiWzFdIDVcbiJ9 --&gt;
-</code></pre>
-<p>[1] 5</p>
-<pre><code>
-
-
-&lt;!-- rnb-output-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-Now we can use the variables
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxueCArIHlcbmBgYFxuYGBgIn0= --&gt;
-
-```r
-```r
-x + y</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-output-begin eyJkYXRhIjoiWzFdIDdcbiJ9 --&gt;
-</code></pre>
-<p>[1] 7</p>
-<pre><code>
-
-
-&lt;!-- rnb-output-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-Variables can hold any type of data
-Characters
-Note the use of the paste command. This is my preferred way to join variables or text.
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuZ3JlZXRpbmcgPC0gXFxIZWxsb1xcXG5uYW1lIDwtIFxcR3JhaGFtXFxcbnByaW50KHBhc3RlKGdyZWV0aW5nLG5hbWUsIHNlcCA9IFxcIFxcKSlcbmBgYFxuYGBgIn0= --&gt;
-
-```r
-```r
-greeting &lt;- \Hello\
-name &lt;- \Graham\
-print(paste(greeting,name, sep = \ \))</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-output-begin eyJkYXRhIjoiWzFdIFxcSGVsbG8gR3JhaGFtXFxcbiJ9 --&gt;
-</code></pre>
-<p>[1] Graham<br />
-</p>
-<pre><code>
-
-
-&lt;!-- rnb-output-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-Lists
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxubGlzdCA8LSBjKDEsMiwzLDQpXG5saXN0XG5gYGBcbmBgYCJ9 --&gt;
-
-```r
-```r
-list &lt;- c(1,2,3,4)
-list</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-output-begin eyJkYXRhIjoiWzFdIDEgMiAzIDRcbiJ9 --&gt;
-</code></pre>
-<p>[1] 1 2 3 4</p>
-<pre><code>
-
-
-&lt;!-- rnb-output-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueiA8LSBjKDEsIDIsIE5BLCA4LCAzLCBOQSwgMylcbnogJT4lIG1lYW4obmEucm09VFJVRSlcbmBgYCJ9 --&gt;
-
-```r
-z &lt;- c(1, 2, NA, 8, 3, NA, 3)
-z %&gt;% mean(na.rm=TRUE)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDMuNFxuIn0= -->
-<pre><code>[1] 3.4</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDJcbiJ9 -->
+<pre><code>[1] 2</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueVxuYGBgIn0= -->
+<pre class="r"><code>y</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDVcbiJ9 -->
+<pre><code>[1] 5</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Now we can use the variables</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueCArIHlcbmBgYCJ9 -->
+<pre class="r"><code>x + y</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDdcbiJ9 -->
+<pre><code>[1] 7</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Variables can hold any type of data Characters Note the use of the
+paste command, which takes the variables to be pasted together followed
+by the character used to separate the variables in this case a white
+space.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ3JlZXRpbmcgPC0gXCJIZWxsb1wiXG5uYW1lIDwtIFwiR3JhaGFtXCJcblxucHJpbnQocGFzdGUoZ3JlZXRpbmcsbmFtZSwgc2VwID0gXCIgXCIpKVxuYGBgIn0= -->
+<pre class="r"><code>greeting &lt;- &quot;Hello&quot;
+name &lt;- &quot;Graham&quot;
+
+print(paste(greeting,name, sep = &quot; &quot;))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiSGVsbG8gR3JhaGFtXCJcbiJ9 -->
+<pre><code>[1] &quot;Hello Graham&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Lists or as R calls them vectors. Lists or vectors must contain
+elements of the same type for examples logical, integer, double,
+complex, character and raw.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlzdCA8LSBjKDEsMiwzLDQpXG5saXN0XG5gYGAifQ== -->
+<pre class="r"><code>list &lt;- c(1,2,3,4)
+list</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDEgMiAzIDRcbiJ9 -->
+<pre><code>[1] 1 2 3 4</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>The length of the list can be determined using the length
+function</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGVuZ3RoKGxpc3QpXG5gYGAifQ== -->
+<pre class="r"><code>length(list)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDRcbiJ9 -->
+<pre><code>[1] 4</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Some vectors my have NA values. NA values are not equivalent to zero
+and any calculation with an NA value will result in NA</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueiA8LSBjKDEsIDIsIE5BLCA4LCAzLCBOQSwgMylcbnpcbmBgYCJ9 -->
+<pre class="r"><code>z &lt;- c(1, 2, NA, 8, 3, NA, 3)
+z</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdICAxICAyIE5BICA4ICAzIE5BICAzXG4ifQ== -->
+<pre><code>[1]  1  2 NA  8  3 NA  3</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtKHopIFxuYGBgIn0= -->
+<pre class="r"><code>sum(z) </code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIE5BXG4ifQ== -->
+<pre><code>[1] NA</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Many functions can ignore the NAs using the na.rm = TRUE feature</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtKHosIG5hLnJtPVRSVUUpXG5gYGAifQ== -->
+<pre class="r"><code>sum(z, na.rm=TRUE)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDE3XG4ifQ== -->
+<pre><code>[1] 17</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Can add values to an existing vector using the append function</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYXBwZW5kKHosIDUpICMgYWRkIHRvIHRoZSBlbmQgb2YgYSB2ZWN0b3JcbmBgYCJ9 -->
+<pre class="r"><code>append(z, 5) # add to the end of a vector</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdICAxICAyIE5BICA4ICAzIE5BICAzICA1XG4ifQ== -->
+<pre><code>[1]  1  2 NA  8  3 NA  3  5</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYXBwZW5kKDUsIHopICMgYWRkIHRvIHRoZSBiZWdpbm5pbmcgb2YgYSB2ZWN0b3JcbmBgYCJ9 -->
+<pre class="r"><code>append(5, z) # add to the beginning of a vector</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdICA1ICAxICAyIE5BICA4ICAzIE5BICAzXG4ifQ== -->
+<pre><code>[1]  5  1  2 NA  8  3 NA  3</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYXBwZW5kKHosNSwgYWZ0ZXIgPSAyKVxuYGBgIn0= -->
+<pre class="r"><code>append(z,5, after = 2)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdICAxICAyICA1IE5BICA4ICAzIE5BICAzXG4ifQ== -->
+<pre><code>[1]  1  2  5 NA  8  3 NA  3</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Can find out if the vector contains unique values. The unique
+function removes duplicated values, keeping the first occurrence of a
+duplicated value</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuelxuYGBgIn0= -->
+<pre class="r"><code>z</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdICAxICAyIE5BICA4ICAzIE5BICAzXG4ifQ== -->
+<pre><code>[1]  1  2 NA  8  3 NA  3</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudW5pcXVlKHopXG5gYGAifQ== -->
+<pre class="r"><code>unique(z)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdICAxICAyIE5BICA4ICAzXG4ifQ== -->
+<pre><code>[1]  1  2 NA  8  3</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Can use the grepl function to find elements in a vector that match a
+pattern, this results in a list of booleans (TRUE or FALSE)</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2VuZV9uYW1lcyA8LSBjKFwiQUNUMVwiLFwiTk9UQ0hcIixcIkRNUEsxXCIpXG5nZW5lX25hbWVzXG5gYGAifQ== -->
+<pre class="r"><code>gene_names &lt;- c(&quot;ACT1&quot;,&quot;NOTCH&quot;,&quot;DMPK1&quot;)
+gene_names</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiQUNUMVwiICBcIk5PVENIXCIgXCJETVBLMVwiXG4ifQ== -->
+<pre><code>[1] &quot;ACT1&quot;  &quot;NOTCH&quot; &quot;DMPK1&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ3JlcGwoXCIxXCIsZ2VuZV9uYW1lcylcbmBgYCJ9 -->
+<pre class="r"><code>grepl(&quot;1&quot;,gene_names)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdICBUUlVFIEZBTFNFICBUUlVFXG4ifQ== -->
+<pre><code>[1]  TRUE FALSE  TRUE</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Can use that boolean list to subset the original vector</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2VuZV9uYW1lc1tncmVwbChcIjFcIixnZW5lX25hbWVzKV1cbmBgYCJ9 -->
+<pre class="r"><code>gene_names[grepl(&quot;1&quot;,gene_names)]</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiQUNUMVwiICBcIkRNUEsxXCJcbiJ9 -->
+<pre><code>[1] &quot;ACT1&quot;  &quot;DMPK1&quot;</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1970,11 +1985,11 @@ variable and each row contains one set of values from each column.</p>
 columns,(hence the header = TRUE parameter)</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGFibGUgPC0gcmVhZC50YWJsZShcImRhdGEvZXhhbXBsZV90YWJsZS50eHRcIiwgaGVhZGVyID0gVFJVRSwgc2VwID0gXCIgXCIpICMgVGhpcyB3aWxsIHJlYWQgaW4gYSBzcGFjZSBzZXBhcmF0ZWQgZGF0YSB0YWJsZVxudGFibGVcbmBgYCJ9 -->
-<pre class="r"><code>table &lt;- read.table(&quot;data/example_table.txt&quot;, header = TRUE, sep = &quot; &quot;) # This will read in a space separated data table
-table</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YV90YWJsZSA8LSByZWFkLnRhYmxlKFwiZGF0YS9leGFtcGxlX3RhYmxlLnR4dFwiLCBoZWFkZXIgPSBUUlVFLCBzZXAgPSBcIiBcIikgIyBUaGlzIHdpbGwgcmVhZCBpbiBhIHNwYWNlIHNlcGFyYXRlZCBkYXRhIHRhYmxlXG5kYXRhX3RhYmxlXG5gYGAifQ== -->
+<pre class="r"><code>data_table &lt;- read.table(&quot;data/example_table.txt&quot;, header = TRUE, sep = &quot; &quot;) # This will read in a space separated data table
+data_table</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MiwibmNvbCI6Mywic3VtbWFyeSI6eyJEZXNjcmlwdGlvbiI6WyJkZiBbMiDDlyAzXSJdfX0sInJkZiI6IlVrUllNd3BZQ2dBQUFBTUFCQUlDQUFNRkFBQUFBQVZWVkVZdE9BQUFCQUlBQUFBQkFBUUFDUUFBQUFGNEFBQURFd0FBQUFNQUFBQVFBQUFBQWdBRUFBa0FBQUFFUVVOVU1RQUVBQWtBQUFBRlRrOVVRMGdBQUFBTkFBQUFBZ0FBQUdRQUFBQUNBQUFBRFFBQUFBSUFBQUI0QUFBQUhnQUFCQUlBQUFBQkFBUUFDUUFBQUFWdVlXMWxjd0FBQUJBQUFBQURBQVFBQ1FBQUFBUkhaVzVsQUFRQUNRQUFBQWRUWVcxd2JHVXhBQVFBQ1FBQUFBZFRZVzF3YkdVeUFBQUVBZ0FBQUFFQUJBQUpBQUFBQ1hKdmR5NXVZVzFsY3dBQUFBMEFBQUFDQUFBQUFRQUFBQUlBQUFRQ0FBQUFBUUFFQUFrQUFBQUZZMnhoYzNNQUFBQVFBQUFBQVFBRUFBa0FBQUFLWkdGMFlTNW1jbUZ0WlFBQUFQNEFBQVFDQUFBQUFRQUVBQWtBQUFBSGIzQjBhVzl1Y3dBQUFoTUFBQUFGQUFBQUVBQUFBQUVBQkFBSkFBQUFBWElBQUFBUUFBQUFBUUFFQUFrQUFBQVBkVzV1WVcxbFpDMWphSFZ1YXkwMkFBQUFDZ0FBQUFFQUFBQUFBQUFBRFFBQUFBRUFBQUFDQUFBQURRQUFBQUVBQUFBREFBQUVBZ0FBQXY4QUFBQVFBQUFBQlFBRUFBa0FBQUFHWlc1bmFXNWxBQVFBQ1FBQUFBVnNZV0psYkFBRUFBa0FBQUFPY205M2JtRnRaWE11Y0hKcGJuUUFCQUFKQUFBQUNuSnZkM011ZEc5MFlXd0FCQUFKQUFBQUNtTnZiSE11ZEc5MFlXd0FBQUQrQUFBQS9nPT0ifQ== -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MiwibmNvbCI6Mywic3VtbWFyeSI6W119LCJyZGYiOiJVa1JZTXdwWUNnQUFBQU1BQkFJQ0FBTUZBQUFBQUFWVlZFWXRPQUFBQkFJQUFBQUJBQVFBQ1FBQUFBRjRBQUFERXdBQUFBTUFBQUFRQUFBQUFnQUVBQWtBQUFBRVFVTlVNUUFFQUFrQUFBQUZUazlVUTBnQUFBQU5BQUFBQWdBQUFHUUFBQUFDQUFBQURRQUFBQUlBQUFCNEFBQUFIZ0FBQkFJQUFBQUJBQVFBQ1FBQUFBVnVZVzFsY3dBQUFCQUFBQUFEQUFRQUNRQUFBQVJIWlc1bEFBUUFDUUFBQUFkVFlXMXdiR1V4QUFRQUNRQUFBQWRUWVcxd2JHVXlBQUFFQWdBQUFBRUFCQUFKQUFBQUNYSnZkeTV1WVcxbGN3QUFBQTBBQUFBQ0FBQUFBUUFBQUFJQUFBUUNBQUFBQVFBRUFBa0FBQUFGWTJ4aGMzTUFBQUFRQUFBQUFRQUVBQWtBQUFBS1pHRjBZUzVtY21GdFpRQUFBUDRBQUFRQ0FBQUFBUUFFQUFrQUFBQUhiM0IwYVc5dWN3QUFBaE1BQUFBRkFBQUFFQUFBQUFFQUJBQUpBQUFBQVhJQUFBQVFBQUFBQVFBRUFBa0FBQUFQZFc1dVlXMWxaQzFqYUhWdWF5MHlBQUFBQ2dBQUFBRUFBQUFBQUFBQURRQUFBQUVBQUFBQ0FBQUFEUUFBQUFFQUFBQURBQUFFQWdBQUF2OEFBQUFRQUFBQUJRQUVBQWtBQUFBR1pXNW5hVzVsQUFRQUNRQUFBQVZzWVdKbGJBQUVBQWtBQUFBT2NtOTNibUZ0WlhNdWNISnBiblFBQkFBSkFBQUFDbkp2ZDNNdWRHOTBZV3dBQkFBSkFBQUFDbU52YkhNdWRHOTBZV3dBQUFEK0FBQUEvZz09In0= -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["Gene"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Sample1"],"name":[2],"type":["int"],"align":["right"]},{"label":["Sample2"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"ACT1","2":"100","3":"120"},{"1":"NOTCH","2":"2","3":"30"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[2]},"pages":{}}}
@@ -1989,6 +2004,81 @@ data/example-table.csv.</p>
 <!-- rnb-chunk-begin -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+<p>The data_table was read in as a data frame, which is like a
+spreadsheet in excel. Data frames consist of named rows and columns,
+these by default are numbers. Each column can be treated like a vector
+and is accessed using the dataframe name and the column name, separated
+by a dollar sign, $. For example, we can calculte the natural log for
+the values Sample1 in the table we just loaded.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubG9nKGRhdGFfdGFibGUkU2FtcGxlMSlcbmBgYCJ9 -->
+<pre class="r"><code>log(data_table$Sample1)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDQuNjA1MTcwMiAwLjY5MzE0NzJcbiJ9 -->
+<pre><code>[1] 4.6051702 0.6931472</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Often we would want to perform a calculation on all values in the
+data frame</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubG9nKGRhdGFfdGFibGUpXG5gYGAifQ== -->
+<pre class="r"><code>log(data_table)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gTWF0aC5kYXRhLmZyYW1lKGRhdGFfdGFibGUpIDogXG4gIG5vbi1udW1lcmljLWFsaWtlIHZhcmlhYmxlKHMpIGluIGRhdGEgZnJhbWU6IEdlbmVcbiJ9 -->
+<pre><code>Error in Math.data.frame(data_table) : 
+  non-numeric-alike variable(s) in data frame: Gene</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>If you want to perform a calculation on the whole data frame all the
+values have to be of the same type, e.g.all numbers (either integer or
+double). The error above indicates that the Gene column does not contain
+numeric values. We can replace the numbered rownames the the Gene name
+column from the data frame then delete it.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucm93bmFtZXMoZGF0YV90YWJsZSkgPC0gZGF0YV90YWJsZSRHZW5lICMgcmVwbGFjZSB0aGUgcncgbmFtZXMgd2l0aCB0aGUgZ2VuZSBuYW1lc1xuZGF0YV90YWJsZSRHZW5lIDwtIE5VTEwgIyBkZWxldGUgdGhlIEdlbmUgY29sdW1uXG5kYXRhX3RhYmxlXG5gYGAifQ== -->
+<pre class="r"><code>rownames(data_table) &lt;- data_table$Gene # replace the rw names with the gene names
+data_table$Gene &lt;- NULL # delete the Gene column
+data_table</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MiwibmNvbCI6Miwic3VtbWFyeSI6W119LCJyZGYiOiJVa1JZTXdwWUNnQUFBQU1BQkFJQ0FBTUZBQUFBQUFWVlZFWXRPQUFBQkFJQUFBQUJBQVFBQ1FBQUFBRjRBQUFERXdBQUFBSUFBQUFOQUFBQUFnQUFBR1FBQUFBQ0FBQUFEUUFBQUFJQUFBQjRBQUFBSGdBQUJBSUFBQUFCQUFRQUNRQUFBQVZ1WVcxbGN3QUFBQkFBQUFBQ0FBUUFDUUFBQUFkVFlXMXdiR1V4QUFRQUNRQUFBQWRUWVcxd2JHVXlBQUFFQWdBQUFBRUFCQUFKQUFBQUNYSnZkeTV1WVcxbGN3QUFBQkFBQUFBQ0FBUUFDUUFBQUFSQlExUXhBQVFBQ1FBQUFBVk9UMVJEU0FBQUJBSUFBQUFCQUFRQUNRQUFBQVZqYkdGemN3QUFBQkFBQUFBQkFBUUFDUUFBQUFwa1lYUmhMbVp5WVcxbEFBQUEvZ0FBQkFJQUFBQUJBQVFBQ1FBQUFBZHZjSFJwYjI1ekFBQUNFd0FBQUFVQUFBQVFBQUFBQVFBRUFBa0FBQUFCY2dBQUFCQUFBQUFCQUFRQUNRQUFBQTkxYm01aGJXVmtMV05vZFc1ckxURUFBQUFLQUFBQUFRQUFBQUVBQUFBTkFBQUFBUUFBQUFJQUFBQU5BQUFBQVFBQUFBSUFBQVFDQUFBQy93QUFBQkFBQUFBRkFBUUFDUUFBQUFabGJtZHBibVVBQkFBSkFBQUFCV3hoWW1Wc0FBUUFDUUFBQUE1eWIzZHVZVzFsY3k1d2NtbHVkQUFFQUFrQUFBQUtjbTkzY3k1MGIzUmhiQUFFQUFrQUFBQUtZMjlzY3k1MGIzUmhiQUFBQVA0QUFBRCsifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Sample1"],"name":[1],"type":["int"],"align":["right"]},{"label":["Sample2"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"100","2":"120","_rn_":"ACT1"},{"1":"2","2":"30","_rn_":"NOTCH"}],"options":{"columns":{"min":{},"max":[10],"total":[2]},"rows":{"min":[10],"max":[10],"total":[2]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Now the data frame contains only numeric values the log function can
+be appplied to the entire data frame</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubG9nX3RhYmxlIDwtIGxvZyhkYXRhX3RhYmxlKVxubG9nX3RhYmxlXG5gYGAifQ== -->
+<pre class="r"><code>log_table &lt;- log(data_table)
+log_table</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MiwibmNvbCI6Miwic3VtbWFyeSI6W119LCJyZGYiOiJVa1JZTXdwWUNnQUFBQU1BQkFJQ0FBTUZBQUFBQUFWVlZFWXRPQUFBQkFJQUFBQUJBQVFBQ1FBQUFBRjRBQUFERXdBQUFBSUFBQUFPQUFBQUFrQVNhN0c3dFZVV1ArWXVRdjc2T2U4QUFBQU9BQUFBQWtBVEptUThSSG5KUUFzMXB2a0wxcHNBQUFRQ0FBQUFBUUFFQUFrQUFBQUZibUZ0WlhNQUFBQVFBQUFBQWdBRUFBa0FBQUFIVTJGdGNHeGxNUUFFQUFrQUFBQUhVMkZ0Y0d4bE1nQUFCQUlBQUFBQkFBUUFDUUFBQUFseWIzY3VibUZ0WlhNQUFBQVFBQUFBQWdBRUFBa0FBQUFFUVVOVU1RQUVBQWtBQUFBRlRrOVVRMGdBQUFRQ0FBQUFBUUFFQUFrQUFBQUZZMnhoYzNNQUFBQVFBQUFBQVFBRUFBa0FBQUFLWkdGMFlTNW1jbUZ0WlFBQUFQNEFBQVFDQUFBQUFRQUVBQWtBQUFBSGIzQjBhVzl1Y3dBQUFoTUFBQUFGQUFBQUVBQUFBQUVBQkFBSkFBQUFBWElBQUFBUUFBQUFBUUFFQUFrQUFBQVBkVzV1WVcxbFpDMWphSFZ1YXkweEFBQUFDZ0FBQUFFQUFBQUJBQUFBRFFBQUFBRUFBQUFDQUFBQURRQUFBQUVBQUFBQ0FBQUVBZ0FBQXY4QUFBQVFBQUFBQlFBRUFBa0FBQUFHWlc1bmFXNWxBQVFBQ1FBQUFBVnNZV0psYkFBRUFBa0FBQUFPY205M2JtRnRaWE11Y0hKcGJuUUFCQUFKQUFBQUNuSnZkM011ZEc5MFlXd0FCQUFKQUFBQUNtTnZiSE11ZEc5MFlXd0FBQUQrQUFBQS9nPT0ifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Sample1"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Sample2"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"4.6051702","2":"4.787492","_rn_":"ACT1"},{"1":"0.6931472","2":"3.401197","_rn_":"NOTCH"}],"options":{"columns":{"min":{},"max":[10],"total":[2]},"rows":{"min":[10],"max":[10],"total":[2]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Writing data to a file using the write.table function</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxud3JpdGUudGFibGUobG9nX3RhYmxlLFwiZGF0YS9leGFtcGxlX2xvZ190YWJsZS50c3ZcIiwgY29sLm5hbWVzID0gVFJVRSwgcXVvdGUgPSBGQUxTRSwgc2VwID0gXCJcXHRcIilcbmBgYCJ9 -->
+<pre class="r"><code>write.table(log_table,&quot;data/example_log_table.tsv&quot;, col.names = TRUE, quote = FALSE, sep = &quot;\t&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 <p>When you save the notebook, an HTML file containing the code and
 output will be saved alongside it (click the <em>Preview</em> button or
 press <em>Cmd+Shift+K</em> to preview the HTML file).</p>
@@ -1998,8 +2088,9 @@ run any R code chunks. Instead, the output of the chunk when it was last
 run in the editor is displayed.</p>
 <!-- rnb-text-end -->
 </div>
+</div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiU2Vzc2lvbiAyIC0gSW50cm8gdG8gUiIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKVGhpcyBpcyBhIGJlZ2lubmVycyB0dXRvcmlhbCBmb3IgUi4gSXQgaXMgYSBwb3dlcmZ1bCB0b29sIGZvciBhbGwgbWFubmVyIG9mIGNhbGN1bGF0aW9ucywgZGF0YSBtYW5pcHVsYXRpb24sIHNjaWVudGlmaWMgY29tcHV0YXRpb25zIGFuZCBjYW4gYWxzbyBiZSB1c2VkIHRvIHZpc3VhbGlzZSB5b3VyIGRhdGEuCgpUaGlzIHR1dG9yaWFsIHVzZXMgUiBub3RlYm9va3Mgd2hpY2ggY29uc2lzdHMgb2Ygbm90ZXMgdGhhdCBhcmUgb24gYSB3aGl0ZSBiYWNrIGdyb3VuZCwgImNvZGUgY2h1bmtzIiB0aGF0IHN0YXJ0IHdpdGggdGhyZWUgYmFja3RpY2tzIChgKSB0aGVuIGN1cmx5IGJyYWNrZXRzIGFyb3VuZCB0aGUgY29kaW5nIGxhbmd1YWdlLCBpbiB0aGlzIGNhc2UgUiAobGlrZSB0aGlzIHtyfSkgYW5kIHRoZSBjb2RlIGJsb2NrIGVuZCBpcyBkZWZpbmVkIGJ5IGEgZnVydGhlciBzZXQgb2YgdGhyZWUgYmFja3RpY2tzKGApLiAKWW91IGNhbiBjcmVhdGUgY29kZSBjaHVua3MgbWFudWFsbHkgb3IgYnkgY2xpY2tpbmcgdGhlICpJbnNlcnQgQ2h1bmsqIGJ1dHRvbiBvbiB0aGUgdG9vbGJhciBvciBieSBwcmVzc2luZyAqQ21kK09wdGlvbitJKi4KClRoZSBjb2RlIGJsb2NrcyBjYW4gYmUgcnVuIGJ5IGNsaWNraW5nIG9uIHRoZSBncmVlbiBzdGFydCBhcnJvdyBvciBieSBwbGFjaW5nIHlvdXIgY3Vyc29yIGluc2lkZSBpdCBhbmQgcHJlc3NpbmcgKkNtZCtTaGlmdCtFbnRlciouIFRoZSByZXN1bHRzIG9mIHRoZSBjb2RlIGJsb2NrIHdpbGwgYmUgc2hvd24gYmVsb3cgdGhlIGNvZGUgYmxvY2suCgojIyBGaXJzdCB0aGUgYmFzaWNzIG9mIFIuCkJhc2ljIGNhbGN1bGF0aW9ucwpgYGB7cn0KNCAqIDUgKyAyCmBgYAoKRm9yIHJlYWRhYmlsaXR5IGl0IGlzIGJlc3QgdG8gYWRkIHNwYWNlcyBiZXR3ZWVuIHRoZSBvcGVyYXRvcnMgKGUuZy4gNCAqIDUpLCBob3dldmVyLCB0aGVzZSBhcmUgbm90IHJlcXVpcmVkIGFuZCBjYW4gYmUgb21pdHRlZC4KCiMjIFZhcmlhYmxlcwpWYXJpYWJsZXMgYXJlIGFuIGludGVncmFsIHBhcnQgb2YgYW55IHByb2dyYW1taW5nIGxhbmd1YWdlIGFuZCBSIG9mZmVycyBhIGdyZWF0IGRlYWwgb2YgZmxleGliaWxpdHkuIFIgZG9lcyBub3QgcmVxdWlyZSB2YXJpYWJsZSB0eXBlcyB0byBiZSBkZWNsYXJlZCBhbmQgY2FuIHRha2Ugb24gYW55IGF2YWlsYWJsZSBkYXRhIHR5cGUuIEl0IGNhbiBhbHNvIGhvbGQgYW55IFIgb2JqZWN0IHN1Y2ggYXMgYSBmdW5jdGlvbiwgdGhlIHJlc3VsdCBvZiBhbiBhbmFseXNpcyBvciBhIHBsb3QuClRoZXJlIGFyZSBhIG51bWJlciBvZiB3YXlzIHRvIGFzc2lnbiBhIHZhbHVlIHRvIGEgdmFyaWFibGUsIGFuZCBhZ2FpbiwgdGhpcyBkb2VzIG5vdCBkZXBlbmQgb24gdGhlIHR5cGUgb2YgdmFsdWUgYmVpbmcgYXNzaWduZWQuIApUaGUgdmFsaWQgYXNzaWdubWVudCBvcGVyYXRvcnMgYXJlIDwtIGFuZCA9LCB3aXRoIHRoZSBmaXJzdCBiZWluZyBwcmVmZXJyZWQuIAoKRm9yIGV4YW1wbGUsIGxldOKAmXMgc2F2ZSAyIHRvIHRoZSB2YXJpYWJsZSB4IGFuZCA1IHRvIHRoZSB2YXJpYWJsZSB5LiBUaGUgYXJyb3cgb3BlcmF0b3IgY2FuIGFsc28gcG9pbnQgaW4gdGhlIG90aGVyIGRpcmVjdGlvbi4KYGBge3J9CnggPC0gMgp5IDwtIDUKeAp5CmBgYApOb3cgd2UgY2FuIHVzZSB0aGUgdmFyaWFibGVzCmBgYHtyfQp4ICsgeQpgYGAKVmFyaWFibGVzIGNhbiBob2xkIGFueSB0eXBlIG9mIGRhdGEKQ2hhcmFjdGVycwpOb3RlIHRoZSB1c2Ugb2YgdGhlIHBhc3RlIGNvbW1hbmQuIFRoaXMgaXMgbXkgcHJlZmVycmVkIHdheSB0byBqb2luIHZhcmlhYmxlcyBvciB0ZXh0LgpgYGB7cn0KZ3JlZXRpbmcgPC0gIkhlbGxvIgpuYW1lIDwtICJHcmFoYW0iCnByaW50KHBhc3RlKGdyZWV0aW5nLG5hbWUsIHNlcCA9ICIgIikpCgpgYGAKTGlzdHMKYGBge3J9Cmxpc3QgPC0gYygxLDIsMyw0KQpsaXN0CmBgYAoKYGBge3J9CnogPC0gYygxLCAyLCBOQSwgOCwgMywgTkEsIDMpCnogJT4lIG1lYW4obmEucm09VFJVRSkKYGBgCgojIyBSZWFkIGluIGRhdGEgZnJvbSBmaWxlCgpJdCBpcyB2ZXJ5IGNvbW1vbiB0aGF0IHlvdSB3aWxsIG5lZWQgdG8gcmVhZCBpbiBkYXRhIHRvIFIgZnJvbSBhIGZpbGUuIFRoZXJlIGFyZSBhIGZldyB3YXlzIHRvIGRvIHRoaXMsIGJhc2UgUiBoYXMgYSByZWFkLnRhYmxlKCkgZnVuY3Rpb24uIFRoYXQgYWxsb3dzIHlvdSB0byByZWFkIGluIHRhYmxlIGRhdGEgd2l0aCB2YXJpb3VzIGRlbGltaXRlcnMsIGZvciBleGFtcGxlIHNwYWNlcywgdGFicyBvciBjb21tYXMuIFNwYWNlcyBhcmUgZGVub3RlZCBsaWtlIHRoaXMgIiAiLiB0YWJzIGJ5ICJcdCIgYW5kIGNvbW1hcyBieSAiLCIuClRoZSBmaWxlIHdpbGwgYmUgcmVhZCBpbiBhcyBhIGRhdGEgZnJhbWUuIEEgZGF0YSBmcmFtZSBpcyBhIHRhYmxlIG9yIGEgdHdvLWRpbWVuc2lvbmFsIGFycmF5LWxpa2Ugc3RydWN0dXJlLCBzaW1pbGFyIHRvIGFuIGV4Y2VsIHNwcmVhZHNoZXQsIGluIHdoaWNoIGVhY2ggY29sdW1uIGNvbnRhaW5zIHZhbHVlcyBvZiBvbmUgdmFyaWFibGUgYW5kIGVhY2ggcm93IGNvbnRhaW5zIG9uZSBzZXQgb2YgdmFsdWVzIGZyb20gZWFjaCBjb2x1bW4uCgpUaGUgY29kZSBiZWxvdyByZWFkcyBpbiBhIHNwYWNlIHNlcGFyYXRlZCBmaWxlLCB0aGF0IGhhcyBuYW1lZCBjb2x1bW5zLChoZW5jZSB0aGUgaGVhZGVyID0gVFJVRSBwYXJhbWV0ZXIpCgpgYGB7cn0KdGFibGUgPC0gcmVhZC50YWJsZSgiZGF0YS9leGFtcGxlX3RhYmxlLnR4dCIsIGhlYWRlciA9IFRSVUUsIHNlcCA9ICIgIikgIyBUaGlzIHdpbGwgcmVhZCBpbiBhIHNwYWNlIHNlcGFyYXRlZCBkYXRhIHRhYmxlCnRhYmxlCmBgYApOb3cgdHJ5IHJlYWRpbmcgaW4gdGggY29tbWEgc2VwYXJhdGVkIGZpbGUgaW4gZGF0YS9leGFtcGxlLXRhYmxlLmNzdi4KYGBge3J9CgpgYGAKCgpXaGVuIHlvdSBzYXZlIHRoZSBub3RlYm9vaywgYW4gSFRNTCBmaWxlIGNvbnRhaW5pbmcgdGhlIGNvZGUgYW5kIG91dHB1dCB3aWxsIGJlIHNhdmVkIGFsb25nc2lkZSBpdCAoY2xpY2sgdGhlICpQcmV2aWV3KiBidXR0b24gb3IgcHJlc3MgKkNtZCtTaGlmdCtLKiB0byBwcmV2aWV3IHRoZSBIVE1MIGZpbGUpLiAKClRoZSBwcmV2aWV3IHNob3dzIHlvdSBhIHJlbmRlcmVkIEhUTUwgY29weSBvZiB0aGUgY29udGVudHMgb2YgdGhlIGVkaXRvci4gQ29uc2VxdWVudGx5LCB1bmxpa2UgKktuaXQqLCAqUHJldmlldyogZG9lcyBub3QgcnVuIGFueSBSIGNvZGUgY2h1bmtzLiBJbnN0ZWFkLCB0aGUgb3V0cHV0IG9mIHRoZSBjaHVuayB3aGVuIGl0IHdhcyBsYXN0IHJ1biBpbiB0aGUgZWRpdG9yIGlzIGRpc3BsYXllZC4KCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiU2Vzc2lvbiAyIC0gSW50cm8gdG8gUiIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKVGhpcyBpcyBhIGJlZ2lubmVycyB0dXRvcmlhbCBmb3IgUi4gSXQgaXMgYSBwb3dlcmZ1bCB0b29sIGZvciBhbGwgbWFubmVyIG9mIGNhbGN1bGF0aW9ucywgZGF0YSBtYW5pcHVsYXRpb24sIHNjaWVudGlmaWMgY29tcHV0YXRpb25zIGFuZCBjYW4gYWxzbyBiZSB1c2VkIHRvIHZpc3VhbGlzZSB5b3VyIGRhdGEuCgpUaGlzIHR1dG9yaWFsIHVzZXMgUiBub3RlYm9va3Mgd2hpY2ggY29uc2lzdHMgb2Ygbm90ZXMgdGhhdCBhcmUgb24gYSB3aGl0ZSBiYWNrIGdyb3VuZCwgImNvZGUgY2h1bmtzIiB0aGF0IHN0YXJ0IHdpdGggdGhyZWUgYmFja3RpY2tzIChgKSB0aGVuIGN1cmx5IGJyYWNrZXRzIGFyb3VuZCB0aGUgY29kaW5nIGxhbmd1YWdlLCBpbiB0aGlzIGNhc2UgUiAobGlrZSB0aGlzIHtyfSkgYW5kIHRoZSBjb2RlIGJsb2NrIGVuZCBpcyBkZWZpbmVkIGJ5IGEgZnVydGhlciBzZXQgb2YgdGhyZWUgYmFja3RpY2tzKGApLiAKWW91IGNhbiBjcmVhdGUgY29kZSBjaHVua3MgbWFudWFsbHkgb3IgYnkgY2xpY2tpbmcgdGhlICpJbnNlcnQgQ2h1bmsqIGJ1dHRvbiBvbiB0aGUgdG9vbGJhciBvciBieSBwcmVzc2luZyAqQ21kK09wdGlvbitJKi4KClRoZSBjb2RlIGJsb2NrcyBjYW4gYmUgcnVuIGJ5IGNsaWNraW5nIG9uIHRoZSBncmVlbiBzdGFydCBhcnJvdyBvciBieSBwbGFjaW5nIHlvdXIgY3Vyc29yIGluc2lkZSBpdCBhbmQgcHJlc3NpbmcgKkNtZCtTaGlmdCtFbnRlciouIFRoZSByZXN1bHRzIG9mIHRoZSBjb2RlIGJsb2NrIHdpbGwgYmUgc2hvd24gYmVsb3cgdGhlIGNvZGUgYmxvY2suCgojIEJhc2UgUgpBbGwgdGhlIGZvbGxvd2luZyBhcmUgYXZhaWxhYmxlIGluIHRoZSB2ZXJzaW9uIG9mIFIgd2l0aG91dCBpbnN0YWxsaW5nIGFueSBhZGRpdGlvbmFsIHBhY2thZ2VzCgojIyBGaXJzdCB0aGUgYmFzaWNzIG9mIFIuCkJhc2ljIGNhbGN1bGF0aW9ucwpgYGB7cn0KNCAqIDUgKyAyCmBgYAoKRm9yIHJlYWRhYmlsaXR5IGl0IGlzIGJlc3QgdG8gYWRkIHNwYWNlcyBiZXR3ZWVuIHRoZSBvcGVyYXRvcnMgKGUuZy4gNCAqIDUpLCBob3dldmVyLCB0aGVzZSBhcmUgbm90IHJlcXVpcmVkIGFuZCBjYW4gYmUgb21pdHRlZC4KCiMjIFZhcmlhYmxlcwpWYXJpYWJsZXMgYXJlIGFuIGludGVncmFsIHBhcnQgb2YgYW55IHByb2dyYW1taW5nIGxhbmd1YWdlIGFuZCBSIG9mZmVycyBhIGdyZWF0IGRlYWwgb2YgZmxleGliaWxpdHkuIFIgZG9lcyBub3QgcmVxdWlyZSB2YXJpYWJsZSB0eXBlcyB0byBiZSBkZWNsYXJlZCBhbmQgY2FuIHRha2Ugb24gYW55IGF2YWlsYWJsZSBkYXRhIHR5cGUuIEl0IGNhbiBhbHNvIGhvbGQgYW55IFIgb2JqZWN0IHN1Y2ggYXMgYSBmdW5jdGlvbiwgdGhlIHJlc3VsdCBvZiBhbiBhbmFseXNpcyBvciBhIHBsb3QuClRoZXJlIGFyZSBhIG51bWJlciBvZiB3YXlzIHRvIGFzc2lnbiBhIHZhbHVlIHRvIGEgdmFyaWFibGUsIGFuZCBhZ2FpbiwgdGhpcyBkb2VzIG5vdCBkZXBlbmQgb24gdGhlIHR5cGUgb2YgdmFsdWUgYmVpbmcgYXNzaWduZWQuIApUaGUgdmFsaWQgYXNzaWdubWVudCBvcGVyYXRvcnMgYXJlIDwtIGFuZCA9LCB3aXRoIHRoZSBmaXJzdCBiZWluZyBwcmVmZXJyZWQuIAoKRm9yIGV4YW1wbGUsIGxldOKAmXMgc2F2ZSAyIHRvIHRoZSB2YXJpYWJsZSB4IGFuZCA1IHRvIHRoZSB2YXJpYWJsZSB5LiBUaGUgYXJyb3cgb3BlcmF0b3IgY2FuIGFsc28gcG9pbnQgaW4gdGhlIG90aGVyIGRpcmVjdGlvbi4KYGBge3J9CnggPC0gMgp5IDwtIDUKeAp5CmBgYApOb3cgd2UgY2FuIHVzZSB0aGUgdmFyaWFibGVzCmBgYHtyfQp4ICsgeQpgYGAKVmFyaWFibGVzIGNhbiBob2xkIGFueSB0eXBlIG9mIGRhdGEKQ2hhcmFjdGVycwpOb3RlIHRoZSB1c2Ugb2YgdGhlIHBhc3RlIGNvbW1hbmQsIHdoaWNoIHRha2VzIHRoZSB2YXJpYWJsZXMgdG8gYmUgcGFzdGVkIHRvZ2V0aGVyIGZvbGxvd2VkIGJ5IHRoZSBjaGFyYWN0ZXIgdXNlZCB0byBzZXBhcmF0ZSB0aGUgdmFyaWFibGVzIGluIHRoaXMgY2FzZSBhIHdoaXRlIHNwYWNlLgpgYGB7cn0KZ3JlZXRpbmcgPC0gIkhlbGxvIgpuYW1lIDwtICJHcmFoYW0iCgpwcmludChwYXN0ZShncmVldGluZyxuYW1lLCBzZXAgPSAiICIpKQpgYGAKCkxpc3RzIG9yIGFzIFIgY2FsbHMgdGhlbSB2ZWN0b3JzLiBMaXN0cyBvciB2ZWN0b3JzIG11c3QgY29udGFpbiBlbGVtZW50cyBvZiB0aGUgc2FtZSB0eXBlIGZvciBleGFtcGxlcyBsb2dpY2FsLCBpbnRlZ2VyLCBkb3VibGUsIGNvbXBsZXgsIGNoYXJhY3RlciBhbmQgcmF3LgpgYGB7cn0KbGlzdCA8LSBjKDEsMiwzLDQpCmxpc3QKYGBgCgpUaGUgbGVuZ3RoIG9mIHRoZSBsaXN0IGNhbiBiZSBkZXRlcm1pbmVkIHVzaW5nIHRoZSBsZW5ndGggZnVuY3Rpb24KYGBge3J9Cmxlbmd0aChsaXN0KQpgYGAKClNvbWUgdmVjdG9ycyBteSBoYXZlIE5BIHZhbHVlcy4gTkEgdmFsdWVzIGFyZSBub3QgZXF1aXZhbGVudCB0byB6ZXJvIGFuZCBhbnkgY2FsY3VsYXRpb24gd2l0aCBhbiBOQSB2YWx1ZSB3aWxsIHJlc3VsdCBpbiBOQQpgYGB7cn0KeiA8LSBjKDEsIDIsIE5BLCA4LCAzLCBOQSwgMykKegpzdW0oeikgCmBgYAoKTWFueSBmdW5jdGlvbnMgY2FuIGlnbm9yZSB0aGUgTkFzIHVzaW5nIHRoZSBuYS5ybSA9IFRSVUUgZmVhdHVyZQpgYGB7cn0Kc3VtKHosIG5hLnJtPVRSVUUpCmBgYAoKQ2FuIGFkZCB2YWx1ZXMgdG8gYW4gZXhpc3RpbmcgdmVjdG9yIHVzaW5nIHRoZSBhcHBlbmQgZnVuY3Rpb24KYGBge3J9CmFwcGVuZCh6LCA1KSAjIGFkZCB0byB0aGUgZW5kIG9mIGEgdmVjdG9yCmFwcGVuZCg1LCB6KSAjIGFkZCB0byB0aGUgYmVnaW5uaW5nIG9mIGEgdmVjdG9yCmFwcGVuZCh6LDUsIGFmdGVyID0gMikgIyBhZGQgYWZ0ZXIgdGhlIHNlY29uZCBlbGVtZW50IGluIHRoZSB2ZWN0b3IKYGBgCgpDYW4gZmluZCBvdXQgaWYgdGhlIHZlY3RvciBjb250YWlucyB1bmlxdWUgdmFsdWVzLiBUaGUgdW5pcXVlIGZ1bmN0aW9uIHJlbW92ZXMgZHVwbGljYXRlZCB2YWx1ZXMsIGtlZXBpbmcgdGhlIGZpcnN0IG9jY3VycmVuY2Ugb2YgYSBkdXBsaWNhdGVkIHZhbHVlCmBgYHtyfQp6CnVuaXF1ZSh6KQpgYGAKCkNhbiB1c2UgdGhlIGdyZXBsIGZ1bmN0aW9uIHRvIGZpbmQgZWxlbWVudHMgaW4gYSB2ZWN0b3IgdGhhdCBtYXRjaCBhIHBhdHRlcm4sIHRoaXMgcmVzdWx0cyBpbiBhIGxpc3Qgb2YgYm9vbGVhbnMgKFRSVUUgb3IgRkFMU0UpCmBgYHtyfQpnZW5lX25hbWVzIDwtIGMoIkFDVDEiLCJOT1RDSCIsIkRNUEsxIikKZ2VuZV9uYW1lcwpncmVwbCgiMSIsZ2VuZV9uYW1lcykKYGBgCgpDYW4gdXNlIHRoYXQgYm9vbGVhbiBsaXN0IHRvIHN1YnNldCB0aGUgb3JpZ2luYWwgdmVjdG9yCmBgYHtyfQpnZW5lX25hbWVzW2dyZXBsKCIxIixnZW5lX25hbWVzKV0KYGBgCgojIyBSZWFkIGluIGRhdGEgZnJvbSBmaWxlCgpJdCBpcyB2ZXJ5IGNvbW1vbiB0aGF0IHlvdSB3aWxsIG5lZWQgdG8gcmVhZCBpbiBkYXRhIHRvIFIgZnJvbSBhIGZpbGUuIFRoZXJlIGFyZSBhIGZldyB3YXlzIHRvIGRvIHRoaXMsIGJhc2UgUiBoYXMgYSByZWFkLnRhYmxlKCkgZnVuY3Rpb24uIFRoYXQgYWxsb3dzIHlvdSB0byByZWFkIGluIHRhYmxlIGRhdGEgd2l0aCB2YXJpb3VzIGRlbGltaXRlcnMsIGZvciBleGFtcGxlIHNwYWNlcywgdGFicyBvciBjb21tYXMuIFNwYWNlcyBhcmUgZGVub3RlZCBsaWtlIHRoaXMgIiAiLiB0YWJzIGJ5ICJcdCIgYW5kIGNvbW1hcyBieSAiLCIuClRoZSBmaWxlIHdpbGwgYmUgcmVhZCBpbiBhcyBhIGRhdGEgZnJhbWUuIEEgZGF0YSBmcmFtZSBpcyBhIHRhYmxlIG9yIGEgdHdvLWRpbWVuc2lvbmFsIGFycmF5LWxpa2Ugc3RydWN0dXJlLCBzaW1pbGFyIHRvIGFuIGV4Y2VsIHNwcmVhZHNoZXQsIGluIHdoaWNoIGVhY2ggY29sdW1uIGNvbnRhaW5zIHZhbHVlcyBvZiBvbmUgdmFyaWFibGUgYW5kIGVhY2ggcm93IGNvbnRhaW5zIG9uZSBzZXQgb2YgdmFsdWVzIGZyb20gZWFjaCBjb2x1bW4uCgpUaGUgY29kZSBiZWxvdyByZWFkcyBpbiBhIHNwYWNlIHNlcGFyYXRlZCBmaWxlLCB0aGF0IGhhcyBuYW1lZCBjb2x1bW5zLChoZW5jZSB0aGUgaGVhZGVyID0gVFJVRSBwYXJhbWV0ZXIpCgpgYGB7cn0KZGF0YV90YWJsZSA8LSByZWFkLnRhYmxlKCJkYXRhL2V4YW1wbGVfdGFibGUudHh0IiwgaGVhZGVyID0gVFJVRSwgc2VwID0gIiAiKSAjIFRoaXMgd2lsbCByZWFkIGluIGEgc3BhY2Ugc2VwYXJhdGVkIGRhdGEgdGFibGUKZGF0YV90YWJsZQpgYGAKTm93IHRyeSByZWFkaW5nIGluIHRoIGNvbW1hIHNlcGFyYXRlZCBmaWxlIGluIGRhdGEvZXhhbXBsZS10YWJsZS5jc3YuCmBgYHtyfQoKYGBgCgpUaGUgZGF0YV90YWJsZSB3YXMgcmVhZCBpbiBhcyBhIGRhdGEgZnJhbWUsIHdoaWNoIGlzIGxpa2UgYSBzcHJlYWRzaGVldCBpbiBleGNlbC4gRGF0YSBmcmFtZXMgY29uc2lzdCBvZiBuYW1lZCByb3dzIGFuZCBjb2x1bW5zLCB0aGVzZSBieSBkZWZhdWx0IGFyZSBudW1iZXJzLiBFYWNoIGNvbHVtbiBjYW4gYmUgdHJlYXRlZCBsaWtlIGEgdmVjdG9yIGFuZCBpcyBhY2Nlc3NlZCB1c2luZyB0aGUgZGF0YWZyYW1lIG5hbWUgYW5kIHRoZSBjb2x1bW4gbmFtZSwgc2VwYXJhdGVkIGJ5IGEgZG9sbGFyIHNpZ24sICQuIEZvciBleGFtcGxlLCB3ZSBjYW4gY2FsY3VsdGUgdGhlIG5hdHVyYWwgbG9nIGZvciB0aGUgdmFsdWVzIFNhbXBsZTEgaW4gdGhlIHRhYmxlIHdlIGp1c3QgbG9hZGVkLgpgYGB7cn0KbG9nKGRhdGFfdGFibGUkU2FtcGxlMSkKYGBgCgpPZnRlbiB3ZSB3b3VsZCB3YW50IHRvIHBlcmZvcm0gYSBjYWxjdWxhdGlvbiBvbiBhbGwgdmFsdWVzIGluIHRoZSBkYXRhIGZyYW1lCmBgYHtyfQpsb2coZGF0YV90YWJsZSkKYGBgCgpJZiB5b3Ugd2FudCB0byBwZXJmb3JtIGEgY2FsY3VsYXRpb24gb24gdGhlIHdob2xlIGRhdGEgZnJhbWUgYWxsIHRoZSB2YWx1ZXMgaGF2ZSB0byBiZSBvZiB0aGUgc2FtZSB0eXBlLCBlLmcuYWxsIG51bWJlcnMgKGVpdGhlciBpbnRlZ2VyIG9yIGRvdWJsZSkuIFRoZSBlcnJvciBhYm92ZSBpbmRpY2F0ZXMgdGhhdCB0aGUgR2VuZSBjb2x1bW4gZG9lcyBub3QgY29udGFpbiBudW1lcmljIHZhbHVlcy4gV2UgY2FuIHJlcGxhY2UgdGhlIG51bWJlcmVkIHJvd25hbWVzIHRoZSB0aGUgR2VuZSBuYW1lIGNvbHVtbiBmcm9tIHRoZSBkYXRhIGZyYW1lIHRoZW4gZGVsZXRlIGl0LgpgYGB7cn0Kcm93bmFtZXMoZGF0YV90YWJsZSkgPC0gZGF0YV90YWJsZSRHZW5lICMgcmVwbGFjZSB0aGUgcncgbmFtZXMgd2l0aCB0aGUgZ2VuZSBuYW1lcwpkYXRhX3RhYmxlJEdlbmUgPC0gTlVMTCAjIGRlbGV0ZSB0aGUgR2VuZSBjb2x1bW4KZGF0YV90YWJsZQpgYGAKTm93IHRoZSBkYXRhIGZyYW1lIGNvbnRhaW5zIG9ubHkgbnVtZXJpYyB2YWx1ZXMgdGhlIGxvZyBmdW5jdGlvbiBjYW4gYmUgYXBwcGxpZWQgdG8gdGhlIGVudGlyZSBkYXRhIGZyYW1lCmBgYHtyfQpsb2dfdGFibGUgPC0gbG9nKGRhdGFfdGFibGUpCmxvZ190YWJsZQpgYGAKCldyaXRpbmcgZGF0YSB0byBhIGZpbGUgdXNpbmcgdGhlIHdyaXRlLnRhYmxlIGZ1bmN0aW9uCmBgYHtyfQp3cml0ZS50YWJsZShsb2dfdGFibGUsImRhdGEvZXhhbXBsZV9sb2dfdGFibGUudHN2IiwgY29sLm5hbWVzID0gVFJVRSwgcXVvdGUgPSBGQUxTRSwgc2VwID0gIlx0IikKYGBgCgoKV2hlbiB5b3Ugc2F2ZSB0aGUgbm90ZWJvb2ssIGFuIEhUTUwgZmlsZSBjb250YWluaW5nIHRoZSBjb2RlIGFuZCBvdXRwdXQgd2lsbCBiZSBzYXZlZCBhbG9uZ3NpZGUgaXQgKGNsaWNrIHRoZSAqUHJldmlldyogYnV0dG9uIG9yIHByZXNzICpDbWQrU2hpZnQrSyogdG8gcHJldmlldyB0aGUgSFRNTCBmaWxlKS4gCgpUaGUgcHJldmlldyBzaG93cyB5b3UgYSByZW5kZXJlZCBIVE1MIGNvcHkgb2YgdGhlIGNvbnRlbnRzIG9mIHRoZSBlZGl0b3IuIENvbnNlcXVlbnRseSwgdW5saWtlICpLbml0KiwgKlByZXZpZXcqIGRvZXMgbm90IHJ1biBhbnkgUiBjb2RlIGNodW5rcy4gSW5zdGVhZCwgdGhlIG91dHB1dCBvZiB0aGUgY2h1bmsgd2hlbiBpdCB3YXMgbGFzdCBydW4gaW4gdGhlIGVkaXRvciBpcyBkaXNwbGF5ZWQuCgo=</div>
 
 
 

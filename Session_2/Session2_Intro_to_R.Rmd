@@ -39,23 +39,60 @@ x + y
 ```
 Variables can hold any type of data
 Characters
-Note the use of the paste command. This is my preferred way to join variables or text.
+Note the use of the paste command, which takes the variables to be pasted together followed by the character used to separate the variables in this case a white space.
 ```{r}
 greeting <- "Hello"
 name <- "Graham"
-print(paste(greeting,name, sep = " "))
 
+print(paste(greeting,name, sep = " "))
 ```
 
-Lists or as R calls them vectors. Lists or vectors must be of the same type
+Lists or as R calls them vectors. Lists or vectors must contain elements of the same type for examples logical, integer, double, complex, character and raw.
 ```{r}
 list <- c(1,2,3,4)
 list
 ```
 
+The length of the list can be determined using the length function
+```{r}
+length(list)
+```
+
+Some vectors my have NA values. NA values are not equivalent to zero and any calculation with an NA value will result in NA
 ```{r}
 z <- c(1, 2, NA, 8, 3, NA, 3)
-z %>% mean(na.rm=TRUE)
+z
+sum(z) 
+```
+
+Many functions can ignore the NAs using the na.rm = TRUE feature
+```{r}
+sum(z, na.rm=TRUE)
+```
+
+Can add values to an existing vector using the append function
+```{r}
+append(z, 5) # add to the end of a vector
+append(5, z) # add to the beginning of a vector
+append(z,5, after = 2) # add after the second element in the vector
+```
+
+Can find out if the vector contains unique values. The unique function removes duplicated values, keeping the first occurrence of a duplicated value
+```{r}
+z
+unique(z)
+```
+
+Can use the grepl function to find elements in a vector that match a pattern, this results in a list of booleans (TRUE or FALSE)
+```{r}
+gene_names <- c("ACT1","NOTCH","DMPK1")
+gene_names
+grepl("1",gene_names)
+```
+
+Can use that boolean list to subset the original vector
+```{r}
+gene_names[grepl("1",gene_names)]
 ```
 
 ## Read in data from file
@@ -66,12 +103,39 @@ The file will be read in as a data frame. A data frame is a table or a two-dimen
 The code below reads in a space separated file, that has named columns,(hence the header = TRUE parameter)
 
 ```{r}
-table <- read.table("data/example_table.txt", header = TRUE, sep = " ") # This will read in a space separated data table
-table
+data_table <- read.table("data/example_table.txt", header = TRUE, sep = " ") # This will read in a space separated data table
+data_table
 ```
 Now try reading in th comma separated file in data/example-table.csv.
 ```{r}
 
+```
+
+The data_table was read in as a data frame, which is like a spreadsheet in excel. Data frames consist of named rows and columns, these by default are numbers. Each column can be treated like a vector and is accessed using the dataframe name and the column name, separated by a dollar sign, $. For example, we can calculte the natural log for the values Sample1 in the table we just loaded.
+```{r}
+log(data_table$Sample1)
+```
+
+Often we would want to perform a calculation on all values in the data frame
+```{r}
+log(data_table)
+```
+
+If you want to perform a calculation on the whole data frame all the values have to be of the same type, e.g.all numbers (either integer or double). The error above indicates that the Gene column does not contain numeric values. We can replace the numbered rownames the the Gene name column from the data frame then delete it.
+```{r}
+rownames(data_table) <- data_table$Gene # replace the rw names with the gene names
+data_table$Gene <- NULL # delete the Gene column
+data_table
+```
+Now the data frame contains only numeric values the log function can be appplied to the entire data frame
+```{r}
+log_table <- log(data_table)
+log_table
+```
+
+Writing data to a file using the write.table function
+```{r}
+write.table(log_table,"data/example_log_table.tsv", col.names = TRUE, quote = FALSE, sep = "\t")
 ```
 
 
