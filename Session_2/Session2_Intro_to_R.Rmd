@@ -19,6 +19,11 @@ Basic calculations
 4 * 5 + 2
 ```
 
+Try a simple calculation for your self
+```{r}
+
+```
+
 For readability it is best to add spaces between the operators (e.g. 4 * 5), however, these are not required and can be omitted.
 
 ## Variables
@@ -33,29 +38,72 @@ y <- 5
 x
 y
 ```
-Now we can use the variables
+Now we can use the variables later in our code, in this case a simple addition.
 ```{r}
 x + y
 ```
 Variables can hold any type of data
 Characters
-Note the use of the paste command. This is my preferred way to join variables or text.
+Note the use of the paste command, which takes the variables to be pasted together followed by the character used to separate the variables in this case a white space.
 ```{r}
 greeting <- "Hello"
 name <- "Graham"
+
 print(paste(greeting,name, sep = " "))
-
 ```
 
-Lists or as R calls them vectors. Lists or vectors must be of the same type
+Vectors must contain elements of the same type for examples logical, integer, double, complex, character and raw.
+This may look like a list but in R a list is a data structure that can contain elements of different types.
 ```{r}
-list <- c(1,2,3,4)
-list
+vector <- c(1,2,3,4)
+vector
 ```
 
+The length of the vector can be determined using the length function
+```{r}
+length(vector)
+```
+
+Some vectors my have NA values. NA values are not equivalent to zero and any calculation with an NA value will result in NA
 ```{r}
 z <- c(1, 2, NA, 8, 3, NA, 3)
-z %>% mean(na.rm=TRUE)
+z
+sum(z) 
+```
+
+Many functions can ignore the NAs using the na.rm = TRUE feature
+```{r}
+sum(z, na.rm=TRUE)
+```
+
+Can add values to an existing vector using the append function
+```{r}
+append(z, 5) # add to the end of a vector
+append(5, z) # add to the beginning of a vector
+append(z,5, after = 2) # add after the second element in the vector
+```
+
+Can find out if the vector contains unique values. The unique function removes duplicated values, keeping the first occurrence of a duplicated value
+```{r}
+z
+unique(z)
+```
+
+Can use the grepl function to find elements in a vector that match a pattern, this results in a list of booleans (TRUE or FALSE)
+```{r}
+gene_names <- c("ACT1","NOTCH","DMPK1")
+gene_names
+grepl("1",gene_names)
+```
+
+Can use that boolean list to subset the original vector
+```{r}
+gene_names[grepl("1",gene_names)]
+```
+
+Try this for your self looking for "C".
+```{r}
+
 ```
 
 ## Read in data from file
@@ -66,13 +114,80 @@ The file will be read in as a data frame. A data frame is a table or a two-dimen
 The code below reads in a space separated file, that has named columns,(hence the header = TRUE parameter)
 
 ```{r}
-table <- read.table("data/example_table.txt", header = TRUE, sep = " ") # This will read in a space separated data table
-table
+data_table <- read.table("data/example_table.txt", header = TRUE, sep = " ") # This will read in a space separated data table
+data_table
 ```
 Now try reading in th comma separated file in data/example-table.csv.
 ```{r}
 
 ```
+
+The data_table was read in as a data frame, which is like a spreadsheet in excel. Data frames consist of named rows and columns, these by default are numbers. Each column can be treated like a vector and is accessed using the data frame name and the column name, separated by a dollar sign, $. For example, we can calculate the natural log for the values Sample1 in the table we just loaded.
+```{r}
+log(data_table$Sample1)
+```
+
+Often we would want to perform a calculation on all values in the data frame
+```{r}
+log(data_table)
+```
+
+If you want to perform a calculation on the whole data frame all the values have to be of the same type, e.g.all numbers (either integer or double). The error above indicates that the Gene column does not contain numeric values. We can replace the numbered row names the the Gene name column from the data frame then delete it.
+```{r}
+rownames(data_table) <- data_table$Gene # replace the rw names with the gene names
+data_table$Gene <- NULL # delete the Gene column
+data_table
+```
+Now the data frame contains only numeric values the log function can be applied to the entire data frame
+```{r}
+log_table <- log(data_table)
+log_table
+```
+
+Writing data to a tab separated file using the write.table() function. We have set the column names to TRUE, quote to FASLE and the separator, sep, to "\t", which is the symbol for a tab. The quote parameter is set to FALSE,  because write.table() by default surrounds the values in the data frame with double quotes, which can be annoying when using the file later.
+```{r}
+write.table(log_table,"data/example_log_table.tsv", col.names = TRUE, quote = FALSE, sep = "\t")
+```
+
+Try for your self write the data to a comma separated file called "example_log_table.csv"
+```{r}
+
+```
+
+
+## Functions
+In R you create functions which are blocks of code that can take parameters. Functions can perform very simple tasks but normally you would write a function to perform more complex computations.
+A simple example of what a function looks like, below
+```{r}
+my_function <- function(x){
+  result <- (x + 5) * 3
+  return(result)
+}
+
+my_function(5)
+```
+Notice that when you run the function for the first time it appears in the Functions section in the Environment pane. So you can call to function later in your code without have to re-write the code or re-run the function. Functions are useful when you will be running the same computation multiple times in different parts of your code, they make the code easier to read (especially if your functions have descriptive names) and maintain.
+```{r}
+my_function(3)
+```
+
+Functions are also useful if you want to do the same computation on more than one element at a time. We use the R command lapply() 
+```{r}
+num_list <- c(4,6,8,9,2)
+function_results <- lapply(num_list, my_function)
+function_results
+```
+Notice that the function_results in the Environment pane is in the Data section along with data frames. That is because Lists are a more complex structure than vectors.
+List can be converted to a vector using the unlist() function.
+```{r}
+unlist(function_results)
+```
+
+Write you own simple function.
+```{r}
+
+```
+
 
 
 When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
