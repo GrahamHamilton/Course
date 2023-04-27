@@ -57,7 +57,7 @@ Download from https://posit.co/download/rstudio-desktop/
 :::
 :::
 
-## 
+## Install R & RStudio
 
 ## RStudio
 
@@ -104,6 +104,38 @@ Set up Rstudio - Set options in **Tools** and **Global Options...**
 :::
 :::
 :::
+
+## R Notebooks
+
+::: columns
+::: {.column width="50%"}
+R Notebooks are Markdown documents with chunks of code that can be executed independently. Output from the code is visible beneath the code in the Notebook.
+:::
+
+::: {.column width="50%"}
+![](images/R_notebook.png)
+:::
+:::
+
+## Download Course Material
+
+https://github.com/GrahamHamilton/Course
+
+::: r-stack
+![](images/Github.png){.fragment height="500"}
+
+![](images/Github_download.png){.fragment height="300"}
+:::
+
+## Download Course Material
+
+-   Unzip the downloaded file
+-   Move the folder to a suitable place on computer
+-   Open RStudio and, using the files pane, navigate to the Course-main folder
+-   Double click on the Course.Rproj
+
+
+## Base R Tutorial
 
 ## RStudio Libraries
 
@@ -178,8 +210,7 @@ install.packages("devtools")
 require("devtools")
 ```
 
-Then can install GitHub packages.
-Github packages are usually named after the repository name then the package name e.g. grahamhamilton/Rpackage
+Then can install GitHub packages. Github packages are usually named after the repository name then the package name e.g. grahamhamilton/Rpackage
 
 ```{r}
 #| echo: true
@@ -196,9 +227,8 @@ Now install these packages
     -   tidyverse
 
     -   devtools
-    
 
-##
+## 
 
 ## Loading Packages
 
@@ -207,22 +237,24 @@ Packages have to be loaded prior to use. There are two ways to load packages in 
 -   **library()**
     -   library() will output an error and stop the execution of the code
 -   **require()**
-    -   require() will output a warning if a package is not installed and then continue to execute the code
+    -   require() will output a warning if a package is not installed and continue to execute the code
 
 ## Loading Packages
 
-Load the libraries seperately
+Load the libraries separately
+
 ```{r}
 #| echo: true
 library("tidyverse")
 library("Rsubread")
 ```
+
 Or as a comma seperated list
+
 ```{r}
 #| echo: true
 library("tidyverse","Rsubread")
 ```
-
 
 ## Loading Packages
 
@@ -243,7 +275,6 @@ cran.load <- function(pkg){
 }
 cran.load(cran.packages)
 ```
-
 
 ## Loading Packages
 
@@ -267,107 +298,35 @@ biomart.load <- function(pkg){
 biomart.load(biomart.packages)
 ```
 
-## R Notebooks
+## Tidyverse {.smaller}
+
+The tidyverse is a collection of R packages designed for data science
 
 ::: columns
 ::: {.column width="50%"}
-R Notebooks are Markdown documents with chunks of code that can be executed independantly. Output from the code is visible beneath the code in the Notebook.
+-   **ggplot2** ![](images/ggplot2.png){width="100"}
+
+    -   Package for creating graphics
+
+-   **dplyr** ![](images/dplyr.png){width="100"}
+
+    -   Package for data manipulation
 :::
 
 ::: {.column width="50%"}
-![](images/R_notebook.png)
+-   **tidyr** ![](images/tidyr.png){width="100"}
+
+    -   Package for tidying data
+
+-   **readr** ![](images/readr.png){width="100"}
+
+    -   Package for reading in data
 :::
 :::
 
-## 
-
-```{r}
-#| echo: true
-head(mpg, n = 3) %>%
-  kbl() %>%
-  kable_styling()
-```
-
-## ggplot2 - Themes
-
-```{r}
-#| echo: false
-
-library("patchwork")
-
-default <- ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
-  geom_point(alpha = 0.5, size = 2) +
-  labs(title = "Default Theme") +
-  scale_color_viridis_c() +
-  theme(legend.position = "none")
-
-bw <- ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
-  geom_point(alpha = 0.5, size = 2) +
-  scale_color_viridis_c() +
-  labs(title = "BW Theme") +
-  theme_bw() +
-  theme(legend.position = "none")
-
-linedraw <- ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
-  geom_point(alpha = 0.5, size = 2) +
-  scale_color_viridis_c() +
-  labs(title = "Linedraw Theme") +
-  theme_linedraw() +
-  theme(legend.position = "none")
-
-light <- ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
-  geom_point(alpha = 0.5, size = 2) +
-  scale_color_viridis_c() +
-  labs(title = "Light Theme") +
-  theme_light() +
-  theme(legend.position = "none")
-
-dark <- ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
-  geom_point(alpha = 0.5, size = 2) +
-  scale_color_viridis_c() +
-  labs(title = "Dark Theme") +
-  theme_dark() +
-  theme(legend.position = "none")
-
-minimal <- ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
-  geom_point(alpha = 0.5, size = 2) +
-  scale_color_viridis_c() +
-  labs(title = "Minimal Theme") +
-  theme_minimal() +
-  theme(legend.position = "none")
-
-classic <- ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
-  geom_point(alpha = 0.5, size = 2) +
-  scale_color_viridis_c() +
-  labs(title = "Classic Theme") +
-  theme_classic() +
-  theme(legend.position = "none")
-
-void <- ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
-  geom_point(alpha = 0.5, size = 2) +
-  scale_color_viridis_c() +
-  labs(title = "Void Theme") +
-  theme_void() +
-  theme(legend.position = "none")
-
-(default | bw | linedraw | light) /
-  (dark | minimal | classic | void)
-```
-
-## Download Course Material
-
-::: r-stack
-![](images/Github.png){.fragment height="500"}
-
-![](images/Github_download.png){.fragment height="300"}
+::: footer
+https://www.tidyverse.org
 :::
-
-## Download Course Material
-
--   Unzip the downloaded file
--   Move the folder to a suitable place on computer
--   Open RStudio and, using the files pane, navigate to the Course-main folder
--   Double click on the Course.Rproj
 
 ## ggplot2
 
@@ -380,9 +339,21 @@ ggplot2 is a package for creating graphics
     -   What to plot from the data via aes (aesthetics), can also add colour, size, shape and transparency\
     -   How the data is represented via the geom\_
 
+## MPG data
+
+Example data provide in R, which we will use for the **ggplot2** examples.
+
+
+```{r}
+#| echo: true
+head(mpg, n = 3) %>%
+  kbl() %>%
+  kable_styling()
+```
+
 ## ggplot2 {.smaller}
 
-Set the data a plotting area, with ggplot and the aesthetics, to plot the miles per gallon on the motorway on the x axis and miles per gallon on the y axis
+Set the data and plotting area, with ggplot and the aesthetics, to plot the miles per gallon on the motorway on the x axis and miles per gallon on the y axis
 
 ```{r}
 #| echo: true
@@ -511,6 +482,73 @@ ggplot(mpg, aes(x = cyl, y = hwy, fill = cyl)) +
   scale_fill_viridis_d()
 ```
 
+## ggplot2 - Themes
+
+```{r}
+#| echo: false
+
+library("patchwork")
+
+default <- ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
+  geom_point(alpha = 0.5, size = 2) +
+  scale_colour_viridis_d() +
+  labs(title = "Default Theme") +
+  theme(legend.position = "none")
+
+bw <- ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
+  geom_point(alpha = 0.5, size = 2) +
+  scale_color_viridis_d() +
+  labs(title = "BW Theme") +
+  theme_bw() +
+  theme(legend.position = "none")
+
+linedraw <- ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
+  geom_point(alpha = 0.5, size = 2) +
+  scale_color_viridis_d() +
+  labs(title = "Linedraw Theme") +
+  theme_linedraw() +
+  theme(legend.position = "none")
+
+light <- ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
+  geom_point(alpha = 0.5, size = 2) +
+  scale_color_viridis_d() +
+  labs(title = "Light Theme") +
+  theme_light() +
+  theme(legend.position = "none")
+
+dark <- ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
+  geom_point(alpha = 0.5, size = 2) +
+  scale_color_viridis_d() +
+  labs(title = "Dark Theme") +
+  theme_dark() +
+  theme(legend.position = "none")
+
+minimal <- ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
+  geom_point(alpha = 0.5, size = 2) +
+  scale_color_viridis_d() +
+  labs(title = "Minimal Theme") +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+classic <- ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
+  geom_point(alpha = 0.5, size = 2) +
+  scale_color_viridis_d() +
+  labs(title = "Classic Theme") +
+  theme_classic() +
+  theme(legend.position = "none")
+
+void <- ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
+  geom_point(alpha = 0.5, size = 2) +
+  scale_color_viridis_d() +
+  labs(title = "Void Theme") +
+  theme_void() +
+  theme(legend.position = "none")
+
+(default | bw | linedraw | light) /
+  (dark | minimal | classic | void)
+```
+
+
 ## Tidyverse {.smaller}
 
 ### Data Tidying
@@ -527,45 +565,17 @@ ggplot(mpg, aes(x = cyl, y = hwy, fill = cyl)) +
 
 ## Tidyverse {.smaller}
 
-The tidyverse is a collection of R packages designed for data science
-
-::: columns
-::: {.column width="50%"}
--   ggplot2 ![](images/ggplot2.png){width="100"}
-
-    -   Package for creating graphics
-
--   dplyr ![](images/dplyr.png){width="100"}
-
-    -   Package for data manipulation
-:::
-
-::: {.column width="50%"}
--   tidyr ![](images/tidyr.png){width="100"}
-
-    -   Package for tidying data
-
--   readr ![](images/readr.png){width="100"}
-
-    -   Package for reading in data
-:::
-:::
-
-::: footer
-https://www.tidyverse.org
-:::
-
-## Tidyverse {.smaller}
-
 ```{r}
 #| echo: true
 #| eval: true
-example_table <- read.table("data/example_table.txt", header = TRUE, sep = " ")
+example_table <- read_delim("data/example_table.txt", delim = " ")
 example_table  %>%
   kbl() %>%
   kable_styling()
 ```
 
+## Tidyverse {.smaller}
+### Data Tidying
 ```{r}
 #| echo: true
 #| eval: true
@@ -578,20 +588,46 @@ pivot_table %>%
 ## Tidyverse
 
 ```{r}
+#| echo: true
+#| eval: true
 ggplot(pivot_table, aes(x = Gene, y = Expression, colour = Gene)) +
   geom_point(size = 5) +
+  geom_text(aes(label = Sample),nudge_x = 0, nudge_y = 5, colour = "black") +
   scale_color_viridis_d()
 ```
-
-\newpage
 
 ## Tidyverse {.smaller}
 
 ```{r}
 #| echo: true
 #| eval: true
-real_data <- read.table("data/real_data_example.tsv", header = TRUE, sep = "\t")
+real_data <- read_tsv("data/real_data_example.tsv", col_names = TRUE)
 head(real_data)  %>%
+  kbl() %>%
+  kable_styling()
+```
+**Notice the numbers after the gene names**
+
+## Tidyverse {.smaller}
+Tidy up the gene names using the tidyr command separate_wider_delim()
+```{r}
+#| echo: true
+#| eval: true
+real_data %>% 
+  separate_wider_delim(cols = Gene_names, delim = "_", names = c("Gene","Number")) %>%
+  head(n = 3)  %>%
+  kbl() %>%
+  kable_styling()
+```
+
+## Tidyverse {.smaller}
+The numbers after the gene names are not required, so can set the names for the Numbers to NA
+```{r}
+#| echo: true
+#| eval: true
+real_data <- real_data %>% 
+  separate_wider_delim(cols = Gene_names, delim = "_", names = c("Genes",NA))
+  head(real_data, n = 3)  %>%
   kbl() %>%
   kable_styling()
 ```
@@ -605,7 +641,7 @@ Tidy the data
 #| eval: true
 
 pivot_real_data <- real_data %>% 
-  pivot_longer(-Gene_names, names_to = "Samples", values_to = "Expression")
+  pivot_longer(-Genes, names_to = "Samples", values_to = "Expression")
 
 head(pivot_real_data)  %>%
   kbl() %>%
@@ -691,18 +727,18 @@ pivot_table %>%
 :::
 :::
 
-## 
 
-## Tidyverse
 
+## Tidyverse {.smaller}
+Boxplot - Expression of a names gene
 ```{r}
+#| echo: true
+#| eval: true
 expression_table <- pivot_real_data %>%
   separate_wider_delim(Samples, delim = "_", names = c("Sample", "Replicate")) %>%
-  filter(Gene_names == "CHAC1_1279")
-```
-
-```{r}
-ggplot(expression_table, aes(x = Sample, y = Expression, fill = Sample)) +
+  filter(Genes == "CHAC1")
+ 
+box <- ggplot(expression_table, aes(x = Sample, y = Expression, fill = Sample)) +
   geom_boxplot() +
   scale_y_log10() +
   labs(x = NULL,
@@ -710,4 +746,24 @@ ggplot(expression_table, aes(x = Sample, y = Expression, fill = Sample)) +
   scale_fill_viridis_d() +
   theme_classic() +
   theme(legend.position = "none")
+box
 ```
+
+
+## Saving data to files
+
+### Tidyverse
+Saving a data frame to a files using the **readr** command **write_delim()**
+
+```{r}
+#| echo: true
+write_delim(expression_table, "data/gene_expression_table.tsv", delim = "\t")
+```
+
+Saving a plot using the **ggplot2** command **ggsave**
+
+```{r}
+#| echo: true
+ggsave(filename = "boxplot.png", plot = box, path = "data")
+```
+

@@ -455,8 +455,8 @@
 </div>
 </div>
 </section>
-<section id="section" class="slide level2">
-<h2></h2>
+<section id="install-r-rstudio" class="slide level2">
+<h2>Install R &amp; RStudio</h2>
 </section>
 <section id="rstudio-2" class="slide level2">
 <h2>RStudio</h2>
@@ -506,6 +506,36 @@
 </div>
 </div>
 </div>
+</section>
+<section id="r-notebooks" class="slide level2">
+<h2>R Notebooks</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>R Notebooks are Markdown documents with chunks of code that can be executed independently. Output from the code is visible beneath the code in the Notebook.</p>
+</div><div class="column" style="width:50%;">
+<p><img data-src="images/R_notebook.png"></p>
+</div>
+</div>
+</section>
+<section id="download-course-material" class="slide level2">
+<h2>Download Course Material</h2>
+<p>https://github.com/GrahamHamilton/Course</p>
+<div class="r-stack">
+<p><img data-src="images/Github.png" class="fragment" height="500"></p>
+<p><img data-src="images/Github_download.png" class="fragment" height="300"></p>
+</div>
+</section>
+<section id="download-course-material-1" class="slide level2">
+<h2>Download Course Material</h2>
+<ul>
+<li>Unzip the downloaded file</li>
+<li>Move the folder to a suitable place on computer</li>
+<li>Open RStudio and, using the files pane, navigate to the Course-main folder</li>
+<li>Double click on the Course.Rproj</li>
+</ul>
+</section>
+<section id="base-r-tutorial" class="slide level2">
+<h2>Base R Tutorial</h2>
 </section>
 <section id="rstudio-libraries" class="slide level2">
 <h2>RStudio Libraries</h2>
@@ -587,7 +617,7 @@ R packages contain:</p>
 </ul></li>
 </ul>
 </section>
-<section id="section-1" class="slide level2">
+<section id="section" class="slide level2">
 <h2></h2>
 </section>
 <section id="loading-packages" class="slide level2">
@@ -600,13 +630,13 @@ R packages contain:</p>
 </ul></li>
 <li><strong>require()</strong>
 <ul>
-<li>require() will output a warning if a package is not installed and then continue to execute the code</li>
+<li>require() will output a warning if a package is not installed and continue to execute the code</li>
 </ul></li>
 </ul>
 </section>
 <section id="loading-packages-1" class="slide level2">
 <h2>Loading Packages</h2>
-<p>Load the libraries seperately</p>
+<p>Load the libraries separately</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
 <span id="cb6-2"><a href="#cb6-2"></a><span class="fu">library</span>(<span class="st">"Rsubread"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -655,18 +685,58 @@ R packages contain:</p>
 <span id="cb10-12"><a href="#cb10-12"></a><span class="fu">biomart.load</span>(biomart.packages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="r-notebooks" class="slide level2">
-<h2>R Notebooks</h2>
+<section id="tidyverse" class="slide level2 smaller">
+<h2>Tidyverse</h2>
+<p>The tidyverse is a collection of R packages designed for data science</p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<p>R Notebooks are Markdown documents with chunks of code that can be executed independantly. Output from the code is visible beneath the code in the Notebook.</p>
+<ul>
+<li><p><strong>ggplot2</strong> <img data-src="images/ggplot2.png" width="100"></p>
+<ul>
+<li>Package for creating graphics</li>
+</ul></li>
+<li><p><strong>dplyr</strong> <img data-src="images/dplyr.png" width="100"></p>
+<ul>
+<li>Package for data manipulation</li>
+</ul></li>
+</ul>
 </div><div class="column" style="width:50%;">
-<p><img data-src="images/R_notebook.png"></p>
+<ul>
+<li><p><strong>tidyr</strong> <img data-src="images/tidyr.png" width="100"></p>
+<ul>
+<li>Package for tidying data</li>
+</ul></li>
+<li><p><strong>readr</strong> <img data-src="images/readr.png" width="100"></p>
+<ul>
+<li>Package for reading in data</li>
+</ul></li>
+</ul>
 </div>
+</div>
+<div class="footer">
+<p>https://www.tidyverse.org</p>
 </div>
 </section>
-<section id="section-2" class="slide level2">
-<h2></h2>
+<section id="ggplot2" class="slide level2">
+<h2>ggplot2</h2>
+<p>ggplot2 is a package for creating graphics</p>
+<ul>
+<li>Based on the Grammar of Graphics<br>
+</li>
+<li>Part of the tidyverse set of tools</li>
+<li>Call ggplot()
+<ul>
+<li>Supply a suitably formatted data set<br>
+</li>
+<li>What to plot from the data via aes (aesthetics), can also add colour, size, shape and transparency<br>
+</li>
+<li>How the data is represented via the geom_</li>
+</ul></li>
+</ul>
+</section>
+<section id="mpg-data" class="slide level2">
+<h2>MPG data</h2>
+<p>Example data provide in R, which we will use for the <strong>ggplot2</strong> examples.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">head</span>(mpg, <span class="at">n =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb11-2"><a href="#cb11-2"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
@@ -735,52 +805,15 @@ R packages contain:</p>
 </div>
 </div>
 </section>
-<section id="ggplot2---themes" class="slide level2">
-<h2>ggplot2 - Themes</h2>
-
-<img data-src="RandRStudio_files/figure-revealjs/unnamed-chunk-11-1.png" width="960" class="r-stretch"></section>
-<section id="download-course-material" class="slide level2">
-<h2>Download Course Material</h2>
-<div class="r-stack">
-<p><img data-src="images/Github.png" class="fragment" height="500"></p>
-<p><img data-src="images/Github_download.png" class="fragment" height="300"></p>
-</div>
-</section>
-<section id="download-course-material-1" class="slide level2">
-<h2>Download Course Material</h2>
-<ul>
-<li>Unzip the downloaded file</li>
-<li>Move the folder to a suitable place on computer</li>
-<li>Open RStudio and, using the files pane, navigate to the Course-main folder</li>
-<li>Double click on the Course.Rproj</li>
-</ul>
-</section>
-<section id="ggplot2" class="slide level2">
-<h2>ggplot2</h2>
-<p>ggplot2 is a package for creating graphics</p>
-<ul>
-<li>Based on the Grammar of Graphics<br>
-</li>
-<li>Part of the tidyverse set of tools</li>
-<li>Call ggplot()
-<ul>
-<li>Supply a suitably formatted data set<br>
-</li>
-<li>What to plot from the data via aes (aesthetics), can also add colour, size, shape and transparency<br>
-</li>
-<li>How the data is represented via the geom_</li>
-</ul></li>
-</ul>
-</section>
 <section id="ggplot2-1" class="slide level2 smaller">
 <h2>ggplot2</h2>
-<p>Set the data a plotting area, with ggplot and the aesthetics, to plot the miles per gallon on the motorway on the x axis and miles per gallon on the y axis</p>
+<p>Set the data and plotting area, with ggplot and the aesthetics, to plot the miles per gallon on the motorway on the x axis and miles per gallon on the y axis</p>
 <div class="cell columns column-output-location">
 <div class="column">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> hwy, <span class="at">y =</span> cty, <span class="at">color =</span> cyl))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
-<p><img data-src="RandRStudio_files/figure-revealjs/unnamed-chunk-12-1.png" width="768"></p>
+<p><img data-src="RandRStudio_files/figure-revealjs/unnamed-chunk-11-1.png" width="768"></p>
 </div>
 </div>
 </div>
@@ -794,7 +827,7 @@ R packages contain:</p>
 <span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
-<p><img data-src="RandRStudio_files/figure-revealjs/unnamed-chunk-13-1.png" width="768"></p>
+<p><img data-src="RandRStudio_files/figure-revealjs/unnamed-chunk-12-1.png" width="768"></p>
 </div>
 </div>
 </div>
@@ -808,7 +841,7 @@ R packages contain:</p>
 <span id="cb14-2"><a href="#cb14-2"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
-<p><img data-src="RandRStudio_files/figure-revealjs/unnamed-chunk-14-1.png" width="768"></p>
+<p><img data-src="RandRStudio_files/figure-revealjs/unnamed-chunk-13-1.png" width="768"></p>
 </div>
 </div>
 </div>
@@ -823,7 +856,7 @@ R packages contain:</p>
 <span id="cb15-3"><a href="#cb15-3"></a>  <span class="fu">scale_color_viridis_c</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
-<p><img data-src="RandRStudio_files/figure-revealjs/unnamed-chunk-15-1.png" width="768"></p>
+<p><img data-src="RandRStudio_files/figure-revealjs/unnamed-chunk-14-1.png" width="768"></p>
 </div>
 </div>
 </div>
@@ -841,7 +874,7 @@ R packages contain:</p>
 <span id="cb16-6"><a href="#cb16-6"></a>       <span class="at">y =</span> <span class="st">"City miles per gallon"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
-<p><img data-src="RandRStudio_files/figure-revealjs/unnamed-chunk-16-1.png" width="768"></p>
+<p><img data-src="RandRStudio_files/figure-revealjs/unnamed-chunk-15-1.png" width="768"></p>
 </div>
 </div>
 </div>
@@ -858,7 +891,7 @@ R packages contain:</p>
 <span id="cb17-5"><a href="#cb17-5"></a>  <span class="fu">scale_fill_viridis_d</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
-<p><img data-src="RandRStudio_files/figure-revealjs/unnamed-chunk-17-1.png" width="768"></p>
+<p><img data-src="RandRStudio_files/figure-revealjs/unnamed-chunk-16-1.png" width="768"></p>
 </div>
 </div>
 </div>
@@ -876,7 +909,7 @@ R packages contain:</p>
 <span id="cb18-6"><a href="#cb18-6"></a>  <span class="fu">scale_fill_viridis_d</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
-<p><img data-src="RandRStudio_files/figure-revealjs/unnamed-chunk-18-1.png" width="768"></p>
+<p><img data-src="RandRStudio_files/figure-revealjs/unnamed-chunk-17-1.png" width="768"></p>
 </div>
 </div>
 </div>
@@ -893,12 +926,16 @@ R packages contain:</p>
 <span id="cb19-5"><a href="#cb19-5"></a>  <span class="fu">scale_fill_viridis_d</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
-<p><img data-src="RandRStudio_files/figure-revealjs/unnamed-chunk-19-1.png" width="768"></p>
+<p><img data-src="RandRStudio_files/figure-revealjs/unnamed-chunk-18-1.png" width="768"></p>
 </div>
 </div>
 </div>
 </section>
-<section id="tidyverse" class="slide level2 smaller">
+<section id="ggplot2---themes" class="slide level2">
+<h2>ggplot2 - Themes</h2>
+
+<img data-src="RandRStudio_files/figure-revealjs/unnamed-chunk-19-1.png" width="960" class="r-stretch"></section>
+<section id="tidyverse-1" class="slide level2 smaller">
 <h2>Tidyverse</h2>
 <h3 id="data-tidying">Data Tidying</h3>
 <ul>
@@ -916,42 +953,10 @@ R packages contain:</p>
 </ul></li>
 </ul>
 </section>
-<section id="tidyverse-1" class="slide level2 smaller">
-<h2>Tidyverse</h2>
-<p>The tidyverse is a collection of R packages designed for data science</p>
-<div class="columns">
-<div class="column" style="width:50%;">
-<ul>
-<li><p>ggplot2 <img data-src="images/ggplot2.png" width="100"></p>
-<ul>
-<li>Package for creating graphics</li>
-</ul></li>
-<li><p>dplyr <img data-src="images/dplyr.png" width="100"></p>
-<ul>
-<li>Package for data manipulation</li>
-</ul></li>
-</ul>
-</div><div class="column" style="width:50%;">
-<ul>
-<li><p>tidyr <img data-src="images/tidyr.png" width="100"></p>
-<ul>
-<li>Package for tidying data</li>
-</ul></li>
-<li><p>readr <img data-src="images/readr.png" width="100"></p>
-<ul>
-<li>Package for reading in data</li>
-</ul></li>
-</ul>
-</div>
-</div>
-<div class="footer">
-<p>https://www.tidyverse.org</p>
-</div>
-</section>
 <section id="tidyverse-2" class="slide level2 smaller">
 <h2>Tidyverse</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>example_table <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"data/example_table.txt"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">" "</span>)</span>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>example_table <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/example_table.txt"</span>, <span class="at">delim =</span> <span class="st">" "</span>)</span>
 <span id="cb20-2"><a href="#cb20-2"></a>example_table  <span class="sc">%&gt;%</span></span>
 <span id="cb20-3"><a href="#cb20-3"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb20-4"><a href="#cb20-4"></a>  <span class="fu">kable_styling</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -981,6 +986,10 @@ R packages contain:</p>
 
 </div>
 </div>
+</section>
+<section id="tidyverse-3" class="slide level2 smaller">
+<h2>Tidyverse</h2>
+<h3 id="data-tidying-1">Data Tidying</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>pivot_table <span class="ot">&lt;-</span> example_table <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>Gene, <span class="at">names_to =</span> <span class="st">"Sample"</span>, <span class="at">values_to =</span> <span class="st">"Expression"</span>)</span>
 <span id="cb21-2"><a href="#cb21-2"></a>pivot_table <span class="sc">%&gt;%</span></span>
@@ -1023,18 +1032,23 @@ R packages contain:</p>
 </div>
 </div>
 </section>
-<section id="tidyverse-3" class="slide level2">
-<h2>Tidyverse</h2>
-
-<img data-src="RandRStudio_files/figure-revealjs/unnamed-chunk-22-1.png" width="960" class="r-stretch"><p></p>
-</section>
-<section id="tidyverse-4" class="slide level2 smaller">
+<section id="tidyverse-4" class="slide level2">
 <h2>Tidyverse</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>real_data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"data/real_data_example.tsv"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span>
-<span id="cb22-2"><a href="#cb22-2"></a><span class="fu">head</span>(real_data)  <span class="sc">%&gt;%</span></span>
-<span id="cb22-3"><a href="#cb22-3"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb22-4"><a href="#cb22-4"></a>  <span class="fu">kable_styling</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">ggplot</span>(pivot_table, <span class="fu">aes</span>(<span class="at">x =</span> Gene, <span class="at">y =</span> Expression, <span class="at">colour =</span> Gene)) <span class="sc">+</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb22-3"><a href="#cb22-3"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> Sample),<span class="at">nudge_x =</span> <span class="dv">0</span>, <span class="at">nudge_y =</span> <span class="dv">5</span>, <span class="at">colour =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb22-4"><a href="#cb22-4"></a>  <span class="fu">scale_color_viridis_d</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="RandRStudio_files/figure-revealjs/unnamed-chunk-22-1.png" width="960" class="r-stretch"></section>
+<section id="tidyverse-5" class="slide level2 smaller">
+<h2>Tidyverse</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>real_data <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">"data/real_data_example.tsv"</span>, <span class="at">col_names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="fu">head</span>(real_data)  <span class="sc">%&gt;%</span></span>
+<span id="cb23-3"><a href="#cb23-3"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb23-4"><a href="#cb23-4"></a>  <span class="fu">kable_styling</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <table class="table" style="margin-left: auto; margin-right: auto;">
@@ -1242,55 +1256,326 @@ R packages contain:</p>
 
 </div>
 </div>
+<p><strong>Notice the numbers after the gene names</strong></p>
 </section>
-<section id="tidyverse-5" class="slide level2 smaller">
+<section id="tidyverse-6" class="slide level2 smaller">
 <h2>Tidyverse</h2>
-<p>Tidy the data</p>
+<p>Tidy up the gene names using the tidyr command separate_wider_delim()</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>pivot_real_data <span class="ot">&lt;-</span> real_data <span class="sc">%&gt;%</span> </span>
-<span id="cb23-2"><a href="#cb23-2"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>Gene_names, <span class="at">names_to =</span> <span class="st">"Samples"</span>, <span class="at">values_to =</span> <span class="st">"Expression"</span>)</span>
-<span id="cb23-3"><a href="#cb23-3"></a></span>
-<span id="cb23-4"><a href="#cb23-4"></a><span class="fu">head</span>(pivot_real_data)  <span class="sc">%&gt;%</span></span>
-<span id="cb23-5"><a href="#cb23-5"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb23-6"><a href="#cb23-6"></a>  <span class="fu">kable_styling</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>real_data <span class="sc">%&gt;%</span> </span>
+<span id="cb24-2"><a href="#cb24-2"></a>  <span class="fu">separate_wider_delim</span>(<span class="at">cols =</span> Gene_names, <span class="at">delim =</span> <span class="st">"_"</span>, <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"Gene"</span>,<span class="st">"Number"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb24-3"><a href="#cb24-3"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">3</span>)  <span class="sc">%&gt;%</span></span>
+<span id="cb24-4"><a href="#cb24-4"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb24-5"><a href="#cb24-5"></a>  <span class="fu">kable_styling</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <table class="table" style="margin-left: auto; margin-right: auto;">
  <thead>
   <tr>
-   <th style="text-align:left;"> Gene_names </th>
+   <th style="text-align:left;"> Gene </th>
+   <th style="text-align:left;"> Number </th>
+   <th style="text-align:right;"> Sample1_1 </th>
+   <th style="text-align:right;"> Sample1_2 </th>
+   <th style="text-align:right;"> Sample1_3 </th>
+   <th style="text-align:right;"> Sample1_4 </th>
+   <th style="text-align:right;"> Sample1_5 </th>
+   <th style="text-align:right;"> Sample2_1 </th>
+   <th style="text-align:right;"> Sample2_2 </th>
+   <th style="text-align:right;"> Sample2_3 </th>
+   <th style="text-align:right;"> Sample2_4 </th>
+   <th style="text-align:right;"> Sample2_5 </th>
+   <th style="text-align:right;"> Sample3_1 </th>
+   <th style="text-align:right;"> Sample3_2 </th>
+   <th style="text-align:right;"> Sample3_3 </th>
+   <th style="text-align:right;"> Sample3_4 </th>
+   <th style="text-align:right;"> Sample3_5 </th>
+   <th style="text-align:right;"> Sample4_1 </th>
+   <th style="text-align:right;"> Sample4_2 </th>
+   <th style="text-align:right;"> Sample4_3 </th>
+   <th style="text-align:right;"> Sample4_4 </th>
+   <th style="text-align:right;"> Sample4_5 </th>
+   <th style="text-align:right;"> Sample5_1 </th>
+   <th style="text-align:right;"> Sample5_2 </th>
+   <th style="text-align:right;"> Sample5_3 </th>
+   <th style="text-align:right;"> Sample5_4 </th>
+   <th style="text-align:right;"> Sample5_5 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> CHAC1 </td>
+   <td style="text-align:left;"> 1279 </td>
+   <td style="text-align:right;"> 49 </td>
+   <td style="text-align:right;"> 11 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 254 </td>
+   <td style="text-align:right;"> 11 </td>
+   <td style="text-align:right;"> 30 </td>
+   <td style="text-align:right;"> 61 </td>
+   <td style="text-align:right;"> 18 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 34 </td>
+   <td style="text-align:right;"> 26 </td>
+   <td style="text-align:right;"> 47 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 21 </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:right;"> 50 </td>
+   <td style="text-align:right;"> 102 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 71 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 67 </td>
+   <td style="text-align:right;"> 11 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 59 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> GLRX </td>
+   <td style="text-align:left;"> 2674 </td>
+   <td style="text-align:right;"> 2212 </td>
+   <td style="text-align:right;"> 1884 </td>
+   <td style="text-align:right;"> 845 </td>
+   <td style="text-align:right;"> 1262 </td>
+   <td style="text-align:right;"> 1193 </td>
+   <td style="text-align:right;"> 1868 </td>
+   <td style="text-align:right;"> 1895 </td>
+   <td style="text-align:right;"> 1378 </td>
+   <td style="text-align:right;"> 1515 </td>
+   <td style="text-align:right;"> 1964 </td>
+   <td style="text-align:right;"> 1959 </td>
+   <td style="text-align:right;"> 1602 </td>
+   <td style="text-align:right;"> 1629 </td>
+   <td style="text-align:right;"> 741 </td>
+   <td style="text-align:right;"> 1145 </td>
+   <td style="text-align:right;"> 310 </td>
+   <td style="text-align:right;"> 538 </td>
+   <td style="text-align:right;"> 185 </td>
+   <td style="text-align:right;"> 332 </td>
+   <td style="text-align:right;"> 705 </td>
+   <td style="text-align:right;"> 358 </td>
+   <td style="text-align:right;"> 526 </td>
+   <td style="text-align:right;"> 278 </td>
+   <td style="text-align:right;"> 157 </td>
+   <td style="text-align:right;"> 1746 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> MEFV </td>
+   <td style="text-align:left;"> 4116 </td>
+   <td style="text-align:right;"> 214 </td>
+   <td style="text-align:right;"> 278 </td>
+   <td style="text-align:right;"> 47 </td>
+   <td style="text-align:right;"> 115 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 120 </td>
+   <td style="text-align:right;"> 20 </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:right;"> 824 </td>
+   <td style="text-align:right;"> 52 </td>
+   <td style="text-align:right;"> 121 </td>
+   <td style="text-align:right;"> 150 </td>
+   <td style="text-align:right;"> 129 </td>
+   <td style="text-align:right;"> 20 </td>
+   <td style="text-align:right;"> 66 </td>
+   <td style="text-align:right;"> 26 </td>
+   <td style="text-align:right;"> 55 </td>
+   <td style="text-align:right;"> 98 </td>
+   <td style="text-align:right;"> 53 </td>
+   <td style="text-align:right;"> 100 </td>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;"> 20 </td>
+   <td style="text-align:right;"> 31 </td>
+   <td style="text-align:right;"> 66 </td>
+   <td style="text-align:right;"> 80 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</section>
+<section id="tidyverse-7" class="slide level2 smaller">
+<h2>Tidyverse</h2>
+<p>The numbers after the gene names are not required, so can set the names for the Numbers to NA</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>real_data <span class="ot">&lt;-</span> real_data <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="#cb25-2"></a>  <span class="fu">separate_wider_delim</span>(<span class="at">cols =</span> Gene_names, <span class="at">delim =</span> <span class="st">"_"</span>, <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"Genes"</span>,<span class="cn">NA</span>))</span>
+<span id="cb25-3"><a href="#cb25-3"></a>  <span class="fu">head</span>(real_data, <span class="at">n =</span> <span class="dv">3</span>)  <span class="sc">%&gt;%</span></span>
+<span id="cb25-4"><a href="#cb25-4"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb25-5"><a href="#cb25-5"></a>  <span class="fu">kable_styling</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Genes </th>
+   <th style="text-align:right;"> Sample1_1 </th>
+   <th style="text-align:right;"> Sample1_2 </th>
+   <th style="text-align:right;"> Sample1_3 </th>
+   <th style="text-align:right;"> Sample1_4 </th>
+   <th style="text-align:right;"> Sample1_5 </th>
+   <th style="text-align:right;"> Sample2_1 </th>
+   <th style="text-align:right;"> Sample2_2 </th>
+   <th style="text-align:right;"> Sample2_3 </th>
+   <th style="text-align:right;"> Sample2_4 </th>
+   <th style="text-align:right;"> Sample2_5 </th>
+   <th style="text-align:right;"> Sample3_1 </th>
+   <th style="text-align:right;"> Sample3_2 </th>
+   <th style="text-align:right;"> Sample3_3 </th>
+   <th style="text-align:right;"> Sample3_4 </th>
+   <th style="text-align:right;"> Sample3_5 </th>
+   <th style="text-align:right;"> Sample4_1 </th>
+   <th style="text-align:right;"> Sample4_2 </th>
+   <th style="text-align:right;"> Sample4_3 </th>
+   <th style="text-align:right;"> Sample4_4 </th>
+   <th style="text-align:right;"> Sample4_5 </th>
+   <th style="text-align:right;"> Sample5_1 </th>
+   <th style="text-align:right;"> Sample5_2 </th>
+   <th style="text-align:right;"> Sample5_3 </th>
+   <th style="text-align:right;"> Sample5_4 </th>
+   <th style="text-align:right;"> Sample5_5 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> CHAC1 </td>
+   <td style="text-align:right;"> 49 </td>
+   <td style="text-align:right;"> 11 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 254 </td>
+   <td style="text-align:right;"> 11 </td>
+   <td style="text-align:right;"> 30 </td>
+   <td style="text-align:right;"> 61 </td>
+   <td style="text-align:right;"> 18 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 34 </td>
+   <td style="text-align:right;"> 26 </td>
+   <td style="text-align:right;"> 47 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 21 </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:right;"> 50 </td>
+   <td style="text-align:right;"> 102 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 71 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 67 </td>
+   <td style="text-align:right;"> 11 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 59 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> GLRX </td>
+   <td style="text-align:right;"> 2212 </td>
+   <td style="text-align:right;"> 1884 </td>
+   <td style="text-align:right;"> 845 </td>
+   <td style="text-align:right;"> 1262 </td>
+   <td style="text-align:right;"> 1193 </td>
+   <td style="text-align:right;"> 1868 </td>
+   <td style="text-align:right;"> 1895 </td>
+   <td style="text-align:right;"> 1378 </td>
+   <td style="text-align:right;"> 1515 </td>
+   <td style="text-align:right;"> 1964 </td>
+   <td style="text-align:right;"> 1959 </td>
+   <td style="text-align:right;"> 1602 </td>
+   <td style="text-align:right;"> 1629 </td>
+   <td style="text-align:right;"> 741 </td>
+   <td style="text-align:right;"> 1145 </td>
+   <td style="text-align:right;"> 310 </td>
+   <td style="text-align:right;"> 538 </td>
+   <td style="text-align:right;"> 185 </td>
+   <td style="text-align:right;"> 332 </td>
+   <td style="text-align:right;"> 705 </td>
+   <td style="text-align:right;"> 358 </td>
+   <td style="text-align:right;"> 526 </td>
+   <td style="text-align:right;"> 278 </td>
+   <td style="text-align:right;"> 157 </td>
+   <td style="text-align:right;"> 1746 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> MEFV </td>
+   <td style="text-align:right;"> 214 </td>
+   <td style="text-align:right;"> 278 </td>
+   <td style="text-align:right;"> 47 </td>
+   <td style="text-align:right;"> 115 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 120 </td>
+   <td style="text-align:right;"> 20 </td>
+   <td style="text-align:right;"> 23 </td>
+   <td style="text-align:right;"> 824 </td>
+   <td style="text-align:right;"> 52 </td>
+   <td style="text-align:right;"> 121 </td>
+   <td style="text-align:right;"> 150 </td>
+   <td style="text-align:right;"> 129 </td>
+   <td style="text-align:right;"> 20 </td>
+   <td style="text-align:right;"> 66 </td>
+   <td style="text-align:right;"> 26 </td>
+   <td style="text-align:right;"> 55 </td>
+   <td style="text-align:right;"> 98 </td>
+   <td style="text-align:right;"> 53 </td>
+   <td style="text-align:right;"> 100 </td>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;"> 20 </td>
+   <td style="text-align:right;"> 31 </td>
+   <td style="text-align:right;"> 66 </td>
+   <td style="text-align:right;"> 80 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</section>
+<section id="tidyverse-8" class="slide level2 smaller">
+<h2>Tidyverse</h2>
+<p>Tidy the data</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>pivot_real_data <span class="ot">&lt;-</span> real_data <span class="sc">%&gt;%</span> </span>
+<span id="cb26-2"><a href="#cb26-2"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>Genes, <span class="at">names_to =</span> <span class="st">"Samples"</span>, <span class="at">values_to =</span> <span class="st">"Expression"</span>)</span>
+<span id="cb26-3"><a href="#cb26-3"></a></span>
+<span id="cb26-4"><a href="#cb26-4"></a><span class="fu">head</span>(pivot_real_data)  <span class="sc">%&gt;%</span></span>
+<span id="cb26-5"><a href="#cb26-5"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb26-6"><a href="#cb26-6"></a>  <span class="fu">kable_styling</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Genes </th>
    <th style="text-align:left;"> Samples </th>
    <th style="text-align:right;"> Expression </th>
   </tr>
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:left;"> CHAC1_1279 </td>
+   <td style="text-align:left;"> CHAC1 </td>
    <td style="text-align:left;"> Sample1_1 </td>
    <td style="text-align:right;"> 49 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> CHAC1_1279 </td>
+   <td style="text-align:left;"> CHAC1 </td>
    <td style="text-align:left;"> Sample1_2 </td>
    <td style="text-align:right;"> 11 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> CHAC1_1279 </td>
+   <td style="text-align:left;"> CHAC1 </td>
    <td style="text-align:left;"> Sample1_3 </td>
    <td style="text-align:right;"> 0 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> CHAC1_1279 </td>
+   <td style="text-align:left;"> CHAC1 </td>
    <td style="text-align:left;"> Sample1_4 </td>
    <td style="text-align:right;"> 254 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> CHAC1_1279 </td>
+   <td style="text-align:left;"> CHAC1 </td>
    <td style="text-align:left;"> Sample1_5 </td>
    <td style="text-align:right;"> 11 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> CHAC1_1279 </td>
+   <td style="text-align:left;"> CHAC1 </td>
    <td style="text-align:left;"> Sample2_1 </td>
    <td style="text-align:right;"> 30 </td>
   </tr>
@@ -1300,42 +1585,42 @@ R packages contain:</p>
 </div>
 </div>
 </section>
-<section id="tidyverse-6" class="slide level2 smaller">
+<section id="tidyverse-9" class="slide level2 smaller">
 <h2>Tidyverse</h2>
 <p>Plot the data</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">ggplot</span>(pivot_real_data, <span class="fu">aes</span>(<span class="at">x =</span> Samples, <span class="at">y =</span> Expression, <span class="at">fill =</span> Samples)) <span class="sc">+</span></span>
-<span id="cb24-2"><a href="#cb24-2"></a>  <span class="fu">geom_boxplot</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="RandRStudio_files/figure-revealjs/unnamed-chunk-25-1.png" width="960" class="r-stretch"></section>
-<section id="tidyverse-7" class="slide level2 smaller">
-<h2>Tidyverse</h2>
-<p>Log transform the expression values</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb25" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">ggplot</span>(pivot_real_data, <span class="fu">aes</span>(<span class="at">x =</span> Samples, <span class="at">y =</span> Expression, <span class="at">fill =</span> Samples)) <span class="sc">+</span></span>
-<span id="cb25-2"><a href="#cb25-2"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb25-3"><a href="#cb25-3"></a>  <span class="fu">scale_y_log10</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="RandRStudio_files/figure-revealjs/unnamed-chunk-26-1.png" width="960" class="r-stretch"></section>
-<section id="tidyverse-8" class="slide level2 smaller">
-<h2>Tidyverse</h2>
-<p>Make the plot look prettier</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb26" data-code-line-numbers="4-9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">ggplot</span>(pivot_real_data, <span class="fu">aes</span>(<span class="at">x =</span> Samples, <span class="at">y =</span> Expression, <span class="at">fill =</span> Samples)) <span class="sc">+</span></span>
-<span id="cb26-2"><a href="#cb26-2"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb26-3"><a href="#cb26-3"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span></span>
-<span id="cb26-4"><a href="#cb26-4"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>,</span>
-<span id="cb26-5"><a href="#cb26-5"></a>       <span class="at">y =</span> <span class="st">"Log10(Expression)"</span>) <span class="sc">+</span></span>
-<span id="cb26-6"><a href="#cb26-6"></a>  <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span></span>
-<span id="cb26-7"><a href="#cb26-7"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb26-8"><a href="#cb26-8"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
-<span id="cb26-9"><a href="#cb26-9"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">hjust=</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">ggplot</span>(pivot_real_data, <span class="fu">aes</span>(<span class="at">x =</span> Samples, <span class="at">y =</span> Expression, <span class="at">fill =</span> Samples)) <span class="sc">+</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a>  <span class="fu">geom_boxplot</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="RandRStudio_files/figure-revealjs/unnamed-chunk-27-1.png" width="960" class="r-stretch"></section>
-<section id="tidyverse-9" class="slide level2 smaller">
+<section id="tidyverse-10" class="slide level2 smaller">
+<h2>Tidyverse</h2>
+<p>Log transform the expression values</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">ggplot</span>(pivot_real_data, <span class="fu">aes</span>(<span class="at">x =</span> Samples, <span class="at">y =</span> Expression, <span class="at">fill =</span> Samples)) <span class="sc">+</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb28-3"><a href="#cb28-3"></a>  <span class="fu">scale_y_log10</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="RandRStudio_files/figure-revealjs/unnamed-chunk-28-1.png" width="960" class="r-stretch"></section>
+<section id="tidyverse-11" class="slide level2 smaller">
+<h2>Tidyverse</h2>
+<p>Make the plot look prettier</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29" data-code-line-numbers="4-9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">ggplot</span>(pivot_real_data, <span class="fu">aes</span>(<span class="at">x =</span> Samples, <span class="at">y =</span> Expression, <span class="at">fill =</span> Samples)) <span class="sc">+</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb29-3"><a href="#cb29-3"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span></span>
+<span id="cb29-4"><a href="#cb29-4"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb29-5"><a href="#cb29-5"></a>       <span class="at">y =</span> <span class="st">"Log10(Expression)"</span>) <span class="sc">+</span></span>
+<span id="cb29-6"><a href="#cb29-6"></a>  <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span></span>
+<span id="cb29-7"><a href="#cb29-7"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb29-8"><a href="#cb29-8"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="cb29-9"><a href="#cb29-9"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">hjust=</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="RandRStudio_files/figure-revealjs/unnamed-chunk-29-1.png" width="960" class="r-stretch"></section>
+<section id="tidyverse-12" class="slide level2 smaller">
 <h2>Tidyverse</h2>
 <p>Dplyr simplifies data manipulation</p>
 <div class="columns">
@@ -1385,12 +1670,12 @@ R packages contain:</p>
 <li>Select columns from a dataframe</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>pivot_table <span class="sc">%&gt;%</span></span>
-<span id="cb27-2"><a href="#cb27-2"></a>  <span class="fu">select</span>(<span class="fu">c</span>(Sample,Expression))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>pivot_table <span class="sc">%&gt;%</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a>  <span class="fu">select</span>(<span class="fu">c</span>(Sample,Expression))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 2
   Sample  Expression
-  &lt;chr&gt;        &lt;int&gt;
+  &lt;chr&gt;        &lt;dbl&gt;
 1 Sample1        100
 2 Sample2        120
 3 Sample1          2
@@ -1401,12 +1686,12 @@ R packages contain:</p>
 <li>Filter rows that match a value in a column</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>pivot_table <span class="sc">%&gt;%</span></span>
-<span id="cb29-2"><a href="#cb29-2"></a>  <span class="fu">filter</span>(Gene <span class="sc">==</span> <span class="st">"ACT1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>pivot_table <span class="sc">%&gt;%</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a>  <span class="fu">filter</span>(Gene <span class="sc">==</span> <span class="st">"ACT1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
   Gene  Sample  Expression
-  &lt;chr&gt; &lt;chr&gt;        &lt;int&gt;
+  &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;
 1 ACT1  Sample1        100
 2 ACT1  Sample2        120</code></pre>
 </div>
@@ -1414,16 +1699,38 @@ R packages contain:</p>
 </div>
 </div>
 </section>
-<section id="section-3" class="slide level2">
-<h2></h2>
-</section>
-<section id="tidyverse-10" class="slide level2">
+<section id="tidyverse-13" class="slide level2 smaller">
 <h2>Tidyverse</h2>
+<p>Boxplot - Expression of a names gene</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>expression_table <span class="ot">&lt;-</span> pivot_real_data <span class="sc">%&gt;%</span></span>
+<span id="cb34-2"><a href="#cb34-2"></a>  <span class="fu">separate_wider_delim</span>(Samples, <span class="at">delim =</span> <span class="st">"_"</span>, <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"Sample"</span>, <span class="st">"Replicate"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb34-3"><a href="#cb34-3"></a>  <span class="fu">filter</span>(Genes <span class="sc">==</span> <span class="st">"CHAC1"</span>)</span>
+<span id="cb34-4"><a href="#cb34-4"></a> </span>
+<span id="cb34-5"><a href="#cb34-5"></a>box <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(expression_table, <span class="fu">aes</span>(<span class="at">x =</span> Sample, <span class="at">y =</span> Expression, <span class="at">fill =</span> Sample)) <span class="sc">+</span></span>
+<span id="cb34-6"><a href="#cb34-6"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb34-7"><a href="#cb34-7"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span></span>
+<span id="cb34-8"><a href="#cb34-8"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb34-9"><a href="#cb34-9"></a>       <span class="at">y =</span> <span class="st">"Log10(Expression)"</span>) <span class="sc">+</span></span>
+<span id="cb34-10"><a href="#cb34-10"></a>  <span class="fu">scale_fill_viridis_d</span>() <span class="sc">+</span></span>
+<span id="cb34-11"><a href="#cb34-11"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb34-12"><a href="#cb34-12"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb34-13"><a href="#cb34-13"></a>box</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-
-<img data-src="RandRStudio_files/figure-revealjs/unnamed-chunk-32-1.png" width="960" class="r-stretch"><div class="footer footer-default">
+<img data-src="RandRStudio_files/figure-revealjs/unnamed-chunk-33-1.png" width="960" class="r-stretch"></section>
+<section id="saving-data-to-files" class="slide level2">
+<h2>Saving data to files</h2>
+<h3 id="tidyverse-14">Tidyverse</h3>
+<p>Saving a data frame to a files using the <strong>readr</strong> command <strong>write_delim()</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="fu">write_delim</span>(expression_table, <span class="st">"data/gene_expression_table.tsv"</span>, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Saving a plot using the <strong>ggplot2</strong> command <strong>ggsave</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">"boxplot.png"</span>, <span class="at">plot =</span> box, <span class="at">path =</span> <span class="st">"data"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="footer footer-default">
 
 </div>
 </section>
