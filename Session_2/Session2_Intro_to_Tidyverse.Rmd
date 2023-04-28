@@ -1,0 +1,44 @@
+---
+title: "Session 2 - Intro to Tidyverse"
+output: html_notebook
+---
+
+This is a beginners tutorial for the R group of packages Tidyverse. It is a powerful collection of R packages designed for data science.
+
+Load the tidyverse package.
+
+```{r}
+library("tidyverse")
+```
+
+First read in the example data, load the file called "tidyverse_data_example.tsv". Use the tidyverse package **tidyr** command read_delim(). I have given you the out line of the command to read in the file to the varaible called data_table.The delimiter for the file is a tab ("\t").
+
+N.B. you can get help on commands by typing a question mark followed by the command into the Console pane below, e.g. ?read_delim
+
+```{r}
+data_table <- read_delim()
+```
+
+Now examine the imported table.
+```{r}
+data_table
+```
+
+The gene names in the first column have additional numeric identifiers appended to the gene name, separated by an underscore. This would make it harder for searching for genes so it would be best to split the numbers from the gene names.
+Here we use the tidyr package separate_wider_delim() to split the gene name from then numeric value using the underscore delimiter (_)
+
+```{r}
+data_table <- data_table %>% separate_wider_delim(cols = Gene_names, delim = "_", names = c("Genes",NA))
+data_table
+```
+
+Now the data needs to be "tidied" for plotting with ggplot2. We need to transpose the expression data columns into one column of expression values and create a column with the sample names for the expression values.
+Using the tidyr command pivot_longer(). We need to specify which columns to use, this can be done using the cols parameter either explicitly naming all the columns to be included or state which columns to ignore during to transposition. Either method is fine but it is prefereable to use the shortest list to keep the code readable, in my opinion. So in this example, we omit the Genes column from the transposition by calling cols = -Genes, a minus sign and the column name.
+
+```{r}
+pivot_data_table <- data_table %>% 
+  pivot_longer()
+
+pivot_data_table
+```
+

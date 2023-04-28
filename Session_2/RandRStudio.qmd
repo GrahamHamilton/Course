@@ -601,7 +601,7 @@ ggplot(pivot_table, aes(x = Gene, y = Expression, colour = Gene)) +
 ```{r}
 #| echo: true
 #| eval: true
-real_data <- read_tsv("data/real_data_example.tsv", col_names = TRUE)
+real_data <- read_tsv("data/tidyverse_data_example.tsv", col_names = TRUE)
 head(real_data)  %>%
   kbl() %>%
   kable_styling()
@@ -750,7 +750,7 @@ box
 ```
 
 
-## Saving data to files
+## Saving data to files  {.smaller}
 
 ### Tidyverse
 Saving a data frame to a files using the **readr** command **write_delim()**
@@ -767,3 +767,27 @@ Saving a plot using the **ggplot2** command **ggsave**
 ggsave(filename = "boxplot.png", plot = box, path = "data")
 ```
 
+## Tidyverse  {.smaller}
+### Piping data
+![](images/magrittr.png){width="100"}
+Tidyverse uses an operator, %>%, that takes to out put from one command and uses it as the input for a subsequent command with out having to use intermediate variable names.
+
+
+## Tidyverse  {.smaller}
+### Piping data
+Log a series of numbers and round to one decimal place
+Base R
+```{r}
+#| echo: true
+# Base R
+number_vector <- c(23,43,76,93,72,58,45)
+round(log(number_vector), 1)
+```
+
+Tidyverse uses the pipe operator and it makes the code easier to read, especially when more than a couple of operations are performed on the data
+```{r}
+#| echo: true
+number_vector %>%
+  log() %>%
+  round(1)
+```

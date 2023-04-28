@@ -1,5 +1,5 @@
 ---
-title: "Session 2 - Intro to R"
+title: "Session 2 - Intro to base R"
 output: html_notebook
 ---
 
