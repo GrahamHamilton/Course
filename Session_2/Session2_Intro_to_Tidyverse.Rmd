@@ -29,11 +29,11 @@ head(data_table)
 ## Tidying Imported Data
 
 The gene names in the first column have additional numeric identifiers appended to the gene name, separated by an underscore. This would make it harder for searching for genes so it would be best to split the numbers from the gene names.
-Here we use the tidyr package separate_wider_delim() to split the gene name from then numeric value using the underscore delimiter (_)
+Here we use the tidyr package separate_wider_delim() to split the names in the column "Gene_names" from then numeric value using the underscore delimiter (_) and putting the split gene names into new column called "Genes" and discarding the numeric part [HINT: use names = c("Genes", NA)]
 
 ```{r}
 data_table <- data_table %>% 
-  separate_wider_delim(cols = Gene_names, delim = "_", names = c("Genes",NA))
+  separate_wider_delim(...)
 head(data_table)
 ```
 
@@ -42,7 +42,7 @@ Using the tidyr command pivot_longer(). We need to specify which columns to use,
 
 ```{r}
 pivot_data_table <- data_table %>% 
-  pivot_longer(-Genes, names_to = "Sample", values_to = "Expression")
+  pivot_longer(...)
 
 head(pivot_data_table)
 ```
@@ -51,7 +51,7 @@ In these data the samples names include the replicates which we would like to se
 
 ```{r}
 pivot_data_table_replicates <- pivot_data_table %>%
-  separate_wider_delim(Sample, delim = "_", names = c("Samples","Replicates"))
+  separate_wider_delim(...)
 head(pivot_data_table_replicates)
 ```
 
@@ -87,34 +87,22 @@ Try with the following formats:-
 Now that we have the data table in a tidy format, we can try plotting a boxplot using the tidyverse package **ggplot2**. Set the x axis to the Samples column, the y axis to the Expression column and fill the boxplot based on the Samples.
 The format for ggplot2 is ggplot(data, aes(x = x_axis_column, y = y_axis_column, fill = column_for_fill)). The use the geom_boxplot(). Layers are added to the initail ggplt with a plus sign, "+".
 ```{r}
-ggplot(pivot_data_table, aes(x = Sample, y = Expression, fill = Sample)) +
-  geom_boxplot() 
+
 ```
 
-Transcriptomics data consists of a large number of genes with very low or no expression so most of the data is near the bottom of the y axis. The graph would be more informative if the expression values were log transformed, add the ggplot2 function  scale_y_log10()
+Transcriptomics data consists of a large number of genes with very low or no expression so most of the data is near the bottom of the y axis. The graph would be more informative if the expression values were log transformed, add the ggplot2 function  scale_y_log10(). Copy the code for above and add the new line.
 ```{r}
-ggplot(pivot_data_table, aes(x = Sample, y = Expression, fill = Sample)) +
-  geom_boxplot() +
-  scale_y_log10()
+
 ```
 
-Now that the boxplot looks more informative, label the axes. The y axis should indicate that it is log transformed and the x axis label is redundant as the samples are called Sample**. Use the ggplot2 function labs.
+Now that the boxplot looks more informative, label the axes. The y axis should indicate that it is log transformed and the x axis label is redundant as the samples are called Sample**. Use the ggplot2 function labs. Copy the code for above and add the new line.
 ```{r}
-ggplot(pivot_data_table, aes(x = Sample, y = Expression, fill = Sample)) +
-  geom_boxplot() +
-  scale_y_log10() +
-  labs(x = NULL,
-       y = "Log10(Expression)")
+
 ```
 
-Now add nicer colours, scale_fill_viridis_d()
+Now add nicer colours, scale_fill_viridis_d(). Copy the code for above and add the new line.
 ```{r}
-ggplot(pivot_data_table, aes(x = Sample, y = Expression, fill = Sample)) +
-  geom_boxplot() +
-  scale_y_log10() +
-  labs(x = NULL,
-       y = "Log10(Expression)") +
-  scale_fill_viridis_d()
+
 ```
 
 Change the look of the plot using one of the following built in themes:
@@ -127,43 +115,25 @@ theme_minimal()
 theme_classic()
 theme_void()
 
-Try a few and choose the one you prefer.
+Try a few and choose the one you prefer. 
+Copy the code for above and add the new line.
 
 ```{r}
-ggplot(pivot_data_table, aes(x = Sample, y = Expression, fill = Sample)) +
-  geom_boxplot() +
-  scale_y_log10() +
-  labs(x = NULL,
-       y = "Log10(Expression)") +
-  scale_fill_viridis_d() +
- theme_classic()
+
 ```
 
-The theme you have chosen can be modified by adding the theme() command. For example the labels on the x axis are currently overlapping each other so we could rotate them 90˚ to make them readable, something like this theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)). This command changes the angle of the x axis labels then adjusts the vertical and horizontal label position.
+The theme you have chosen can be modified by adding the theme() command. For example the labels on the x axis are currently overlapping each other so we could rotate them 90˚ to make them readable, something like this theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)). This command changes the angle of the x axis labels then adjusts the vertical and horizontal label position. 
+Copy the code for above and add the new line.
 
 ```{r}
-ggplot(pivot_data_table, aes(x = Sample, y = Expression, fill = Sample)) +
-  geom_boxplot() +
-  scale_y_log10() +
-  labs(x = NULL,
-       y = "Log10(Expression)") +
-  scale_fill_viridis_d() +
- theme_classic() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
 ```
 
 The plot legend is not required, this can also be controlled by modifying the theme, in a comma separated list. Add the command legend.position, which can be set to "left", "right, "top", "bottom" or "none".
+Copy the code for above and add the new line.
 
 ```{r}
-ggplot(pivot_data_table, aes(x = Sample, y = Expression, fill = Sample)) +
-  geom_boxplot() +
-  scale_y_log10() +
-  labs(x = NULL,
-       y = "Log10(Expression)") +
-  scale_fill_viridis_d() +
- theme_classic() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
-        legend.position = "none")
+
 ```
 
 ## Subsetting Data
@@ -177,13 +147,12 @@ gene_of_interest <- pivot_data_table %>%
 head(gene_of_interest)
 ```
 
+Using ggplot create a boxplot for the gen of interest. You could try adding the individual data points using geom_jitter()
 ```{r}
-ggplot(gene_of_interest, aes(x = Genes, y = Expression, fill = Genes)) +
-  geom_boxplot() +
-  geom_jitter(size = 2, alpha = 0.5)
+
 ```
 
-Can filet the dataframe for a set of genes in a vector, I will look for a family of sine oculus like homeobox genes, SIX1, SIX2, SIX3, SIX4 & SIX5
+Can filter the data frame for a set of genes in a vector, I will look for a family of sine oculus like homeobox genes, SIX1, SIX2, SIX3, SIX4 & SIX5
 
 ```{r}
 goi <- c("SIX1","SIX2","SIX3","SIX4","SIX5")
@@ -194,10 +163,8 @@ genes_of_interest <- pivot_data_table %>%
 genes_of_interest
 ```
 
+Usse ggplot to boxplot the expression of the genes.
 ```{r}
-ggplot(genes_of_interest, aes(x = Genes, y = Expression, fill = Genes)) +
-  geom_boxplot() +
-  geom_jitter(size = 2, alpha = 0.5) +
-  scale_y_log10()
+
 ```
 
