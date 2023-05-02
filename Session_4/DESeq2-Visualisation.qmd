@@ -1,0 +1,360 @@
+---
+title: "DESeq2-Visualisation"
+format: revealjs
+editor: source
+---
+
+
+## Dispersion plots
+
+::: notes
+The black points are the dispersion estimates for each gene as obtained by considering the information from each gene separately. Unless there are many samples, these values fluctuate around their true values. The red trend line is fitted, which shows the dispersion dependence on the mean, and then shrink each gene's estimate towards the red line to obtain the final estimates (blue points) that are then used in the hypothesis test. The blue circles above the main "cloud" of points are genes which have high gene--wise dispersion estimates which are labelled as dispersion outliers. These estimates are therefore not shrunk toward the fitted trend line. These warnings just indicate that the dispersion estimation failed for some genes.
+:::
+
+```{r dipersion plot}
+#| echo: true
+#| output-location: column
+dispersion_data <- as.data.frame(mcols(dds)) %>% 
+  select(baseMean, dispGeneEst, dispFit, dispersion) %>% 
+  pivot_longer(-baseMean, names_to = "variable", values_to = "value") %>%
+  drop_na()
+  
+dispersion_plot <- ggplot(dispersion_data, aes(x=baseMean, y=value, colour=variable)) + 
+  geom_point(size=0.1) +
+  scale_x_log10() + 
+  scale_y_log10() + 
+  ylab("Dispersion") + 
+  xlab("BaseMean") +
+  scale_colour_manual(values=c("#999999", "#B30C00", "#003865"),
+                      breaks=c("dispGeneEst", "dispFit", "dispersion"),
+                      labels=c("Estimate", "Fit", "Final"),
+                      name="") +
+  polyomics_theme() + 
+  guides(colour = guide_legend(override.aes = list(size=2)))
+
+ggsave(filename = "DispPlot.png",
+       plot = dispersion_plot,
+       path = deseq2_results_dir)
+dispersion_plot
+```
+
+## Variance stabilisation
+
+Count data transformations by regularized logarithm and variance stabilizing transformations, used for Principle Component Analysis.
+
+```{r variance stabilisation}
+#| echo: true
+rld <- rlog(dds,fitType = "local")
+vsd <- varianceStabilizingTransformation(dds,fitType = "local")
+```
+
+## PCA Plots
+
+rlog transformed data
+
+```{r rlog PCA, echo = TRUE}
+#| echo: true
+#| output-location: column
+polyomics_palettes <- polyomics_palettes_list()
+pca.data <- plotPCA(rld, intgroup = c("Condition"), returnData = TRUE)
+percentVar <- round(100 * attr(pca.data, "percentVar"))
+
+rlog_pca <- ggplot(pca.data, aes(PC1, PC2, label=name, color=Condition)) +
+  geom_point(size=5) +
+  polyomics_scale_colour(palette = "mixed") +
+  geom_text_repel(colour = "black",size=3) +
+  xlab(paste0("PC1: ",percentVar[1],"% variance")) + 
+  ylab(paste0("PC2: ",percentVar[2],"% variance")) + 
+  polyomics_theme() +
+  labs(title = "PCA Plot",
+       subtitle = "rlog transformed ") +
+  theme(legend.position = "right",
+        panel.grid.major.x = element_line(color=polyomics_cols("Light Grey")), 
+        panel.grid.major.y= element_line(color=polyomics_cols("Light Grey")))
+
+ggsave(filename = "rlog_PCA.pdf",
+       plot = rlog_pca,
+       path = deseq2_results_dir)
+  
+rlog_pca
+```
+
+## PCA Plots
+
+vsd transfromed data
+
+```{r vsd PCA}
+#| echo: true
+#| output-location: column
+data <- plotPCA(vsd, intgroup = c("Condition"), returnData = TRUE)
+percentVar <- round(100 * attr(data, "percentVar"))
+
+vsd_pca_plot <- ggplot(data,aes(PC1,PC2, label=name, color=Condition)) +
+  geom_point(size=5) +
+  polyomics_scale_colour(palette = "mixed") +
+  geom_text_repel(colour = "black",size=3) +
+  xlab(paste0("PC1: ",percentVar[1],"% variance")) +
+  ylab(paste0("PC2: ",percentVar[2],"% variance")) +
+  polyomics_theme() +
+  labs(title = "PCA Plot",
+       subtitle = "vsd transformed ") +
+  theme(legend.position = "right",
+        panel.grid.major.x = element_line(color=polyomics_cols("Light Grey")), 
+        panel.grid.major.y= element_line(color=polyomics_cols("Light Grey")))
+
+ggsave(filename = "vsd_PCA.pdf",
+       plot = vsd_pca_plot,
+       path = deseq2_results_dir)
+
+vsd_pca_plot
+```
+
+## Heatmap
+
+Plot a heatmap for the genes with a p adjusted vale of 0.1 or less
+
+```{r heatmap}
+#| echo: true
+#| output-location: column
+# Get a list of diferentially exoressed gene ensembl ids
+de_genes <- results(dds) %>% # Get the de results
+  as.data.frame() %>% # Convert results to a data frame
+  rownames_to_column(var = "ensembl_gene_id") %>% # add the ensembl ids as a data frame column
+  filter(padj <= qvalueCutoff) %>% # Select data frame rows that have p values below the cut off
+  pull(ensembl_gene_id) # get the ensembl ids of the filtered genes as a character vector
+
+# Get the norma counts and transform to z-scores
+log2_differential_genes <- total.norm.counts  %>%
+  rownames_to_column(var = "ensembl_gene_id") %>% # add the ensembl ids as a data frame column
+  filter(ensembl_gene_id %in% de_genes) %>% # Filter the normalised counts data frame for rows with the ensembl id of the differentially expressed genes list
+  column_to_rownames(var = "ensembl_gene_id") %>% # convert the ensembl_gene_id column to the dtaframe rownames
+  mutate(across(where(is.numeric), ~ .x + 1)) %>% # Add 1 to all the values to avoid NaN errors
+  log2() # Log2 tranform the data frame values
+
+log2_mean_differential_genes <- (log2_differential_genes - rowMeans(log2_differential_genes)) / rowSds(as.matrix(log2_differential_genes)) # Convert to z-scores
+
+# Set the number of colours to be created for the heatmapping
+num_colours = 100 
+
+# Set the range and mid point, the mid point colour is set to zero
+symetric_breaks <- seq(-max(abs(log2_mean_differential_genes)),
+                       max(abs(log2_mean_differential_genes)),
+                       length.out = num_colours + 1)
+
+# Format the annotations file  for pheatmap
+column_annotations <- sample_table %>%
+  column_to_rownames(var = "Sample")
+
+# Plot the pheatmap
+ph <- pheatmap(log2_mean_differential_genes,
+         color =colorRampPalette(c(polyomics_cols("University Blue"), "white",polyomics_cols("Pillarbox")))(num_colours),
+         breaks = symetric_breaks,
+         show_rownames = F,
+         annotation_col = column_annotations)
+```
+
+# Annotations
+
+Create an annotations table from the gene annotation file (gff3)
+
+```{r Annotations}
+#| echo: true
+#| code-line-numbers: "1-6"
+gff <- import.gff(gtf)
+gff <- gff[gff$type == "gene"]
+
+annotations <- data.frame(row.names = gff$ID,
+                          "description" = gff$description) %>%
+  rownames_to_column(var = "ensembl_gene_id")
+
+annotations %>%
+  head(n = 4) %>%
+  kbl() %>%
+  kable_styling() 
+```
+
+## Pairwise differential expression
+
+Iterate through the pairwise comparisons write out comma seperated files, MA plots, Volcano plots and heatmaps for each comparison
+
+```{r}
+#| echo: true
+pairwise_comparisons <- function(comparison){
+  base_condition <- comparison[1]
+  test_condition <- comparison[2]
+  
+  # Contrast name
+  contrast_name <- paste(test_condition, "vs", base_condition, sep = "_")
+  #############################################################################################
+  # Pairwise results
+  #############################################################################################
+  # Create directory for DESeq2 data
+  results_dir = paste(contrast_name, "results", sep = "_")
+  resultsFilePath <-file.path(deseq2_results_dir, results_dir, fsep = .Platform$file.sep)
+  dir.create(resultsFilePath, showWarnings = FALSE)
+
+  # Get the samples names for the contrasts
+  comparisonSampleNames <-  sample_table %>%
+    filter(Condition %in% c(test_condition, base_condition)) %>%
+    pull(Sample)
+
+  # Subset the log2 normailsed counts to just the commpasison samples
+  subset.total.norm.counts <- total.norm.counts %>% 
+    select(all_of(comparisonSampleNames)) %>%
+    rownames_to_column(var = "ensembl_gene_id")
+  
+  # Get the pairwise comparison results
+  comp <- results(dds, contrast = c("Condition", test_condition, base_condition)) %>% # Get the pair wise comparison results
+    as.data.frame() %>% # Convert to dataframe
+    rownames_to_column(var = "ensembl_gene_id") %>% # Create an ensembl gene id column
+    left_join(., annotations, by = "ensembl_gene_id")%>% # merge annotations by ensembl id
+    left_join(., subset.total.norm.counts, by = "ensembl_gene_id") %>% # Merge normalised counts by ensembl id
+    arrange(padj) %>% # Sort the dataframe by the p adjusted value ascending
+    replace_na(list(log2FoldChange = 0.1))
+
+
+  # Write the results data to file
+  # Output file name
+  outfileName <- paste(contrast_name, 'genes', 'tsv', sep = ".")
+  write.table(comp,
+              file = file.path(resultsFilePath, outfileName, fsep = .Platform$file.sep),
+              quote = FALSE,
+              row.names = FALSE,
+              sep = "\t")
+  
+  #############################################################################################
+  # MA plot
+  #############################################################################################
+  ma.plot <- comp %>%
+    ggplot(aes(  x = log10(baseMean), y = log2FoldChange, colour = padj < 0.1  )) +
+    geom_point(size = 0.5) +
+    scale_colour_manual(name = 'padj < 0.1', values = setNames(c( polyomics_cols("Lavender"), polyomics_cols("Light Grey")), c(T, F))) +
+    scale_y_continuous(breaks = seq(floor(min(comp$log2FoldChange)), ceiling(max(comp$log2FoldChange)),  1)) +
+    geom_hline(yintercept = 0, colour = polyomics_cols("Pillarbox"), alpha = 0.5) +
+    polyomics_theme()  +
+    theme(
+      panel.grid.major.x = element_blank(),
+      panel.grid.major.y = element_blank(),
+      axis.line = element_line(colour = "grey80"),
+      legend.position = "none"
+    ) +
+    labs(title = paste(contrast_name, "MA Plot", sep = " "))
+  
+  ggsave(filename = file.path(resultsFilePath, paste(contrast_name, 'genes', 'plotMA', 'png', sep = "."), fsep = .Platform$file.sep),plot = ma.plot)
+  
+  #############################################################################################
+  # Heatmap
+  #############################################################################################
+  de.genes <- comp %>%
+    filter(padj < qvalueCutoff) %>%
+    pull(ensembl_gene_id)
+  
+  if (length(de.genes) > 1) {
+    log2_differential_genes <- subset.total.norm.counts %>% # add the ensembl ids as a data frame column
+      filter(ensembl_gene_id %in% de_genes) %>% # Filter the normalised counts data frame for rows with the ensembl id of the differentially expressed genes list
+      column_to_rownames(var = "ensembl_gene_id") %>% # convert the ensembl_gene_id column to the dtaframe rownames
+      mutate(across(where(is.numeric), ~ .x + 1)) %>% # Add 1 to all the values to avoid NaN errors
+      log2() # Log2 tranform the data frame values
+    
+    log2_mean_differential_genes <- (log2_differential_genes - rowMeans(log2_differential_genes)) / rowSds(as.matrix(log2_differential_genes)) # Convert to z-scores
+  
+    num_colours = 100 # Set the number of colours to be created for the heatmapping
+    
+    # Set the range and mid point, the mid point colour is set to zero
+    symetric_breaks <- seq(-max(abs(log2_mean_differential_genes)),
+                           max(abs(log2_mean_differential_genes)),
+                           length.out = num_colours + 1)
+    
+    # Format the annotations file  for pheatmap
+    column_annotations <- sample_table %>%
+      filter(Sample %in% comparisonSampleNames) %>%
+      column_to_rownames(var = "Sample")
+    
+    # Plot the heatmap
+    ph <- pheatmap(log2_mean_differential_genes,
+             color =colorRampPalette(c(polyomics_cols("University Blue"), "white",polyomics_cols("Pillarbox")))(num_colours),
+             breaks = symetric_breaks,
+             show_rownames = F,
+             annotation_col = column_annotations)
+    heatmap_name <- paste(contrast_name, qvalueCutoff, "heatmap.png", sep = ".")
+    save_pheatmap_png(ph, file.path(resultsFilePath, heatmap_name, fsep = .Platform$file.sep))
+  }
+  
+  #############################################################################################
+  # Volcano plot
+  #############################################################################################
+  comp <- comp %>%
+    mutate(Expression = case_when(log2FoldChange >= foldchange &  padj <= qvalueCutoff~ "Up-regulated",
+                                  log2FoldChange <= -foldchange &  padj <= qvalueCutoff ~ "Down-regulated",
+                                  TRUE ~ "Unchanged"))
+  
+  vp <- ggplot(data = comp, aes(x = log2FoldChange,y = -log10(padj))) +
+    geom_point(aes(color = Expression), size = 3/5)  +
+    scale_color_manual(values = c("#003865", "#CCCCCC","#B30C00")) +
+    xlab(expression("Log"[2]*" Fold Change")) +
+    ylab(expression("-Log"[10]*~ ""~italic(P)~"value")) +
+    geom_vline(xintercept = c(-foldchange, foldchange),
+               col = "#005C8A",
+               linetype = "dotted",
+               alpha = 0.4,
+               size = 1) +
+    geom_hline(yintercept = -log10(qvalueCutoff),
+               col = "#005C8A",
+               linetype = "dotted",
+               alpha = 0.4,
+               size = 1) +
+    xlim(-3,2.5) +
+    ylim(0, 5) +
+    polyomics_theme() +
+    theme(panel.grid.major.x = element_blank(),
+          panel.grid.major.y = element_blank(),
+          axis.line = element_line(colour = "grey80"),
+          plot.title = element_text(size = 30),
+          axis.title = element_text(size = 25),
+          axis.text = element_text(size = 25),
+          legend.text=element_text(size = 15)) +
+    guides(colour = guide_legend(override.aes = list(size=1.5)))
+  
+  ggsave(filename = file.path(resultsFilePath,"volcano_plot.png",fsep = .Platform$file.sep), plot = vp, device = "png")
+  
+  #############################################################################################
+  # GO Analysis
+  #############################################################################################
+  # Subset the differential expression results to return genes with padj cutoff
+  sig_genes <- comp %>%
+    drop_na() %>%
+    as_tibble() %>%
+    filter(padj < qvalueCutoff) %>%
+    pull(ensembl_gene_id)
+
+  # Get the full list of entrez ids to as the background
+  universe_genes <- comp %>%
+    drop_na() %>%
+    pull(ensembl_gene_id)
+
+  # Run the GO enrichment
+  enrichedGO <- enrichGO(
+    gene = sig_genes,
+    universe = universe_genes,
+    OrgDb = gsub("./","",package),
+    keyType = "GID",
+    ont = "ALL",
+    pAdjustMethod = "BH",
+    pvalueCutoff  = pvalueCutoff,
+    qvalueCutoff  = qvalueCutoff,
+    readable = TRUE
+  )
+
+  # If the GO analysis produced results, print and save a dotplot and save the results table
+  if (nrow(as.data.frame(enrichedGO)) > 0) {
+    ggsave(filename = file.path(resultsFilePath, "GO_dotplot.pdf", fsep = .Platform$file.sep),plot = dotplot(enrichedGO))
+    # Write out the results to a file
+    write.table(as.data.frame(enrichedGO),
+            file=file.path(resultsFilePath,paste(contrast_name, "enrichedGO","tsv", sep = "."),fsep =.Platform$file.sep),
+            quote=FALSE,
+            sep = "\t")
+  }
+}
+
+apply(comparisons, 1, pairwise_comparisons)
+```
