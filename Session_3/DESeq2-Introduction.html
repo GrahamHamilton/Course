@@ -1381,168 +1381,101 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 </section>
 <section id="time-course" class="slide level2">
 <h2>Time Course</h2>
-
-<img data-src="DESeq2-Introduction_files/figure-revealjs/unnamed-chunk-29-1.png" width="960" class="r-stretch"></section>
-<section id="time-course-1" class="slide level2">
-<h2>Time Course</h2>
-
-<img data-src="DESeq2-Introduction_files/figure-revealjs/unnamed-chunk-30-1.png" width="960" class="r-stretch"></section>
-<section id="time-course-2" class="slide level2 smaller">
-<h2>Time Course</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Pairwise comparison - compares expression at time points</p>
 <div class="cell">
 <div class="cell-output-display">
-
-<table class="table" style="margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> Sample </th>
-   <th style="text-align:left;"> Condition </th>
-   <th style="text-align:left;"> Time </th>
-   <th style="text-align:left;"> Batch </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> Control_1 </td>
-   <td style="text-align:left;"> Control </td>
-   <td style="text-align:left;"> 0h </td>
-   <td style="text-align:left;"> A </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Control_1 </td>
-   <td style="text-align:left;"> Control </td>
-   <td style="text-align:left;"> 3h </td>
-   <td style="text-align:left;"> A </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Control_1 </td>
-   <td style="text-align:left;"> Control </td>
-   <td style="text-align:left;"> 6h </td>
-   <td style="text-align:left;"> A </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Control_1 </td>
-   <td style="text-align:left;"> Control </td>
-   <td style="text-align:left;"> 9h </td>
-   <td style="text-align:left;"> A </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Control_1 </td>
-   <td style="text-align:left;"> Control </td>
-   <td style="text-align:left;"> 12h </td>
-   <td style="text-align:left;"> A </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Control_2 </td>
-   <td style="text-align:left;"> Control </td>
-   <td style="text-align:left;"> 0h </td>
-   <td style="text-align:left;"> B </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Control_2 </td>
-   <td style="text-align:left;"> Control </td>
-   <td style="text-align:left;"> 3h </td>
-   <td style="text-align:left;"> B </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Control_2 </td>
-   <td style="text-align:left;"> Control </td>
-   <td style="text-align:left;"> 6h </td>
-   <td style="text-align:left;"> B </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Control_2 </td>
-   <td style="text-align:left;"> Control </td>
-   <td style="text-align:left;"> 9h </td>
-   <td style="text-align:left;"> B </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Control_2 </td>
-   <td style="text-align:left;"> Control </td>
-   <td style="text-align:left;"> 12h </td>
-   <td style="text-align:left;"> B </td>
-  </tr>
-</tbody>
-</table>
-
+<p><img data-src="DESeq2-Introduction_files/figure-revealjs/unnamed-chunk-29-1.png" width="960"></p>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<p>Want to compare changes in expression with respect to Treatment <strong>and</strong> Time</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="DESeq2-Introduction_files/figure-revealjs/unnamed-chunk-30-1.png" width="960"></p>
+</div>
+</div>
 </div>
 </div>
 </section>
-<section id="time-course-3" class="slide level2 smaller">
+<section id="time-course-1" class="slide level2">
 <h2>Time Course</h2>
-<p>Construct the model matrix using the code below</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">model.matrix</span>(<span class="sc">~</span> Batch <span class="sc">+</span> Condition <span class="sc">+</span> Time <span class="sc">+</span> Condition<span class="sc">:</span>Time, sample_table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<h3 id="likelihood-ratio-testing-lrt">Likelihood Ratio Testing (LRT)</h3>
+<p>Analyse all levels of a factor at once. LRT identifies genes that change expression across the different levels.</p>
+
+<img data-src="DESeq2-Introduction_files/figure-revealjs/unnamed-chunk-31-1.png" width="960" class="r-stretch"></section>
+<section id="time-course-2" class="slide level2 smaller">
+<h2>Time Course</h2>
 <p>Differential expression command</p>
 <ul>
 <li>Full model</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>DESeq2 <span class="ot">&lt;-</span> <span class="fu">DESeqDataSetFromMatrix</span>(<span class="at">countData =</span> feature.counts.table,</span>
-<span id="cb7-2"><a href="#cb7-2"></a>                                 <span class="at">colData =</span> sample_table,</span>
-<span id="cb7-3"><a href="#cb7-3"></a>                                 <span class="at">design =</span> <span class="sc">~</span>  Batch <span class="sc">+</span> Condition <span class="sc">+</span> Time <span class="sc">+</span> Condition<span class="sc">:</span>Time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>DESeq2 <span class="ot">&lt;-</span> <span class="fu">DESeqDataSetFromMatrix</span>(<span class="at">countData =</span> feature.counts.table,</span>
+<span id="cb6-2"><a href="#cb6-2"></a>                                 <span class="at">colData =</span> sample_table,</span>
+<span id="cb6-3"><a href="#cb6-3"></a>                                 <span class="at">design =</span> <span class="sc">~</span>  Batch <span class="sc">+</span> Condition <span class="sc">+</span> Time <span class="sc">+</span> Condition<span class="sc">:</span>Time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Reduced model</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>DESeq2 <span class="ot">&lt;-</span> <span class="fu">DESeq</span>(DESeq2,</span>
-<span id="cb8-2"><a href="#cb8-2"></a>                <span class="at">test =</span> <span class="st">"LRT"</span>,</span>
-<span id="cb8-3"><a href="#cb8-3"></a>                <span class="at">design =</span> <span class="sc">~</span>  Batch <span class="sc">+</span> Time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>DESeq2 <span class="ot">&lt;-</span> <span class="fu">DESeq</span>(DESeq2,</span>
+<span id="cb7-2"><a href="#cb7-2"></a>                <span class="at">test =</span> <span class="st">"LRT"</span>,</span>
+<span id="cb7-3"><a href="#cb7-3"></a>                <span class="at">reduced =</span> <span class="sc">~</span>  Batch <span class="sc">+</span> Condition <span class="sc">+</span> Time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>The p-values are determined solely by the difference in deviance between the <strong>Full</strong> and <strong>Reduced</strong> model formula (not log2 fold changes)</p>
+</section>
+<section id="tutorial" class="slide level2">
+<h2>Tutorial</h2>
 </section>
 <section id="cran-packages" class="slide level2 smaller">
 <h2>CRAN packages</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r code-overflow-scroll number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>cran.packages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"tidyverse"</span>,</span>
-<span id="cb9-2"><a href="#cb9-2"></a>                   <span class="st">"ggplotify"</span>,</span>
-<span id="cb9-3"><a href="#cb9-3"></a>                   <span class="st">"ggrepel"</span>,</span>
-<span id="cb9-4"><a href="#cb9-4"></a>                   <span class="st">"gplots"</span>,</span>
-<span id="cb9-5"><a href="#cb9-5"></a>                   <span class="st">"RColorBrewer"</span>,</span>
-<span id="cb9-6"><a href="#cb9-6"></a>                   <span class="st">"pheatmap"</span>,</span>
-<span id="cb9-7"><a href="#cb9-7"></a>                   <span class="st">"devtools"</span></span>
-<span id="cb9-8"><a href="#cb9-8"></a>                   )</span>
-<span id="cb9-9"><a href="#cb9-9"></a></span>
-<span id="cb9-10"><a href="#cb9-10"></a>cran.load <span class="ot">&lt;-</span> <span class="cf">function</span>(pkg){</span>
-<span id="cb9-11"><a href="#cb9-11"></a>        new.pkg <span class="ot">&lt;-</span> pkg[<span class="sc">!</span>(pkg <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[, <span class="st">"Package"</span>])]</span>
-<span id="cb9-12"><a href="#cb9-12"></a>        <span class="cf">if</span> (<span class="fu">length</span>(new.pkg)){</span>
-<span id="cb9-13"><a href="#cb9-13"></a>          <span class="fu">install.packages</span>(new.pkg, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb9-14"><a href="#cb9-14"></a>          }</span>
-<span id="cb9-15"><a href="#cb9-15"></a>        <span class="fu">sapply</span>(pkg, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb9-16"><a href="#cb9-16"></a>}</span>
-<span id="cb9-17"><a href="#cb9-17"></a><span class="fu">cran.load</span>(cran.packages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r code-overflow-scroll number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>cran.packages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"tidyverse"</span>,</span>
+<span id="cb8-2"><a href="#cb8-2"></a>                   <span class="st">"devtools"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3"></a></span>
+<span id="cb8-4"><a href="#cb8-4"></a>cran.load <span class="ot">&lt;-</span> <span class="cf">function</span>(pkg){</span>
+<span id="cb8-5"><a href="#cb8-5"></a>        new.pkg <span class="ot">&lt;-</span> pkg[<span class="sc">!</span>(pkg <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[, <span class="st">"Package"</span>])]</span>
+<span id="cb8-6"><a href="#cb8-6"></a>        <span class="cf">if</span> (<span class="fu">length</span>(new.pkg)){</span>
+<span id="cb8-7"><a href="#cb8-7"></a>          <span class="fu">install.packages</span>(new.pkg, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-8"><a href="#cb8-8"></a>          }</span>
+<span id="cb8-9"><a href="#cb8-9"></a>        <span class="fu">sapply</span>(pkg, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-10"><a href="#cb8-10"></a>}</span>
+<span id="cb8-11"><a href="#cb8-11"></a><span class="fu">cran.load</span>(cran.packages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="bioconductor-packages" class="slide level2 smaller">
 <h2>Bioconductor Packages</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r code-overflow-scroll number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>biomart.packages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"DESeq2"</span>)</span>
-<span id="cb10-2"><a href="#cb10-2"></a></span>
-<span id="cb10-3"><a href="#cb10-3"></a>biomart.load <span class="ot">&lt;-</span> <span class="cf">function</span>(pkg){</span>
-<span id="cb10-4"><a href="#cb10-4"></a>        new.pkg <span class="ot">&lt;-</span> pkg[<span class="sc">!</span>(pkg <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[, <span class="st">"Package"</span>])]</span>
-<span id="cb10-5"><a href="#cb10-5"></a>        <span class="cf">if</span> (<span class="fu">length</span>(new.pkg)){</span>
-<span id="cb10-6"><a href="#cb10-6"></a>          <span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"BiocManager"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb10-7"><a href="#cb10-7"></a>            <span class="fu">install.packages</span>(<span class="st">"BiocManager"</span>)</span>
-<span id="cb10-8"><a href="#cb10-8"></a>            BiocManager<span class="sc">::</span><span class="fu">install</span>(new.pkg)</span>
-<span id="cb10-9"><a href="#cb10-9"></a>        }</span>
-<span id="cb10-10"><a href="#cb10-10"></a>        <span class="fu">sapply</span>(pkg, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb10-11"><a href="#cb10-11"></a>}</span>
-<span id="cb10-12"><a href="#cb10-12"></a><span class="fu">biomart.load</span>(biomart.packages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r code-overflow-scroll number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>bioconductor.packages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"DESeq2"</span>,</span>
+<span id="cb9-2"><a href="#cb9-2"></a>                      <span class="st">"biomaRt"</span>,</span>
+<span id="cb9-3"><a href="#cb9-3"></a>                      <span class="st">"org.Mm.eg.db"</span>)</span>
+<span id="cb9-4"><a href="#cb9-4"></a></span>
+<span id="cb9-5"><a href="#cb9-5"></a>bioconductor.load <span class="ot">&lt;-</span> <span class="cf">function</span>(pkg){</span>
+<span id="cb9-6"><a href="#cb9-6"></a>        new.pkg <span class="ot">&lt;-</span> pkg[<span class="sc">!</span>(pkg <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[, <span class="st">"Package"</span>])]</span>
+<span id="cb9-7"><a href="#cb9-7"></a>        <span class="cf">if</span> (<span class="fu">length</span>(new.pkg)){</span>
+<span id="cb9-8"><a href="#cb9-8"></a>          <span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"BiocManager"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb9-9"><a href="#cb9-9"></a>            <span class="fu">install.packages</span>(<span class="st">"BiocManager"</span>)</span>
+<span id="cb9-10"><a href="#cb9-10"></a>            BiocManager<span class="sc">::</span><span class="fu">install</span>(new.pkg)</span>
+<span id="cb9-11"><a href="#cb9-11"></a>        }</span>
+<span id="cb9-12"><a href="#cb9-12"></a>        <span class="fu">sapply</span>(pkg, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-13"><a href="#cb9-13"></a>}</span>
+<span id="cb9-14"><a href="#cb9-14"></a><span class="fu">bioconductor.load</span>(bioconductor.packages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="github-packages" class="slide level2 smaller">
 <h2>Github Packages</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r code-overflow-scroll number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>git.packages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"pipelineTools"</span>)</span>
-<span id="cb11-2"><a href="#cb11-2"></a>repository <span class="ot">&lt;-</span> <span class="st">"GrahamHamilton"</span></span>
-<span id="cb11-3"><a href="#cb11-3"></a>git.load <span class="ot">&lt;-</span> <span class="cf">function</span>(pkg){</span>
-<span id="cb11-4"><a href="#cb11-4"></a>        new.pkg <span class="ot">&lt;-</span> pkg[<span class="sc">!</span>(pkg <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[, <span class="st">"Package"</span>])]</span>
-<span id="cb11-5"><a href="#cb11-5"></a>        <span class="cf">if</span> (<span class="fu">length</span>(new.pkg))</span>
-<span id="cb11-6"><a href="#cb11-6"></a>          <span class="fu">install_github</span>(<span class="fu">paste</span>(repository,new.pkg,<span class="at">sep =</span> <span class="st">"/"</span>), <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb11-7"><a href="#cb11-7"></a>        <span class="fu">sapply</span>(pkg, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb11-8"><a href="#cb11-8"></a>}</span>
-<span id="cb11-9"><a href="#cb11-9"></a><span class="fu">git.load</span>(git.packages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r code-overflow-scroll number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>git.packages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"pipelineTools"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2"></a>repository <span class="ot">&lt;-</span> <span class="st">"GrahamHamilton"</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a>git.load <span class="ot">&lt;-</span> <span class="cf">function</span>(pkg){</span>
+<span id="cb10-4"><a href="#cb10-4"></a>        new.pkg <span class="ot">&lt;-</span> pkg[<span class="sc">!</span>(pkg <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[, <span class="st">"Package"</span>])]</span>
+<span id="cb10-5"><a href="#cb10-5"></a>        <span class="cf">if</span> (<span class="fu">length</span>(new.pkg))</span>
+<span id="cb10-6"><a href="#cb10-6"></a>          <span class="fu">install_github</span>(<span class="fu">paste</span>(repository,new.pkg,<span class="at">sep =</span> <span class="st">"/"</span>), <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-7"><a href="#cb10-7"></a>        <span class="fu">sapply</span>(pkg, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-8"><a href="#cb10-8"></a>}</span>
+<span id="cb10-9"><a href="#cb10-9"></a><span class="fu">git.load</span>(git.packages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section>
@@ -1553,27 +1486,29 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 <section id="set-up" class="slide level2">
 <h2>Set Up</h2>
 <h3 id="results-directory">Results directory</h3>
+<p>Firstly, We will create a directory to save differential expression data</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># Create directory for DESeq2 data</span></span>
-<span id="cb12-2"><a href="#cb12-2"></a>deseq2_results_dir <span class="ot">=</span> <span class="st">"DESeq2"</span></span>
-<span id="cb12-3"><a href="#cb12-3"></a><span class="fu">dir.create</span>(deseq2_results_dir, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># Create directory for DESeq2 data</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>deseq2_results_dir <span class="ot">=</span> <span class="st">"DESeq2"</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="fu">dir.create</span>(deseq2_results_dir, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <h3 id="statistical-cut-off-values">Statistical cut off values</h3>
+<p>Create the cut off used for filtering results</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>pvalueCutoff <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a>qvalueCutoff <span class="ot">&lt;-</span> <span class="fl">0.1</span></span>
-<span id="cb13-3"><a href="#cb13-3"></a>foldchange <span class="ot">&lt;-</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>pvalueCutoff <span class="ot">&lt;-</span> <span class="fl">0.05</span> <span class="co"># P value</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>qvalueCutoff <span class="ot">&lt;-</span> <span class="fl">0.1</span> <span class="co"># Adjusted P value</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a>foldchange <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># Fold change, usually fold change is log2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="set-up-1" class="slide level2">
+<section id="set-up-1" class="slide level2 smaller">
 <h2>Set Up</h2>
 <h3 id="samples">Samples</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14" data-code-line-numbers="1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>sample_table <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">"./data/SampleDescription.tsv"</span>,<span class="at">col_types =</span> <span class="st">"ff"</span>)</span>
-<span id="cb14-2"><a href="#cb14-2"></a>sample_table  <span class="sc">%&gt;%</span></span>
-<span id="cb14-3"><a href="#cb14-3"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">6</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb14-4"><a href="#cb14-4"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb14-5"><a href="#cb14-5"></a>  <span class="fu">kable_styling</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13" data-code-line-numbers="1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>sample_table <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">"./data/SampleDescription.tsv"</span>,<span class="at">col_types =</span> <span class="st">"ff"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2"></a>sample_table  <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">6</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb13-5"><a href="#cb13-5"></a>  <span class="fu">kable_styling</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <table class="table" style="margin-left: auto; margin-right: auto;">
@@ -1618,13 +1553,13 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 <h2>Set Up</h2>
 <h3 id="comparisons">Comparisons</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15" data-code-line-numbers="2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># Import comparisons files and set column type to factors, this is an example for a comparisons table with a sample name and treanment column.</span></span>
-<span id="cb15-2"><a href="#cb15-2"></a>comparisons <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">"./data/comparisons.tsv"</span>,<span class="at">col_types =</span> <span class="st">"ff"</span>)</span>
-<span id="cb15-3"><a href="#cb15-3"></a>comparisons<span class="sc">%&gt;%</span></span>
-<span id="cb15-4"><a href="#cb15-4"></a>  as.data.frame<span class="sc">%&gt;%</span></span>
-<span id="cb15-5"><a href="#cb15-5"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">6</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb15-6"><a href="#cb15-6"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb15-7"><a href="#cb15-7"></a>  <span class="fu">kable_styling</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14" data-code-line-numbers="2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># Import comparisons files and set column type to factors, this is an example for a comparisons table with a sample name and treanment column.</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>comparisons <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">"./data/comparisons.tsv"</span>,<span class="at">col_types =</span> <span class="st">"ff"</span>)</span>
+<span id="cb14-3"><a href="#cb14-3"></a>comparisons<span class="sc">%&gt;%</span></span>
+<span id="cb14-4"><a href="#cb14-4"></a>  as.data.frame<span class="sc">%&gt;%</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">6</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-6"><a href="#cb14-6"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb14-7"><a href="#cb14-7"></a>  <span class="fu">kable_styling</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <table class="table" style="margin-left: auto; margin-right: auto;">
@@ -1650,18 +1585,18 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 <h3 id="feature-counts">Feature counts</h3>
 <p>Read in the feature counts table -featurecounts, from Rsubread package</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16" data-code-line-numbers="1-7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>feature.counts.table <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">"./data/feature_counts_table.tsv"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb16-2"><a href="#cb16-2"></a>  <span class="fu">column_to_rownames</span>(<span class="at">var =</span> <span class="fu">colnames</span>(.[,<span class="dv">1</span>])) <span class="sc">%&gt;%</span></span>
-<span id="cb16-3"><a href="#cb16-3"></a>  <span class="fu">as.data.frame</span>()</span>
-<span id="cb16-4"><a href="#cb16-4"></a></span>
-<span id="cb16-5"><a href="#cb16-5"></a><span class="co"># Ensure that the counts table is in the same order as the sample table</span></span>
-<span id="cb16-6"><a href="#cb16-6"></a>feature.counts.table <span class="ot">&lt;-</span> feature.counts.table <span class="sc">%&gt;%</span></span>
-<span id="cb16-7"><a href="#cb16-7"></a>  <span class="fu">select</span>(<span class="fu">c</span>(sample_table<span class="sc">$</span>Sample))</span>
-<span id="cb16-8"><a href="#cb16-8"></a></span>
-<span id="cb16-9"><a href="#cb16-9"></a>feature.counts.table <span class="sc">%&gt;%</span></span>
-<span id="cb16-10"><a href="#cb16-10"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb16-11"><a href="#cb16-11"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb16-12"><a href="#cb16-12"></a>  <span class="fu">kable_styling</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15" data-code-line-numbers="1-7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>feature.counts.table <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">"./data/feature_counts_table.tsv"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a>  <span class="fu">column_to_rownames</span>(<span class="at">var =</span> <span class="fu">colnames</span>(.[,<span class="dv">1</span>])) <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3"></a>  <span class="fu">as.data.frame</span>()</span>
+<span id="cb15-4"><a href="#cb15-4"></a></span>
+<span id="cb15-5"><a href="#cb15-5"></a><span class="co"># Ensure that the counts table is in the same order as the sample table</span></span>
+<span id="cb15-6"><a href="#cb15-6"></a>feature.counts.table <span class="ot">&lt;-</span> feature.counts.table <span class="sc">%&gt;%</span></span>
+<span id="cb15-7"><a href="#cb15-7"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">c</span>(sample_table<span class="sc">$</span>Sample))</span>
+<span id="cb15-8"><a href="#cb15-8"></a></span>
+<span id="cb15-9"><a href="#cb15-9"></a>feature.counts.table <span class="sc">%&gt;%</span></span>
+<span id="cb15-10"><a href="#cb15-10"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb15-11"><a href="#cb15-11"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb15-12"><a href="#cb15-12"></a>  <span class="fu">kable_styling</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <table class="table" style="margin-left: auto; margin-right: auto;">
@@ -1715,54 +1650,54 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 <h3 id="htseq-count">HtSeq-Count</h3>
 <p>Read in the feature counts for the counts files - HtSeq Counts</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17" data-code-line-numbers="1-8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">"./data/htseq_counts/"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">str_replace_all</span>(<span class="st">"-"</span>,<span class="st">"_"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb17-3"><a href="#cb17-3"></a>  as.data.frame <span class="sc">%&gt;%</span></span>
-<span id="cb17-4"><a href="#cb17-4"></a>  <span class="fu">rename</span>(<span class="at">files =</span> <span class="st">"."</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-5"><a href="#cb17-5"></a>  <span class="fu">bind_cols</span>(<span class="fu">read_tsv</span>(<span class="st">"./data/SampleDescription.tsv"</span>,<span class="at">col_types =</span> <span class="st">"cf"</span>))</span>
-<span id="cb17-6"><a href="#cb17-6"></a></span>
-<span id="cb17-7"><a href="#cb17-7"></a>sampleDataFrame <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">sampleName =</span> files<span class="sc">$</span>Sample,</span>
-<span id="cb17-8"><a href="#cb17-8"></a>                      <span class="at">fileName =</span> files<span class="sc">$</span>files,</span>
-<span id="cb17-9"><a href="#cb17-9"></a>                      <span class="at">condition =</span> files<span class="sc">$</span>Condition)</span>
-<span id="cb17-10"><a href="#cb17-10"></a></span>
-<span id="cb17-11"><a href="#cb17-11"></a>sampleDataFrame <span class="sc">%&gt;%</span></span>
-<span id="cb17-12"><a href="#cb17-12"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb17-13"><a href="#cb17-13"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb17-14"><a href="#cb17-14"></a>  <span class="fu">kable_styling</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16" data-code-line-numbers="1-8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">"./data/htseq_counts/"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a>  <span class="fu">str_replace_all</span>(<span class="st">"-"</span>,<span class="st">"_"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a>  as.data.frame <span class="sc">%&gt;%</span></span>
+<span id="cb16-4"><a href="#cb16-4"></a>  <span class="fu">rename</span>(<span class="at">files =</span> <span class="st">"."</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-5"><a href="#cb16-5"></a>  <span class="fu">bind_cols</span>(<span class="fu">read_tsv</span>(<span class="st">"./data/SampleDescription.tsv"</span>,<span class="at">col_types =</span> <span class="st">"cf"</span>))</span>
+<span id="cb16-6"><a href="#cb16-6"></a></span>
+<span id="cb16-7"><a href="#cb16-7"></a>sampleDataFrame <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">sampleName =</span> files<span class="sc">$</span>Sample,</span>
+<span id="cb16-8"><a href="#cb16-8"></a>                      <span class="at">fileName =</span> files<span class="sc">$</span>files,</span>
+<span id="cb16-9"><a href="#cb16-9"></a>                      <span class="at">condition =</span> files<span class="sc">$</span>Condition)</span>
+<span id="cb16-10"><a href="#cb16-10"></a></span>
+<span id="cb16-11"><a href="#cb16-11"></a>sampleDataFrame <span class="sc">%&gt;%</span></span>
+<span id="cb16-12"><a href="#cb16-12"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-13"><a href="#cb16-13"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb16-14"><a href="#cb16-14"></a>  <span class="fu">kable_styling</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="differential-expression" class="slide level2">
 <h2>Differential Expression</h2>
 <h3 id="deseq2-using-feature-counts-table">DESeq2 using feature counts table</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>DESeq2Table <span class="ot">&lt;-</span> <span class="fu">DESeqDataSetFromMatrix</span>(<span class="at">countData =</span> feature.counts.table,</span>
-<span id="cb18-2"><a href="#cb18-2"></a>                                      <span class="at">colData =</span> sample_table,</span>
-<span id="cb18-3"><a href="#cb18-3"></a>                                      <span class="at">design=</span> <span class="sc">~</span>  Condition)</span>
-<span id="cb18-4"><a href="#cb18-4"></a>dds <span class="ot">&lt;-</span> <span class="fu">DESeq</span>(DESeq2Table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>DESeq2Table <span class="ot">&lt;-</span> <span class="fu">DESeqDataSetFromMatrix</span>(<span class="at">countData =</span> feature.counts.table,</span>
+<span id="cb17-2"><a href="#cb17-2"></a>                                      <span class="at">colData =</span> sample_table,</span>
+<span id="cb17-3"><a href="#cb17-3"></a>                                      <span class="at">design=</span> <span class="sc">~</span>  Condition)</span>
+<span id="cb17-4"><a href="#cb17-4"></a>dds <span class="ot">&lt;-</span> <span class="fu">DESeq</span>(DESeq2Table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Write the normalised read counts to a file</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>total.norm.counts <span class="ot">&lt;-</span> <span class="fu">counts</span>(<span class="fu">estimateSizeFactors</span>(dds), <span class="at">normalized =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb19-2"><a href="#cb19-2"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb19-3"><a href="#cb19-3"></a>  <span class="fu">rownames_to_column</span>(<span class="at">var =</span> <span class="st">"Ensembl_ID"</span>)</span>
-<span id="cb19-4"><a href="#cb19-4"></a><span class="fu">write_tsv</span>(total.norm.counts,<span class="st">"normalised_read_counts.tsv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>total.norm.counts <span class="ot">&lt;-</span> <span class="fu">counts</span>(<span class="fu">estimateSizeFactors</span>(dds), <span class="at">normalized =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a>  <span class="fu">rownames_to_column</span>(<span class="at">var =</span> <span class="st">"Ensembl_ID"</span>)</span>
+<span id="cb18-4"><a href="#cb18-4"></a><span class="fu">write_tsv</span>(total.norm.counts,<span class="st">"normalised_read_counts.tsv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="differential-expression-1" class="slide level2">
 <h2>Differential Expression</h2>
 <h3 id="deseq2-using-htseq-count-files">DESeq2 using htseq-count files</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>DESeq2Table <span class="ot">&lt;-</span> <span class="fu">DESeqDataSetFromHTSeqCount</span>(<span class="at">sampleTable =</span> sampleDataFrame,</span>
-<span id="cb20-2"><a href="#cb20-2"></a>                                           <span class="at">directory =</span> <span class="st">"./data/htseq_counts/"</span>,</span>
-<span id="cb20-3"><a href="#cb20-3"></a>                                           <span class="at">design=</span> <span class="sc">~</span>  condition)</span>
-<span id="cb20-4"><a href="#cb20-4"></a>dds <span class="ot">&lt;-</span> <span class="fu">DESeq</span>(DESeq2Table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>DESeq2Table <span class="ot">&lt;-</span> <span class="fu">DESeqDataSetFromHTSeqCount</span>(<span class="at">sampleTable =</span> sampleDataFrame,</span>
+<span id="cb19-2"><a href="#cb19-2"></a>                                           <span class="at">directory =</span> <span class="st">"./data/htseq_counts/"</span>,</span>
+<span id="cb19-3"><a href="#cb19-3"></a>                                           <span class="at">design=</span> <span class="sc">~</span>  condition)</span>
+<span id="cb19-4"><a href="#cb19-4"></a>dds <span class="ot">&lt;-</span> <span class="fu">DESeq</span>(DESeq2Table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="saving-workspace" class="slide level2">
 <h2>Saving Workspace</h2>
 <p>Save the workspace so we can carry on tomorrow without having to run these steps again. To save the entire workspace use the save.image() command</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">save.image</span>(<span class="st">"Session2.RData"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">save.image</span>(<span class="st">"Session2.RData"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="footer footer-default">
 

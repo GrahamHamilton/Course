@@ -5,6 +5,71 @@ editor: source
 ---
 
 
+## CRAN packages {.smaller}
+
+```{r CRAN}
+#| echo: true
+#| code-overflow: scroll
+#| output: false
+
+cran.packages <- c("tidyverse",
+                   "ggplotify",
+                   "ggrepel",
+                   "gplots",
+                   "RColorBrewer",
+                   "pheatmap",
+                   "devtools"
+                   )
+
+cran.load <- function(pkg){
+        new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+        if (length(new.pkg)){
+          install.packages(new.pkg, dependencies = TRUE)
+          }
+        sapply(pkg, require, character.only = TRUE)
+}
+cran.load(cran.packages)
+```
+
+## Bioconductor Packages {.smaller}
+
+```{r Bioconductor}
+#| echo: true
+#| code-overflow: scroll
+#| output: false
+
+biomart.packages <- c("DESeq2")
+
+biomart.load <- function(pkg){
+        new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+        if (length(new.pkg)){
+          if (!requireNamespace("BiocManager", quietly = TRUE))
+            install.packages("BiocManager")
+            BiocManager::install(new.pkg)
+        }
+        sapply(pkg, require, character.only = TRUE)
+}
+biomart.load(biomart.packages)
+```
+
+## Github Packages {.smaller}
+
+```{r Github}
+#| echo: true
+#| code-overflow: scroll
+#| output: false
+
+git.packages <- c("pipelineTools")
+repository <- "GrahamHamilton"
+git.load <- function(pkg){
+        new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+        if (length(new.pkg))
+          install_github(paste(repository,new.pkg,sep = "/"), dependencies = TRUE)
+        sapply(pkg, require, character.only = TRUE)
+}
+git.load(git.packages)
+```
+
 ## Dispersion plots
 
 ::: notes

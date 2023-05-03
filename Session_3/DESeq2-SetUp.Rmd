@@ -1,0 +1,109 @@
+---
+title: "DESeq2_SetUp"
+output: html_notebook
+---
+
+## Install and load packages from CRAN and Bioconductor
+```{r}
+cran.packages <- c("tidyverse",
+                   "devtools")
+
+cran.load <- function(pkg){
+        new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+        if (length(new.pkg)){
+          install.packages(new.pkg, dependencies = TRUE)
+          }
+        sapply(pkg, require, character.only = TRUE)
+}
+cran.load(cran.packages)
+
+bioconductor.packages <- c("DESeq2",
+                      "biomaRt",
+                      "org.Mm.eg.db")
+
+bioconductor.load <- function(pkg){
+        new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+        if (length(new.pkg)){
+          if (!requireNamespace("BiocManager", quietly = TRUE))
+            install.packages("BiocManager")
+            BiocManager::install(new.pkg)
+        }
+        sapply(pkg, require, character.only = TRUE)
+}
+bioconductor.load(bioconductor.packages)
+```
+### Results directory
+Create a directory to save differential expression data
+
+```{r}
+#| echo: true
+# Create directory for DESeq2 data
+deseq2_results_dir = "DESeq2"
+dir.create(deseq2_results_dir, showWarnings = FALSE)
+```
+
+### Statistical cut off values
+Create the cut offs used for filtering results
+
+```{r}
+#| echo: true
+pvalueCutoff <- 0.05 # P value
+qvalueCutoff <- 0.1 # Adjusted P value
+foldchange <- 1 # Fold change, usually fold change is log2
+```
+
+### Read Samples Description
+
+This file containing the sample/replicate names along with the treatment group for each sample/replicate. This file can also contain other confounding factor for example Batch.
+
+Import the Sample description file sample_description.tsv from the data directory using the read_tsv command from the readr package. It is a time saver if you can set the column data type at the same time as importing the data. DESeq2 prefers data to be set as factors, discrete values rather than continuous. You can do this using the col_types parameter in read_tsv. HINT: look at the help by typing ?read_tsv in the Console pane.
+
+```{r}
+
+```
+
+### Comparisons
+
+The file contains the pairwise comparisons we would like to perform. In this example there is only treatment and control samples, however it is quite common for multiple related treatments to be included in an experiment. This file is used to define which pairs are to be compared.
+
+Import the comparisons file comparisons.tsv from the data directory using the read_tsv command from the readr package. Again, it is a time saver if you can set the column data type at the same time as importing the data. DESeq2 prefers data to be set as factors, discrete values rather than continuous. You can do this using the col_types parameter in read_tsv. HINT: look at the help by typing ?read_tsv in the Console pane.
+```{r}
+
+```
+
+### Counts Data
+
+Read in the counts data from the file feature_counts_table.tsv in the data directory using the read_tsv command from the readr package. You will notice when reading the package in that the Ensembl gene ids are a column. DESeq2 requires these identifiers to be set as the row names. I would suggest using the command column_to_rownames, part of the tidyverse tibble package, and set the var, which defines the column to use as the rownames, colnames(.[,1]), which is R for the first column in the data frame. HINT: look at the help by typing ?column_to_rownames in the Console pane.
+```{r}
+
+```
+
+### Differential Expression
+
+Now we have imported the data we can run the DESeq2 command to perform the differential expression. Fill in the variable names, replace the three dots(...) for the counts data, the samples description table and the treatment name for the countData, colData and design respectively in the DESeqDataSetFromMatrix command.
+```{r}
+#| echo: true
+DESeq2Table <- DESeqDataSetFromMatrix(countData = ...,
+                                      colData = ...,
+                                      design= ~  ...)
+dds <- DESeq(DESeq2Table)
+```
+
+
+After the differential expression analysis has run we can get a table of normalised counts and write them to a file.
+
+```{r}
+total.norm.counts <- estimateSizeFactors(dds) %>%
+  counts(normalized = TRUE) %>%
+  as.data.frame() %>%
+  rownames_to_column(var = "Ensembl_ID")
+
+write_tsv(total.norm.counts,"normalised_read_counts.tsv")
+```
+
+## Saving Workspace
+Save the workspace so we can carry on tomorrow without having to run these steps again. To save the entire workspace use the save.image() command
+
+```{r}
+save.image("Session2.RData")
+```
