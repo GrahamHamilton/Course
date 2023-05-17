@@ -1,0 +1,1024 @@
+---
+title: "Session 4: DESeq2-Visualisation"
+format:
+  revealjs:
+    slide-number: c/t
+    show-slide-number: all
+editor: source
+---
+
+## Overview
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+-   Loading packages  
+-   Loading saved data  
+-   Dispersion plots  
+-   PCA plots  
+-   Heatmap  
+
+:::
+
+::: {.column width="50%"} 
+
+-   Pairwise comparison  
+-   MA plot  
+-   Volcano plot  
+-   Results table 
+
+:::
+
+::::
+
+## CRAN packages {.smaller}
+Install CRAN packages
+
+```{r CRAN}
+#| echo: true
+#| code-overflow: scroll
+#| output: false
+
+cran.packages <- c("tidyverse",
+                   "ggrepel",
+                   "kableExtra",
+                   "RColorBrewer",
+                   "pheatmap",
+                   "devtools")
+
+cran.load <- function(pkg){
+        new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+        if (length(new.pkg)){
+          install.packages(new.pkg, dependencies = TRUE)
+          }
+        sapply(pkg, require, character.only = TRUE)
+}
+cran.load(cran.packages)
+```
+
+## Bioconductor Packages {.smaller}
+
+Install Biocondustor packages
+
+```{r Bioconductor}
+#| echo: true
+#| code-overflow: scroll
+#| output: false
+
+bioconductor.packages <- c("DESeq2",
+                           "biomaRt",
+                           "apeglm")
+
+bioconductor.load <- function(pkg){
+        new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+        if (length(new.pkg)){
+          if (!requireNamespace("BiocManager", quietly = TRUE))
+            install.packages("BiocManager")
+            BiocManager::install(new.pkg)
+        }
+        sapply(pkg, require, character.only = TRUE)
+}
+bioconductor.load(bioconductor.packages)
+```
+
+## Github Packages {.smaller}
+
+Install package fro GitHub
+
+```{r Github}
+#| echo: true
+#| code-overflow: scroll
+#| output: false
+
+git.packages <- c("pipelineTools")
+repository <- "GrahamHamilton"
+git.load <- function(pkg){
+        new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+        if (length(new.pkg))
+          install_github(paste(repository,new.pkg,sep = "/"), dependencies = TRUE)
+        sapply(pkg, require, character.only = TRUE)
+}
+git.load(git.packages)
+```
+
+## Load Save Data
+
+Load the data from the previous R session
+
+```{r}
+#| echo: true
+#| eval: true
+load("../Session_3/Session3.RData")
+```
+
+## Results Directory
+
+Create a results directory for the DESeq2 results files
+
+```{r}
+#| echo: true
+#| eval: true
+deseq2_results_dir <- "DESeq2"
+dir.create(deseq2_results_dir, showWarnings = FALSE)
+```
+
+
+## Dispersion {.smaller}
+
+Dispersion is a measure of the spread of the data.
+DESeq2 dispersion estimates are:
+
+-   inversely related to the mean
+-   directly related to variance
+
+Based on this relationship, the dispersion is higher for small mean counts and lower for large mean counts.
+
+Dispersion estimates reflect the variance in gene expression for a given mean value.
+
+## Dispersion plots {.smaller}
+:::: {.columns}
+
+::: {.column width="40%"}
+-   Black points - dispersion estimates for each gene
+-   Red line - fitted to the gene-wise dispersion estimates
+-   Blue points -  gene-wise dispersion estimates moved toward the expected dispersion values, "shrinking"
+
+:::
+
+::: {.column width="60%"}
+
+```{r dipersion plot}
+#| echo: false
+#| output-location: column-fragment
+#| 
+dispersion_data <- mcols(dds) %>% 
+  as.data.frame() %>%
+  dplyr::select(baseMean, dispGeneEst, dispFit, dispersion) %>% 
+  pivot_longer(-baseMean, names_to = "variable", values_to = "value") %>%
+  drop_na()
+  
+dispersion_plot <- ggplot(dispersion_data, aes(x=baseMean, y=value, colour=variable)) + 
+  geom_point(size=0.1) +
+  scale_x_log10() + 
+  scale_y_log10() + 
+  ylab("Dispersion") + 
+  xlab("BaseMean") +
+  scale_colour_manual(values=c("#999999", "#B30C00", "#003865"),
+                      breaks=c("dispGeneEst", "dispFit", "dispersion"),
+                      labels=c("Estimate", "Fit", "Final"),
+                      name="") +
+  theme_classic() + 
+  guides(colour = guide_legend(override.aes = list(size=2)))
+
+ggsave(filename = "DispPlot.png",
+       plot = dispersion_plot,
+       path = deseq2_results_dir)
+dispersion_plot
+```
+:::
+
+::::
+
+## Principle Component Analysis {.smaller}
+Principal Component Analysis (PCA) is a technique used to emphasize variation and bring out strong patterns in a dataset^[https://www.youtube.com/watch?v=_UVHneBUBW0].
+
+Plot expression values of Sample 1 versus Sample 2
+![](images/PCA_1.png){width="60%"}
+
+::: aside
+A good PCA tutorial by Josh Starmer
+:::
+
+## PCA {.smaller}
+-   Draw line through the data with the most variation, PC1
+-   Draw line through the data with the second most variation, PC2
+-   PCA will compute a per sample score
+
+![](images/PCA_2.png){width="100%"}
+
+## PCA {.smaller}
+
+:::: {.columns}
+::: {.column width="50%"}
+-   Dataset have larger dimensions 
+-   n-dimensional space with n axes
+-   Principle component matrix with samples and scores
+-   Plot principal components against each other
+-   Expect that biological replicates to have similar scores 
+-   Samples from different treatment groups have different scores
+:::
+::: {.column width="50%"}
+![](images/PCA_3.png){width="50%"}
+![](images/PCA_4.png){width="50%"}
+:::
+::::
+
+## PCA {.smaller}
+Example PCA data
+
+![](images/PCA_table.png){width="50%"}
+
+## PCA {.smaller}
+
+:::: {.columns}
+::: {.column width="50%"}
+::: {style="font-size: 80%;"}
+
+Treatment - No variation on PC1 or PC2
+![](images/PCA_treatmentPC1.png){width="80%"}
+
+Cages - No variation on PC1 or PC2
+![](images/PCA_cage.png){width="80%"}
+
+:::
+:::
+
+::: {.column width="50%"}
+::: {style="font-size: 80%;"}
+
+Strain - variation PC1
+![](images/PCA_strain.png){width="80%"}
+
+Sex - variation PC2
+![](images/PCA_sex.png){width="80%"}
+
+:::
+:::
+::::
+
+## PCA {.smaller}
+
+Explore other Principle components for variation due to **Treatment**
+
+![](images/PCA_treatment_PC3.png){width="100%"}
+
+## PCA
+
+*   Samples separate by treatment on PC3
+*   Can regress out the variation driving PC1 and PC2
+    +   Add Strain and Sex as confounding factors to the model
+
+## PCA
+Count data transformations by regularized logarithm and variance stabilizing transformations, used for Principle Component Analysis.
+
+```{r variance stabilisation}
+#| echo: true
+rld <- rlog(dds,fitType = "local")
+rld_mat <- assay(rld)
+vsd <- varianceStabilizingTransformation(dds,fitType = "local")
+vsd_mat <- assay(vsd)
+```
+
+## PCA Plots {.smaller}
+
+Calculate the principle component values using the R package prcomp().
+Add the meta data from the sample description table.
+
+```{r}
+#| echo: true
+pca <- prcomp(t(rld_mat))
+
+pca_data <- pca$x %>%
+  as.data.frame() %>%
+  rownames_to_column(var = "Sample") %>%
+  left_join(sample_table)
+```
+<br>
+
+::: {style="font-size: 50%;"}
+
+```{r}
+#| echo: false
+#| eval: true
+head(pca_data) %>%
+  kbl() %>%
+  kable_styling()
+```
+
+:::
+
+## PCA Plots {.smaller}
+
+Can also calculate the percentage variaction for each principle component
+
+```{r}
+#| echo: true
+percent_var <- round(pca$sdev^2/sum(pca$sdev^2) * 100, digits = 1)
+```
+
+```{r}
+#| echo: false
+#| eval: true
+ head(percent_var) %>%
+  kbl(col.names = NULL) %>%
+  kable_styling("condensed")
+```
+
+## PCA Plots {.smaller}
+
+Plot PC1 against PC2 using ggplot2
+
+```{r}
+rlog_pca <- ggplot(pca_data, aes(x = PC1, y = PC2, label=Sample, color=Condition)) +
+  geom_point(size=5) +
+  geom_text_repel(colour = "black",size=3) +
+  xlab(paste0("PC1: ",percent_var[1],"% variance")) +
+  ylab(paste0("PC2: ",percent_var[2],"% variance")) +
+  theme_classic() +
+  labs(title = "PCA Plot",
+       subtitle = "rlog transformed ") +
+  theme(legend.position = "right",
+        panel.grid.major.x = element_line("grey"), 
+        panel.grid.major.y= element_line("grey"))
+
+ggsave(filename = "rlog_PCA.png",
+       plot = rlog_pca,
+       path = deseq2_results_dir)
+  
+rlog_pca
+```
+
+## PCA Plots {.smaller}
+Similar plot using the vsd expression values
+
+```{r vsd PCA}
+#| echo: true
+#| output-location: slide
+pca <- prcomp(t(vsd_mat))
+pca_data <- pca$x %>%
+  as.data.frame() %>%
+  rownames_to_column(var = "Sample") %>%
+  left_join(sample_table)
+
+percent_var <- round(pca$sdev^2/sum(pca$sdev^2) * 100, digits = 1)
+
+vsd_pca_plot <- ggplot(pca_data,aes(PC1,PC2, label=Sample, color=Condition)) +
+  geom_point(size=5) +
+  geom_text_repel(colour = "black",size=3) +
+  xlab(paste0("PC1: ",percent_var[1],"% variance")) +
+  ylab(paste0("PC2: ",percent_var[2],"% variance")) +
+  theme_classic() +
+  labs(title = "PCA Plot",
+       subtitle = "vsd transformed ") +
+  theme(legend.position = "right",
+        panel.grid.major.x = element_line("grey"), 
+        panel.grid.major.y= element_line("grey"))
+
+ggsave(filename = "vsd_PCA.png",
+       plot = vsd_pca_plot,
+       path = deseq2_results_dir)
+
+vsd_pca_plot
+```
+
+## Heatmap {.smaller}
+
+Get a list ENSEMBL gene ids, with a p adjusted value of `r qvalueCutoff` or less
+
+```{r heatmap}
+#| echo: true
+de_genes <- results(dds) %>% # Get the de results
+  as.data.frame() %>% # Convert results to a data frame
+  rownames_to_column(var = "ensembl_gene_id") %>% # add the ensembl ids as a data frame column
+  filter(padj <= qvalueCutoff) %>% # Select data frame rows that have p values below the cut off
+  pull(ensembl_gene_id) # get the ensembl ids of the filtered genes as a character vector
+```
+<br>
+```{r}
+#| echo: false
+de_genes %>%
+  head(n = 3) %>%
+  kbl(col.names = NULL) %>%
+  kable_styling()
+```
+
+## Heatmap {.smaller}
+
+Create a table of log transformed normalised read counts. Convert into Z-scores.
+
+Z-scores - Take the log of the read counts, subtract the mean for the gene then divide by the standard deviation for that gene.
+```{r}
+#| echo: true
+#| code-overflow: wrap
+log2_de_genes <- total_norm_counts  %>%
+  filter(ensembl_gene_id %in% de_genes) %>% # Filter the normalised counts data frame for rows with the ensembl id of the differentially expressed genes list
+  column_to_rownames(var = "ensembl_gene_id") %>% # convert the ensembl_gene_id column to the dtaframe rownames
+  mutate(across(where(is.numeric), ~ .x + 1)) %>% # Add 1 to all the values to avoid NaN errors
+  log2() # Log2 tranform the data frame values
+```
+
+ 
+::: {style="font-size: 50%;"}
+
+```{r}
+log2_de_genes %>%
+  head(n = 1) %>%
+  kbl() %>%
+  kable_styling("condensed")
+```
+<br>
+:::
+
+```{r}
+#| echo: true
+#| code-overflow: wrap
+z_scores <- (log2_de_genes - rowMeans(log2_de_genes)) /rowSds(as.matrix(log2_de_genes)) 
+```
+
+::: {style="font-size: 50%;"}
+
+```{r}
+z_scores %>%
+  head(n = 1) %>%
+  kbl() %>%
+  kable_styling("condensed")
+```
+
+:::
+
+## Heatmap {.smaller}
+
+```{r}
+#| echo: true
+#| output-location: slide
+num_colours = 100 
+
+symetric_breaks <- seq(-max(abs(z_scores)),
+                       max(abs(z_scores)),
+                       length.out = num_colours + 1)
+
+column_annotations <- sample_table %>%
+  column_to_rownames(var = "Sample")
+
+ph <- pheatmap(z_scores,
+         color =colorRampPalette(c("#003865", "#FFFFFF","#B30C00"))(num_colours),
+         breaks = symetric_breaks,
+         show_rownames = F,
+         annotation_col = column_annotations)
+```
+
+```{r}
+#| echo: false
+save_pheatmap_png(plot = ph, 
+                  filename = "Heatmap.png",
+                  path = deseq2_results_dir)
+```
+
+## Annotations {.smaller}
+
+Create an annotations table using data from ENSEMBL Biomart
+
+```{r Annotations}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "1-10"
+database <- "hsapiens_gene_ensembl"
+mart <- "genes"
+filt <- "ensembl_gene_id"
+
+ensembl <- useEnsembl(biomart = mart, dataset = database)
+
+att <- c("ensembl_gene_id","external_gene_name","chromosome_name","start_position","end_position","gene_biotype","entrezgene_id")
+
+annotations <- getBM(attributes=att,filter=filt,values=rownames(dds),mart=ensembl) %>% 
+  distinct(ensembl_gene_id, .keep_all = TRUE)
+```
+
+```{r}
+#| echo: false
+#| eval: false
+write_delim(annotations,"./data/ensembl_annotations.tsv", delim = "\t")
+```
+
+```{r}
+#| echo: false
+#| eval: true
+annotations <- read_tsv("./data/ensembl_annotations.tsv")
+```
+<br>
+
+::: {style="font-size: 50%;"}
+```{r}
+#| eval: true
+annotations %>%
+  head(n = 3) %>%
+  kbl() %>%
+  kable_styling()
+```
+
+:::
+
+## Pairwise differential expression {.smaller}
+
+Select the groups for comparison
+
+```{r}
+#| echo: true
+
+base_condition <- comparisons$Base_condition %>% as.character() 
+test_condition <- comparisons$Test_condition %>% as.character()
+
+# Contrast name
+contrast_name <- paste(test_condition, "vs", base_condition, sep = "_")
+```
+
+
+## Pairwise Results
+Create directory for DESeq2 data
+```{r}
+#| echo: true
+#| eval: true
+results_dir = paste(contrast_name, "results", sep = "_")
+resultsFilePath <-file.path(deseq2_results_dir, results_dir, fsep = .Platform$file.sep)
+dir.create(resultsFilePath, showWarnings = FALSE)
+```
+
+Get the sample names for the contrast
+
+```{r}
+#| echo: true
+#| eval: true
+comparisonSampleNames <-  sample_table %>%
+  filter(Condition %in% c(test_condition, base_condition)) %>%
+  pull(Sample)
+```
+
+## Pairwise Results {.smaller}
+
+Get the log2 normalised counts to the results tables
+
+```{r}
+#| echo: true
+#| eval: true
+contrast_total_norm_counts <- total_norm_counts %>% 
+  column_to_rownames(var = "ensembl_gene_id") %>%
+  dplyr::select(comparisonSampleNames) %>%
+  rownames_to_column(var = "ensembl_gene_id")
+```
+<br>
+
+::: {style="font-size: 40%;"}
+
+```{r}
+#| echo: false
+#| eval: true
+contrast_total_norm_counts %>%
+  head(n = 4) %>%
+  kbl() %>%
+  kable_styling()
+```
+:::
+
+## Pairwise Results {.smaller}
+Create the results table
+
+*   **The order of the names determines the direction of fold change reported**
+*   **The second element is the level that is used as baseline**
+*   **Observe a log2 fold change of -2 - gene expression is lower treatment relative to the control**
+
+Add annotations and normalised read counts to the results table using the dplyr left_join command
+
+```{r}
+#| echo: true
+#| eval: true
+contrast <- results(dds, contrast = c("Condition", test_condition, base_condition)) %>% # Get the pair se comparison results
+  as.data.frame() %>% # Convert to dataframe
+  rownames_to_column(var = "ensembl_gene_id") %>% # Create an ensembl gene id column
+  left_join(annotations, by = "ensembl_gene_id")%>% # merge annotations by ensembl gene id
+  left_join(contrast_total_norm_counts, by = "ensembl_gene_id") %>% # Merge normalised counts by ensembl gene id
+  arrange(padj) %>% # Sort the dataframe by the p adjusted value ascending
+  replace_na(list(log2FoldChange = 0.001))
+```
+
+## Pairwise Results {.smaller}
+
+*   baseMean - mean of normalized counts for all samples  
+*   log2FoldChange - log2 fold change, condition treated vs untreated  
+*   lfcSE - standard error, condition treated vs untreated  
+*   stat - Wald statistic, condition treated vs untreated  
+*   pvalue - Wald test p-value: condition treated vs untreated  
+*   padj - BH adjusted p-values
+
+::: {style="font-size: 40%;"}
+
+```{r}
+#| echo: false
+#| eval: true
+contrast%>%
+  head(n = 4) %>%
+  kbl() %>%
+  kable_styling()
+```
+
+:::
+
+## Pairwise Results {.smaller}
+
+Save the results table to a file
+
+```{r}
+#| echo: true
+#| eval: true
+# Write the results data to file
+# Output file name
+outfileName <- paste(contrast_name, 'genes', 'tsv', sep = ".")
+write_delim(contrast,
+            file = file.path(resultsFilePath, outfileName, fsep = .Platform$file.sep),
+            delim = "\t")
+```
+
+## MA Plot {.smaller}
+-   MA plot shows the mean of the normalized counts versus the log2 foldchanges.
+-   Significantly differentially expressed genes are colored.
+
+## MA Plot {.smaller}
+Plot the log of the baseMean against the Log fold change
+
+```{r}
+#| echo: true
+#| eval: true
+ma_plot <- ggplot(contrast, aes(  x = log10(baseMean), y = log2FoldChange, colour = padj < 0.1  )) +
+  geom_point(size = 0.5) +
+  scale_colour_manual(name = 'padj < 0.1', values = setNames(c("#003865", "#cccccc"), c(T, F))) +
+  scale_y_continuous(breaks = seq(floor(min(contrast$log2FoldChange)), ceiling(max(contrast$log2FoldChange)), )) +
+  geom_hline(yintercept = 0, colour = "#B30C00", alpha = 0.5) +
+  theme_classic()  +
+  theme(
+    panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_blank(),
+    axis.line = element_line(colour = "#8c8c8c"),
+    legend.position = "none"
+  ) +
+  labs(title = paste(contrast_name, "MA Plot", sep = " "))
+```
+
+```{r}
+#| echo: false
+#| eval: true
+ggsave(filename = "MA_plot.png",
+       plot = ma_plot,
+       path = resultsFilePath)
+```
+
+## MA Plot {.smaller}
+
+```{r}
+ma_plot
+```
+
+**These data do not exhibit over dispersion to any great extent**
+
+
+
+## Overdispersion {.smaller}
+
+*   RNASeq data exhibits overdispersion
+    +   Variance > Mean
+*   Model - Negative Binomial
+*   However, does not account for large dispersion observed with low read counts
+    +   log2 fold changes adjusted, **lfcShrink()**
+    
+## Overdispersion {.smaller}
+
+:::: {.columns}
+::: {.column width="50%"}
+Example unshrunken results
+![](images/maplot_unshrunken.png){width="100%"}
+:::
+::: {.column width="50%"}
+Example shrunken results
+![](images/maplot_shrunken.png){width="100%"}
+:::
+::::
+    
+## Overdispersion {.smaller}
+
+*   LfcShrink - shrinkage of the LFC estimates toward zero when the information for a gene is low
+    +   Low counts
+    +   High dispersion values
+    
+**Shrinking the log2 fold changes will not change the total number of genes that are identified as significantly differentially expressed**
+
+## Log Fold Shrinkage {.smaller}
+
+Create a results table with the lof fold shrinkage changes
+
+```{r}
+#| echo: true
+#| eval: true
+lfc_contrast <- lfcShrink(dds, coef = resultsNames(dds)[2],  type = "apeglm") %>%
+  as.data.frame() %>% # Convert to dataframe
+  rownames_to_column(var = "ensembl_gene_id") %>% # Create an ensembl gene id column
+  left_join(annotations, by = "ensembl_gene_id")%>% # merge annotations by ensembl gene id
+  left_join(contrast_total_norm_counts, by = "ensembl_gene_id") %>% # Merge normalised counts by ensembl gene id
+  arrange(padj) %>% # Sort the dataframe by the p adjusted value ascending
+  replace_na(list(log2FoldChange = 0.001))
+```
+
+## Log Fold Shrinkage {.smaller}
+
+Save the log fold shruken results table to a file
+
+```{r}
+#| echo: true
+#| eval: true
+# Write the results data to file
+# Output file name
+outfileName <- paste("lfc",contrast_name, 'genes', 'tsv', sep = ".")
+write_delim(lfc_contrast,
+            file = file.path(resultsFilePath, outfileName, fsep = .Platform$file.sep),
+            delim = "\t")
+```
+
+## Log Fold Shrinkage {.smaller}
+
+Plot the LFC shrunken data as an MA plot
+
+```{r}
+#| echo: true
+#| eval: true
+#| output-location: slide
+ma_plot <- lfc_contrast %>%
+  ggplot(aes(  x = log10(baseMean), y = log2FoldChange, colour = padj < 0.1  )) +
+  geom_point(size = 0.5) +
+  scale_colour_manual(name = 'padj < 0.1', values = setNames(c("#003865", "#cccccc"), c(T, F))) +
+  scale_y_continuous(breaks = seq(floor(min(lfc_contrast$log2FoldChange)), ceiling(max(lfc_contrast$log2FoldChange)), )) +
+  geom_hline(yintercept = 0, colour = "#B30C00", alpha = 0.5) +
+  theme_classic()  +
+  theme(
+    panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_blank(),
+    axis.line = element_line(colour = "#8c8c8c"),
+    legend.position = "none"
+  ) +
+  labs(title = paste(contrast_name, "MA Plot", sep = " "))
+
+ma_plot
+```
+
+```{r}
+#| echo: false
+#| eval: true
+ggsave(filename = "MA_shrunk_plot.png",
+       plot = ma_plot,
+       path = resultsFilePath)
+```
+
+## Volcano Plot {.smaller}
+
+Add a column to the resuts data frame stating that a gene is significantly either **UP** or **DOWN** regulated.
+<br>
+```{r}
+#| echo: true
+#| eval: true
+contrast<- contrast%>%
+  mutate(Expression = case_when(log2FoldChange >= foldchange &  padj <= qvalueCutoff ~ "Up-regulated",
+                                log2FoldChange <= -foldchange &  padj <= qvalueCutoff ~ "Down-regulated",
+                                TRUE ~ "Unchanged"))
+```
+
+::: {style="font-size: 40%;"}
+
+```{r}
+#| echo: false
+#| eval: true
+contrast%>%
+  head(n = 4) %>%
+  kbl() %>%
+  kable_styling()
+```
+
+:::
+
+## Volcano Plot {.smaller}
+
+Plot the Log fold change against the log of the adjusted P value
+
+```{r}
+#| echo: true
+#| eval: true
+vp <- ggplot(data = contrast, aes(x = log2FoldChange,y = -log10(padj))) +
+  geom_point(aes(color = Expression), size = 3/5)  +
+  scale_color_manual(values = c("#003865", "#CCCCCC","#B30C00")) +
+  xlab(expression("Log"[2]*" Fold Change")) +
+  ylab(expression("-Log"[10]*~ ""~italic(P)~"value")) +
+  geom_vline(xintercept = c(-foldchange, foldchange),
+             col = "#005C8A",
+             linetype = "dotted",
+             alpha = 0.4,
+             linewidth = 1) +
+  geom_hline(yintercept = -log10(qvalueCutoff),
+             col = "#005C8A",
+             linetype = "dotted",
+             alpha = 0.4,
+             linewidth = 1) +
+  theme_classic() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.major.y = element_blank(),
+        axis.line = element_line(colour = "grey80"),
+        plot.title = element_text(size = 30),
+        axis.title = element_text(size = 25),
+        axis.text = element_text(size = 25),
+        legend.text=element_text(size = 15)) +
+  guides(colour = guide_legend(override.aes = list(size=1.5)))
+```
+
+## Volcano Plot {.smaller}
+
+``` {r}
+#| echo: false
+#| eval: true
+vp
+
+ggsave(filename = "volcano_plot.png",
+       plot = vp, 
+       path = resultsFilePath)
+```
+
+##
+Iterate through the pairwise comparisons write out comma seperated files, MA plots, Volcano plots and heatmaps for each comparison
+```{r}
+#| echo: false
+#| eval: false
+pairwise_comparisons <- function(comparison){
+  base_condition <- comparisons[1]
+  test_condition <- comparison[2]
+  
+  # Contrast name
+  contrast_name <- paste(test_condition, "vs", base_condition, sep = "_")
+  print(contrast_name)
+  #############################################################################################
+  # Pairwise results
+  #############################################################################################
+  # Create directory for DESeq2 data
+  results_dir = paste(contrast_name, "results", sep = "_")
+  resultsFilePath <-file.path(deseq2_results_dir, results_dir, fsep = .Platform$file.sep)
+  dir.create(resultsFilePath, showWarnings = FALSE)
+
+  # Get the samples names for the contrast
+  comparisonSampleNames <-  sample_table %>%
+    filter(Condition %in% c(test_condition, base_condition)) %>%
+    pull(Sample)
+
+  # Subset the log2 normailsed counts to just the commpasison samples
+  contrast_total_norm_counts <- total_norm_counts %>% 
+    dplyr::select(all_of(comparisonSampleNames)) %>%
+    rownames_to_column(var = "ensembl_gene_id")
+  
+  # Get the pairwise comparison results
+  contrast <- results(dds, contrast = c("Condition", test_condition, base_condition)) %>% # Get the pair wise comparison results
+    as.data.frame() %>% # Convert to dataframe
+    rownames_to_column(var = "ensembl_gene_id") %>% # Create an ensembl gene id column
+    left_join(., annotations, by = "ensembl_gene_id")%>% # merge annotations by ensembl id
+    left_join(., contrast_total_norm_counts, by = "ensembl_gene_id") %>% # Merge normalised counts by ensembl id
+    arrange(padj) %>% # Sort the dataframe by the p adjusted value ascending
+    replace_na(list(log2FoldChange = 0.1))
+
+
+  # Write the results data to file
+  # Output file name
+  outfileName <- paste(contrast_name, 'genes', 'tsv', sep = ".")
+  write.table(contrast,
+              file = file.path(resultsFilePath, outfileName, fsep = .Platform$file.sep),
+              quote = FALSE,
+              row.names = FALSE,
+              sep = "\t")
+  
+  #############################################################################################
+  # MA plot
+  #############################################################################################
+  ma.plot <- contrast%>%
+    ggplot(aes(  x = log10(baseMean), y = log2FoldChange, colour = padj < 0.1  )) +
+    geom_point(size = 0.5) +
+    scale_colour_manual(name = 'padj < 0.1', values = setNames(c("#003865", "#cccccc"), c(T, F))) +
+    scale_y_continuous(breaks = seq(floor(min(contrastp$log2FoldChange)), ceiling(max(contrast$log2FoldChange)),  1)) +
+    geom_hline(yintercept = 0, colour = "#B30C00", alpha = 0.5) +
+    theme_classic()  +
+    theme(
+      panel.grid.major.x = element_blank(),
+      panel.grid.major.y = element_blank(),
+      axis.line = element_line(colour = "#8c8c8c"),
+      legend.position = "none"
+    ) +
+    labs(title = paste(contrast_name, "MA Plot", sep = " "))
+  
+  ggsave(filename = file.path(resultsFilePath, paste(contrast_name, 'genes', 'plotMA', 'png', sep = "."), fsep = .Platform$file.sep),plot = ma.plot)
+  
+  #############################################################################################
+  # Heatmap
+  #############################################################################################
+  de.genes <- contrast %>%
+    filter(padj < qvalueCutoff) %>%
+    pull(ensembl_gene_id)
+  
+  if (length(de.genes) > 1) {
+    log2_de_genes <- contrast_total_norm_counts %>% # add the ensembl ids as a data frame column
+      filter(ensembl_gene_id %in% de_genes) %>% # Filter the normalised counts data frame for rows with the ensembl id of the differentially expressed genes list
+      column_to_rownames(var = "ensembl_gene_id") %>% # convert the ensembl_gene_id column to the dtaframe rownames
+      mutate(across(where(is.numeric), ~ .x + 1)) %>% # Add 1 to all the values to avoid NaN errors
+      log2() # Log2 tranform the data frame values
+    
+    z_scores <- (log2_de_genes - rowMeans(log2_de_genes)) / rowSds(as.matrix(log2_de_genes)) # Convert to z-scores
+  
+    num_colours = 100 # Set the number of colours to be created for the heatmapping
+    
+    # Set the range and mid point, the mid point colour is set to zero
+    symetric_breaks <- seq(-max(abs(z_scores)),
+                           max(abs(z_scores)),
+                           length.out = num_colours + 1)
+    
+    # Format the annotations file  for pheatmap
+    column_annotations <- sample_table %>%
+      filter(Sample %in% comparisonSampleNames) %>%
+      column_to_rownames(var = "Sample")
+    
+    # Plot the heatmap
+    ph <- pheatmap(z_scores,
+             color =colorRampPalette(c("#003865", "#FFFFFF","#B30C00"))(num_colours),
+             breaks = symetric_breaks,
+             show_rownames = F,
+             annotation_col = column_annotations)
+    heatmap_name <- paste(contrast_name, qvalueCutoff, "heatmap.png", sep = ".")
+    save_pheatmap_png(plot =  ph, filename = heatmap_name,
+                      path = resultsFilePath)
+  }
+  
+  #############################################################################################
+  # Volcano plot
+  #############################################################################################
+  contrast<- contrast%>%
+    mutate(Expression = case_when(log2FoldChange >= foldchange &  padj <= qvalueCutoff~ "Up-regulated",
+                                  log2FoldChange <= -foldchange &  padj <= qvalueCutoff ~ "Down-regulated",
+                                  TRUE ~ "Unchanged"))
+  
+  vp <- ggplot(data = contrast, aes(x = log2FoldChange,y = -log10(padj))) +
+    geom_point(aes(color = Expression), size = 3/5)  +
+    scale_color_manual(values = c("#003865", "#CCCCCC","#B30C00")) +
+    xlab(expression("Log"[2]*" Fold Change")) +
+    ylab(expression("-Log"[10]*~ ""~italic(P)~"value")) +
+    geom_vline(xintercept = c(-foldchange, foldchange),
+               col = "#005C8A",
+               linetype = "dotted",
+               alpha = 0.4,
+               size = 1) +
+    geom_hline(yintercept = -log10(qvalueCutoff),
+               col = "#005C8A",
+               linetype = "dotted",
+               alpha = 0.4,
+               size = 1) +
+    xlim(-3,2.5) +
+    ylim(0, 5) +
+    theme_classic() +
+    theme(panel.grid.major.x = element_blank(),
+          panel.grid.major.y = element_blank(),
+          axis.line = element_line(colour = "grey80"),
+          plot.title = element_text(size = 30),
+          axis.title = element_text(size = 25),
+          axis.text = element_text(size = 25),
+          legend.text=element_text(size = 15)) +
+    guides(colour = guide_legend(override.aes = list(size=1.5)))
+  
+  ggsave(filename = file.path(resultsFilePath,"volcano_plot.png",fsep = .Platform$file.sep), plot = vp, device = "png")
+  
+  #############################################################################################
+  # GO Analysis
+  #############################################################################################
+  # Subset the differential expression results to return genes with padj cutoff
+  sig_genes <- contrast%>%
+    drop_na() %>%
+    as_tibble() %>%
+    filter(padj < qvalueCutoff) %>%
+    pull(ensembl_gene_id)
+
+  # Get the full list of entrez ids to as the background
+  universe_genes <- contrast%>%
+    drop_na() %>%
+    pull(ensembl_gene_id)
+
+  # Run the GO enrichment
+  enrichedGO <- enrichGO(
+    gene = sig_genes,
+    universe = universe_genes,
+    OrgDb = gsub("./","",package),
+    keyType = "GID",
+    ont = "ALL",
+    pAdjustMethod = "BH",
+    pvalueCutoff  = pvalueCutoff,
+    qvalueCutoff  = qvalueCutoff,
+    readable = TRUE
+  )
+
+  # If the GO analysis produced results, print and save a dotplot and save the results table
+  if (nrow(as.data.frame(enrichedGO)) > 0) {
+    ggsave(filename = file.path(resultsFilePath, "GO_dotplot.pdf", fsep = .Platform$file.sep),plot = dotplot(enrichedGO))
+    # Write out the results to a file
+    write.table(as.data.frame(enrichedGO),
+            file=file.path(resultsFilePath,paste(contrast_name, "enrichedGO","tsv", sep = "."),fsep =.Platform$file.sep),
+            quote=FALSE,
+            sep = "\t")
+  }
+}
+
+apply(comparisons, 1, pairwise_comparisons)
+```

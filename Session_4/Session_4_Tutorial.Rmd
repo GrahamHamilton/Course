@@ -1,0 +1,417 @@
+---
+title: "Session_4_Tutorial"
+output: html_document
+---
+
+## Instal & Load Required Pacakges
+### CRAN packages
+Install CRAN packages
+
+```{r CRAN}
+#| echo: true
+#| code-overflow: scroll
+#| output: false
+
+cran.packages <- c("tidyverse",
+                   "ggrepel",
+                   "kableExtra",
+                   "RColorBrewer",
+                   "pheatmap",
+                   "devtools")
+
+cran.load <- function(pkg){
+        new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+        if (length(new.pkg)){
+          install.packages(new.pkg, dependencies = TRUE)
+          }
+        sapply(pkg, require, character.only = TRUE)
+}
+cran.load(cran.packages)
+```
+
+### Bioconductor Packages
+
+Install Biocondustor packages
+
+```{r Bioconductor}
+#| echo: true
+#| code-overflow: scroll
+#| output: false
+
+bioconductor.packages <- c("DESeq2",
+                           "biomaRt",
+                           "apeglm")
+
+bioconductor.load <- function(pkg){
+        new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+        if (length(new.pkg)){
+          if (!requireNamespace("BiocManager", quietly = TRUE))
+            install.packages("BiocManager")
+            BiocManager::install(new.pkg)
+        }
+        sapply(pkg, require, character.only = TRUE)
+}
+bioconductor.load(bioconductor.packages)
+```
+
+### Github Packages
+
+Install package fro GitHub
+
+```{r Github}
+#| echo: true
+#| code-overflow: scroll
+#| output: false
+
+git.packages <- c("pipelineTools")
+repository <- "GrahamHamilton"
+git.load <- function(pkg){
+        new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+        if (length(new.pkg))
+          install_github(paste(repository,new.pkg,sep = "/"), dependencies = TRUE)
+        sapply(pkg, require, character.only = TRUE)
+}
+git.load(git.packages)
+```
+
+
+## Load Save Data
+
+Load the data from the previous R session, session 3, the data should be in the /Session_3/ directory and called Session3.RData. Your working directory for today should be Session_4 so you could use the relative path "..//Session_3/Session3.RData". The "relative" path to the file is relative to the current working directory.
+
+```{r read in previous days data}
+
+```
+
+## Results Directory
+
+Create a results directory for the DESeq2 results files, I would call it DESeq2, but you can call it whatever you would like. 
+HINT: You created a directory in yesterdays session.
+
+```{r results directory}
+
+```
+
+## Dispersion Plot
+This will use the DESeq2 object created at the end of Session_3, dds.
+
+```{r dipersion plot}
+dispersion_data <- mcols(dds) %>% 
+  as.data.frame() %>%
+  dplyr::select(baseMean, dispGeneEst, dispFit, dispersion) %>% 
+  pivot_longer(-baseMean, names_to = "variable", values_to = "value") %>%
+  drop_na()
+  
+dispersion_plot <- ggplot(dispersion_data, aes(x=baseMean, y=value, colour=variable)) + 
+  geom_point(size=0.1) +
+  scale_x_log10() + 
+  scale_y_log10() + 
+  ylab("Dispersion") + 
+  xlab("BaseMean") +
+  scale_colour_manual(values=c("#999999", "#B30C00", "#003865"),
+                      breaks=c("dispGeneEst", "dispFit", "dispersion"),
+                      labels=c("Estimate", "Fit", "Final"),
+                      name="") +
+  theme_classic() + 
+  guides(colour = guide_legend(override.aes = list(size=2)))
+
+ggsave(filename = "DispPlot.png",
+       plot = dispersion_plot,
+       path = deseq2_results_dir)
+dispersion_plot
+```
+
+## PCA
+Count data from the DESeq2 object are transformed by regularized logarithm and variance stabilizing transformation.
+For use in Principle Component Analysis.
+
+```{r variance stabilisation}
+#| echo: true
+rld <- rlog(dds,fitType = "local")
+rld_mat <- assay(rld)
+vsd <- varianceStabilizingTransformation(dds,fitType = "local")
+vsd_mat <- assay(vsd)
+```
+
+## PCA Plot
+Using the rlog transformed counts matrix plot PC1 vs PC2
+```{r rlog pca}
+pca <- prcomp(t(rld_mat))
+
+pca_data <- pca$x %>% # Get the pca values matrix
+  as.data.frame() %>% # Convert to a data frame
+  rownames_to_column(var = "Sample") %>% # Convert rownames to a named column
+  left_join(sample_table) # Add the meta data fromthe sample table
+
+# Calculate the percentage variance associated with each principle component
+percent_var <- round(pca$sdev^2/sum(pca$sdev^2) * 100, digits = 1) 
+
+# Plot the data
+rlog_pca <- ggplot(pca_data, aes(x = PC1, y = PC2, label=Sample, color=Condition)) +
+  geom_point(size=5) +
+  geom_text_repel(colour = "black",size=3) +
+  xlab(paste0("PC1: ",percent_var[1],"% variance")) +
+  ylab(paste0("PC2: ",percent_var[2],"% variance")) +
+  theme_classic() +
+  labs(title = "PCA Plot",
+       subtitle = "rlog transformed ") +
+  theme(legend.position = "right",
+        panel.grid.major.x = element_line("grey"), 
+        panel.grid.major.y= element_line("grey"))
+
+ggsave(filename = "rlog_PCA.png",
+       plot = rlog_pca,
+       path = deseq2_results_dir)
+  
+rlog_pca
+```
+
+Now, using the code above as a template, perform PCA analysis using the vsd transformed counts matrix and plot PC1 vs PC2.
+
+```{r vsd pca}
+
+```
+
+Now, using the code above as a template, plot PC3 vs PC4.
+
+```{r vsd pca PC3vsPC4}
+
+```
+
+## Heatmap
+
+Plot a heatmap using the pheatmap package
+```{r}
+de_genes <- results(dds) %>% # Get the de results
+  as.data.frame() %>% # Convert results to a data frame
+  rownames_to_column(var = "ensembl_gene_id") %>% # add the ensembl ids as a data frame column
+  filter(padj <= qvalueCutoff) %>% # Select data frame rows that have p values below the cut off
+  pull(ensembl_gene_id) # get the ensembl ids of the filtered genes as a character vector
+
+log2_de_genes <- total_norm_counts  %>% # Total normalised counts table, from Session 3 data.
+  filter(ensembl_gene_id %in% de_genes) %>% # Filter the normalised counts data frame for rows with the ensembl id of the differentially expressed genes list
+  column_to_rownames(var = "ensembl_gene_id") %>% # convert the ensembl_gene_id column to the dtaframe rownames
+  mutate(across(where(is.numeric), ~ .x + 1)) %>% # Add 1 to all the values to avoid NaN errors
+  log2() # Log2 tranform the data frame values
+
+# Calculate the z-scores for the differentialy expressed genes
+z_scores <- (log2_de_genes - rowMeans(log2_de_genes)) /rowSds(as.matrix(log2_de_genes)) 
+
+num_colours = 100 # Set the number of colours to be created
+
+# This ensures that the "whitest", or what ever colour is the median colour, value is set to zero
+symetric_breaks <- seq(-max(abs(z_scores)),
+                       max(abs(z_scores)),
+                       length.out = num_colours + 1)
+
+# Get the treatment annotations for each sample
+column_annotations <- sample_table %>%
+  column_to_rownames(var = "Sample")
+
+# Plot the heatmap using the pheatmap package
+ph <- pheatmap(z_scores,
+         color =colorRampPalette(c("#003865", "#FFFFFF","#B30C00"))(num_colours),
+         breaks = symetric_breaks,
+         show_rownames = F,
+         annotation_col = column_annotations)
+
+# Save the heatmap
+save_pheatmap_png(plot = ph, 
+                  filename = "Heatmap.png",
+                  path = deseq2_results_dir)
+```
+
+## Annotations
+
+Create an annotations table using data from ENSEMBL Biomart
+
+```{r Annotations}
+database <- "hsapiens_gene_ensembl" # Name of ENSEMBL data set
+mart <- "genes" # WQhich mart to use
+filt <- "ensembl_gene_id" # What biomart value to use for selection of results, in the case any matching ensembl gene ids
+
+ensembl <- useEnsembl(biomart = mart, dataset = database) # Create te connection to the ENSEMBL online database
+
+att <- c("ensembl_gene_id","external_gene_name","chromosome_name","start_position","end_position","gene_biotype","entrezgene_id") # Set the values that we want to download for Biomart
+
+annotations <- getBM(attributes=att,filter=filt,values=rownames(dds),mart=ensembl) %>% # Get the data from Biomart
+  distinct(ensembl_gene_id, .keep_all = TRUE) # Remove any duplicate gene id rows
+```
+
+Biomart has a range of datasets available
+```{r top dataset}
+datasets <- listDatasets(ensembl)
+head(datasets)
+```
+You can use the scientific name or non scientific name of an organism to find the one you are working on.
+```{r search human}
+searchDatasets(mart = ensembl, pattern = "Human")
+```
+Try to find the mouse dataset name, you could probably guess what it is though!
+```{r search mouse}
+searchDatasets(mart = ensembl, pattern = "")
+```
+
+Biomart has a wide range of attributes that can be used to annotate your results, over 3,000, you can view the first 5 with the code below
+```{r list attributes}
+attributes = listAttributes(ensembl)
+attributes[1:5,]
+```
+
+Atributes can be searched 
+```{r hgnc attributes}
+searchAttributes(mart = ensembl, pattern = "hgnc")
+```
+
+Try searching for Gene ontology attributes, go
+```{r go attributes}
+
+```
+
+## Pairwise comparisons
+Set the contrasts
+```{r set contrasts}
+base_condition <- comparisons$Base_condition %>% as.character() 
+test_condition <- comparisons$Test_condition %>% as.character()
+
+# Contrast name
+contrast_name <- paste(test_condition, "vs", base_condition, sep = "_")
+```
+
+Create directory for DESeq2 data
+```{r pairwise results directory}
+results_dir = paste(contrast_name, "results", sep = "_")
+resultsFilePath <-file.path(deseq2_results_dir, results_dir, fsep = .Platform$file.sep)
+dir.create(resultsFilePath, showWarnings = FALSE)
+```
+
+Get the samples names for the contrast groups
+```{r contrast sample names}
+comparisonSampleNames <-  sample_table %>%
+  filter(Condition %in% c(test_condition, base_condition)) %>%
+  pull(Sample)
+```
+
+Get the log2 normalised counts to add the results tables
+```{r normalise }
+contrast_total_norm_counts <- total_norm_counts %>% 
+  column_to_rownames(var = "ensembl_gene_id") %>%
+  dplyr::select(comparisonSampleNames) %>%
+  rownames_to_column(var = "ensembl_gene_id")
+```
+
+Create the results table
+Add annotations and normalised read counts to the results table using the dplyr left_join command
+
+```{r contrast results}
+contrast <- results(dds, contrast = c("Condition", test_condition, base_condition)) %>% # Get the pair se comparison results
+  as.data.frame() %>% # Convert to dataframe
+  rownames_to_column(var = "ensembl_gene_id") %>% # Create an ensembl gene id column
+  left_join(annotations, by = "ensembl_gene_id")%>% # merge annotations by ensembl gene id
+  left_join(contrast_total_norm_counts, by = "ensembl_gene_id") %>% # Merge normalised counts by ensembl gene id
+  arrange(padj) %>% # Sort the dataframe by the p adjusted value ascending
+  replace_na(list(log2FoldChange = 0.001))
+```
+
+Save the results table to a file
+
+```{r save results to file}
+outfileName <- paste(contrast_name, 'genes', 'tsv', sep = ".")
+write_delim(contrast,
+            file = file.path(resultsFilePath, outfileName, fsep = .Platform$file.sep),
+            delim = "\t")
+```
+
+Adapt the code above to get the lof fold shrunk results. Use the command lfcShrink(dds, coef = ...,  type = ...).
+Set the coef to the name of the contrast, you can find this from this command, resultsNames(dds)[2]
+Set the type to "apeglm"
+```{r contrast lfc results}
+
+```
+
+View the results, HINT use the command head()
+```{r view lfc results}
+
+```
+
+
+Save the lfc results to file, set the outfileName to paste("lfc",contrast_name, 'genes', 'tsv', sep = ".")
+```{r save lfc results to file}
+
+```
+
+MA plot
+```{r results ma plot}
+ma_plot <- ggplot(contrast, aes(  x = log10(baseMean), y = log2FoldChange, colour = padj < 0.1  )) +
+  geom_point(size = 0.5) +
+  scale_colour_manual(name = 'padj < 0.1', values = setNames(c("#003865", "#cccccc"), c(T, F))) +
+  scale_y_continuous(breaks = seq(floor(min(contrast$log2FoldChange)), ceiling(max(contrast$log2FoldChange)), )) +
+  geom_hline(yintercept = 0, colour = "#B30C00", alpha = 0.5) +
+  theme_classic()  +
+  theme(
+    panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_blank(),
+    axis.line = element_line(colour = "#8c8c8c"),
+    legend.position = "none"
+  ) +
+  labs(title = paste(contrast_name, "MA Plot", sep = " "))
+
+ma_plot
+
+ggsave(filename = "MA_plot.png",
+       plot = ma_plot,
+       path = resultsFilePath)
+```
+
+Now create and save an maplot for the lfc contrast results.
+```{r lfc results ma plot}
+
+```
+
+Volcano plot.
+Below is a near complete code chunk for plotting a volcano plot of the unshrunkren results data. You will need to fill in the correct values wheere there are three dots (...).
+Hint you will be plotting log fold change against the adjusted p value (which needs to be negative log 1o transformed). The points should be coloured based on the up or down regulation of the expression, this is created in the first comand of the code chunk.
+
+```{r volcano plot}
+contrast<- contrast%>%
+  mutate(Expression = case_when(log2FoldChange >= foldchange &  padj <= qvalueCutoff ~ "Up-regulated",
+                                log2FoldChange <= -foldchange &  padj <= qvalueCutoff ~ "Down-regulated",
+                                TRUE ~ "Unchanged"))
+
+vp <- ggplot(data =..., aes(x = ...,y = -log10(...))) +
+  geom_point(aes(color = ...), size = 3/5)  +
+  scale_color_manual(values = c("#003865", "#CCCCCC","#B30C00")) +
+  xlab(expression("Log"[2]*" Fold Change")) +
+  ylab(expression("-Log"[10]*~ ""~italic(P)~"value")) +
+  geom_vline(xintercept = c(-foldchange, foldchange),
+             col = "#005C8A",
+             linetype = "dotted",
+             alpha = 0.4,
+             linewidth = 1) +
+  geom_hline(yintercept = -log10(qvalueCutoff),
+             col = "#005C8A",
+             linetype = "dotted",
+             alpha = 0.4,
+             linewidth = 1) +
+  theme_classic() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.major.y = element_blank(),
+        axis.line = element_line(colour = "grey80"),
+        plot.title = element_text(size = 30),
+        axis.title = element_text(size = 25),
+        axis.text = element_text(size = 25),
+        legend.text=element_text(size = 15)) +
+  guides(colour = guide_legend(override.aes = list(size=1.5)))
+
+vp
+
+ggsave(filename = "volcano_plot.png",
+       plot = vp, 
+       path = resultsFilePath)
+```
+
+Now try a heat map for this contrast
+```{r contrast heatmap}
+
+```
+
