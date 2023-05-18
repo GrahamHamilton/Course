@@ -254,6 +254,7 @@ example_table %>%
 
 ## Library Composition {.smaller}
 
+::: {style="font-size: 75%;"}
 ```{r}
 example_table %>%
   slice_head(n = 3) %>%
@@ -290,9 +291,8 @@ log_example_table %>%
   kbl() %>%
   kable_styling()
 ```
-
 :::
-
+:::
 :::
 
 ## Library Composition
@@ -315,6 +315,8 @@ inf_removed %>%
   kbl() %>%
   kable_styling()
 ```
+
+<br>
 
 Step 4. Subtract the average log values from the log of the counts
 
@@ -347,6 +349,8 @@ log_median_values %>%
   kable_styling() 
 ```
 
+<br>
+
 Step 6. Convert log median values to "normal" numbers to get the scaling factors
 
 ```{r}
@@ -370,6 +374,8 @@ example_table%>%
   kbl() %>%
   kable_styling() 
 ```
+
+<br>
 
 #### Scaled read counts {style="text-align: center;"}
 
@@ -438,7 +444,7 @@ Sample description file
 |Treatment_2|Treatment|
 |Treatment_3|Treatment|
 
-<br><br>
+<br>
 Differential expression command
 
 ```{r}

@@ -1,5 +1,6 @@
 ---
 title: "Session 5: ClusterProfiler"
+author: "Graham Hamilton"
 format:
   revealjs:
     slide-number: c/t
@@ -186,7 +187,7 @@ filtered_de_results %>%
 ```
 :::
 
-There are `r nrow(filtered_de_results)` genes remaining after filtering.
+There are **`r nrow(filtered_de_results)`** genes remaining after filtering.
 
 ## Gene Ontology {.smaller}
 
@@ -467,8 +468,6 @@ orgs <- search_kegg_organism("", by='kegg_code')
 
 Supports a large number of organisms **`r nrow(orgs)`**.  
 
-<br>
-
 Search using search_kegg_organism() command:
 
 ::: {style="font-size: 75%;"}
@@ -519,7 +518,7 @@ kegg_ora %>%
 
 Gene set enrichment analysis.
 
-*   Use de genes from the GO gene set enrichment analysis
+*   Use de genes list from the GO gene set enrichment analysis
 
 ```{r}
 #| echo: true

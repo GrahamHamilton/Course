@@ -45,12 +45,12 @@ x + y
 
 Variables can hold any type of data
 Characters
-Note the use of the paste command, which takes the variables to be pasted together followed by the character used to separate the variables in this case a white space.
+Note the use of the paste command, which takes the variables to be pasted together followed by the character used to separate the variables,ß in this case a white space.
 ```{r}
 greeting <- "Hello"
 name <- "Graham"
 
-print(paste(greeting,name, sep = " "))
+paste(greeting,name, sep = " ")
 ```
 
 Vectors must contain elements of the same type for examples logical, integer, double, complex, character and raw.
@@ -135,7 +135,7 @@ log(data_table)
 
 If you want to perform a calculation on the whole data frame all the values have to be of the same type, e.g.all numbers (either integer or double). The error above indicates that the Gene column does not contain numeric values. We can replace the numbered row names the the Gene name column from the data frame then delete it.
 ```{r}
-rownames(data_table) <- data_table$Gene # replace the rw names with the gene names
+rownames(data_table) <- data_table$Gene # replace the row names with the gene names
 data_table$Gene <- NULL # delete the Gene column
 data_table
 ```
@@ -189,9 +189,12 @@ Write you own simple function and test it.
 
 ```
 
+## Getting help
+R and RStudio has a built in help pages for the standard R packages and the packages that you install. These help pages will have a short description of the command/packages function with descriptions of the parameters and usage examples.
+To access these help pages you can either click on the "Help" tab in the files pane on the right and enter the command you need help with into the search box in the top right of the pane. Another way to get the help pages is to type a question mark followed by the command name you need help with, e.g. ?sum. This can be in either the Console pane on in a code chunk, see below.
+```{r}
+?sum
+```
 
-
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
-
-The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+Try this for another command you would like to know more about, for example "summary"
 

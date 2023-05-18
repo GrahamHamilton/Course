@@ -1,5 +1,6 @@
 ---
 title: "Session 4: DESeq2-Visualisation"
+author: "Graham Hamilton"
 format:
   revealjs:
     slide-number: c/t
@@ -102,7 +103,7 @@ git.load <- function(pkg){
 git.load(git.packages)
 ```
 
-## Load Save Data
+## Load Saved Data
 
 Load the data from the previous R session
 
@@ -345,6 +346,7 @@ Similar plot using the vsd expression values
 ```{r vsd PCA}
 #| echo: true
 #| output-location: slide
+#| code-line-numbers: "1-5|7|9-19|21-23"
 pca <- prcomp(t(vsd_mat))
 pca_data <- pca$x %>%
   as.data.frame() %>%
@@ -398,6 +400,9 @@ de_genes %>%
 Create a table of log transformed normalised read counts. Convert into Z-scores.
 
 Z-scores - Take the log of the read counts, subtract the mean for the gene then divide by the standard deviation for that gene.
+
+<br>
+
 ```{r}
 #| echo: true
 #| code-overflow: wrap
@@ -768,7 +773,9 @@ ggsave(filename = "MA_shrunk_plot.png",
 ## Volcano Plot {.smaller}
 
 Add a column to the resuts data frame stating that a gene is significantly either **UP** or **DOWN** regulated.
+
 <br>
+
 ```{r}
 #| echo: true
 #| eval: true
@@ -795,6 +802,7 @@ contrast%>%
 
 Plot the Log fold change against the log of the adjusted P value
 
+::: {style="font-size: 50%;"}
 ```{r}
 #| echo: true
 #| eval: true
@@ -823,6 +831,7 @@ vp <- ggplot(data = contrast, aes(x = log2FoldChange,y = -log10(padj))) +
         legend.text=element_text(size = 15)) +
   guides(colour = guide_legend(override.aes = list(size=1.5)))
 ```
+:::
 
 ## Volcano Plot {.smaller}
 
@@ -837,7 +846,6 @@ ggsave(filename = "volcano_plot.png",
 ```
 
 ##
-Iterate through the pairwise comparisons write out comma seperated files, MA plots, Volcano plots and heatmaps for each comparison
 ```{r}
 #| echo: false
 #| eval: false

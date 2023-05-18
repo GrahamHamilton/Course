@@ -1,5 +1,6 @@
 ---
 title: "R and RStudio"
+author: "Graham Hamilton"
 format:
   revealjs:
     slide-number: c/t
@@ -117,6 +118,15 @@ R Notebooks are Markdown documents with chunks of code that can be executed inde
 :::
 :::
 
+## R Notebooks {.smaller}
+
+*   Code chunks can be inserted using the Insert Chunk button
+*   Code chunks can be inserted by pressing Control,Alt and I keys
+*   Code chunks can be executed by clicking the green arrow head
+*   Code chunks can be executed by pressing Control,Shift and enter keys
+
+![](images/R_notebook_code_chunk.png)
+
 ## Download Course Material
 
 https://github.com/GrahamHamilton/Course
@@ -136,6 +146,10 @@ https://github.com/GrahamHamilton/Course
 
 
 ## Base R Tutorial
+*   Open the directory "Session_2"
+*   Click the file called "Session2_Tutorial_Intro_to_base_R.Rmd"
+
+##
 
 ## RStudio Libraries
 
@@ -210,12 +224,12 @@ install.packages("devtools")
 require("devtools")
 ```
 
-Then can install GitHub packages. Github packages are usually named after the repository name then the package name e.g. grahamhamilton/Rpackage
+Then can install GitHub packages. Github packages are usually named after the repository name then the package name e.g. GrahamHamilton/Rpackage
 
 ```{r}
 #| echo: true
 #| eval: false
-install_github("GitHubPackage")
+install_github("GrahamHamilton/Rpackage")
 ```
 
 ## Installing Packages
@@ -339,22 +353,79 @@ ggplot2 is a package for creating graphics
     -   What to plot from the data via aes (aesthetics), can also add colour, size, shape and transparency\
     -   How the data is represented via the geom\_
 
-## MPG data
+## Tidyverse  {.smaller}
+### Piping data
+![](images/magrittr.png){width="100"}
+Tidyverse uses an operator, %>%, that takes to out put from one command and uses it as the input for a subsequent command with out having to use intermediate variable names.
+
+
+## Tidyverse  {.smaller}
+### Piping data
+
+::: {style="font-size: 75%;"}
+Log a series of numbers and round to one decimal place
+
+*   Create the list of numbers
+
+
+```{r}
+#| echo: true
+number_vector <- c(23,43,76,93,72,58,45)
+```
+
+*   Base R
+```{r}
+#| echo: true
+# Base R
+round(log(number_vector), digits = 1)
+```
+
+*   Tidyverse uses the pipe operator and it makes the code easier to read, especially when more than a couple of operations are performed on the data
+```{r}
+#| echo: true
+# Tidyverse
+number_vector %>%
+  log() %>%
+  round(digits = 1)
+```
+:::
+
+## MPG data {.smaller}
 
 Example data provide in R, which we will use for the **ggplot2** examples.
 
+<br>
 
+::: {style="font-size: 75%;"}
 ```{r}
 #| echo: true
 head(mpg, n = 3) %>%
   kbl() %>%
   kable_styling()
 ```
+:::
+
+## ggplot2 {.smaller}
+
+ggplot builds a plot in layers.  
+
+The first layer would be an empty plotting pane.
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-width: 8
+#| fig-height: 6
+#| output-location: column
+ggplot()
+```
+
 
 ## ggplot2 {.smaller}
 
 Set the data and plotting area, with ggplot and the aesthetics, to plot the miles per gallon on the motorway on the x axis and miles per gallon on the y axis
 
+::: {style="font-size: 75%;"}
 ```{r}
 #| echo: true
 #| eval: true
@@ -363,11 +434,13 @@ Set the data and plotting area, with ggplot and the aesthetics, to plot the mile
 #| output-location: column
 ggplot(mpg, aes(x = hwy, y = cty, color = cyl))
 ```
+:::
 
 ## ggplot2 {.smaller}
 
 Scatter plot with geom_point
 
+::: {style="font-size: 75%;"}
 ```{r}
 #| echo: true
 #| eval: true
@@ -378,11 +451,13 @@ Scatter plot with geom_point
 ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
   geom_point()
 ```
+:::
 
 ## ggplot2 {.smaller}
 
 Change the transparency and size of the points
 
+::: {style="font-size: 75%;"}
 ```{r}
 #| echo: true
 #| eval: true
@@ -393,11 +468,13 @@ Change the transparency and size of the points
 ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
   geom_point(alpha = 0.5, size = 2)
 ```
+:::
 
 ## ggplot2 {.smaller}
 
 Change the point colours
 
+::: {style="font-size: 75%;"}
 ```{r}
 #| echo: true
 #| eval: true
@@ -409,11 +486,13 @@ ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
   geom_point(alpha = 0.5, size = 2)  +
   scale_color_viridis_c()
 ```
+:::
 
 ## ggplot2 {.smaller}
 
 Add title and change axis labels
 
+::: {style="font-size: 75%;"}
 ```{r}
 #| echo: true
 #| eval: true
@@ -429,11 +508,15 @@ ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
        x = "Motorway miles per gallon",
        y = "City miles per gallon")
 ```
+:::
 
 ## ggplot2 {.smaller}
 
 Box plot
 
+*   Need to convert the cylinder column from a continuous variable to distinct variable
+
+::: {style="font-size: 75%;"}
 ```{r}
 #| echo: true
 #| eval: true
@@ -446,41 +529,44 @@ ggplot(mpg, aes(x = cyl, y = hwy, fill = cyl)) +
   geom_boxplot() +
   scale_fill_viridis_d()
 ```
+:::
 
 ## ggplot2 {.smaller}
 
 Box plot
 
+*   Add the data points
+
+::: {style="font-size: 75%;"}
 ```{r}
 #| echo: true
 #| eval: true
 #| fig-width: 8
 #| fig-height: 6
 #| output-location: column
-mpg <- mpg %>% mutate_at(vars(cyl), factor)
-
 ggplot(mpg, aes(x = cyl, y = hwy, fill = cyl)) +
   geom_boxplot() +
   geom_jitter(alpha = 0.5, size = 2) +
   scale_fill_viridis_d()
 ```
+:::
 
 ## ggplot2 {.smaller}
 
 Violin plot
 
+::: {style="font-size: 75%;"}
 ```{r}
 #| echo: true
 #| eval: true
 #| fig-width: 8
 #| fig-height: 6
 #| output-location: column
-mpg <- mpg %>% mutate_at(vars(cyl), factor)
-
 ggplot(mpg, aes(x = cyl, y = hwy, fill = cyl)) +
   geom_violin() +
   scale_fill_viridis_d()
 ```
+:::
 
 ## ggplot2 - Themes
 
@@ -564,10 +650,12 @@ void <- ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
     -   Name, of a group to which the value belongs
 
 ## Tidyverse {.smaller}
+Reading in the data from a text file, values separated by white space.
 
 ```{r}
 #| echo: true
 #| eval: true
+#| code-line-numbers: "1"
 example_table <- read_delim("data/example_table.txt", delim = " ")
 example_table  %>%
   kbl() %>%
@@ -575,17 +663,36 @@ example_table  %>%
 ```
 
 ## Tidyverse {.smaller}
+
+Imported data
+
+::: {style="font-size: 75%;"}
+```{r}
+#| echo: false
+#| eval: true
+example_table  %>%
+  kbl() %>%
+  kable_styling()
+```
+:::
+
 ### Data Tidying
+
+Tidy data using the pivot_longer() command from tidyr package
+
+::: {style="font-size: 75%;"}
 ```{r}
 #| echo: true
 #| eval: true
+#| code-line-numbers: "1"
 pivot_table <- example_table %>% pivot_longer(cols = -Gene, names_to = "Sample", values_to = "Expression")
 pivot_table %>%
   kbl() %>%
   kable_styling()
 ```
+:::
 
-## Tidyverse
+## Tidyverse  {.smaller}
 
 ```{r}
 #| echo: true
@@ -602,35 +709,56 @@ ggplot(pivot_table, aes(x = Gene, y = Expression, colour = Gene)) +
 #| echo: true
 #| eval: true
 real_data <- read_tsv("data/tidyverse_data_example.tsv", col_names = TRUE)
+```
+
+<br>
+
+::: {style="font-size: 75%;"}
+```{r}
+#| echo: false
+#| eval: true
 head(real_data)  %>%
   kbl() %>%
   kable_styling()
 ```
+:::
+
 **Notice the numbers after the gene names**
 
 ## Tidyverse {.smaller}
 Tidy up the gene names using the tidyr command separate_wider_delim()
+
+<br>
+
+::: {style="font-size: 75%;"}
 ```{r}
 #| echo: true
 #| eval: true
+#| code-line-numbers: "1-2"
 real_data %>% 
   separate_wider_delim(cols = Gene_names, delim = "_", names = c("Gene","Number")) %>%
   head(n = 3)  %>%
   kbl() %>%
   kable_styling()
 ```
+:::
 
 ## Tidyverse {.smaller}
 The numbers after the gene names are not required, so can set the names for the Numbers to NA
+<br>
+
+::: {style="font-size: 75%;"}
 ```{r}
 #| echo: true
 #| eval: true
+#| code-line-numbers: "1-2"
 real_data <- real_data %>% 
   separate_wider_delim(cols = Gene_names, delim = "_", names = c("Genes",NA))
   head(real_data, n = 3)  %>%
   kbl() %>%
   kable_styling()
 ```
+:::
 
 ## Tidyverse {.smaller}
 
@@ -642,11 +770,17 @@ Tidy the data
 
 pivot_real_data <- real_data %>% 
   pivot_longer(-Genes, names_to = "Samples", values_to = "Expression")
+```
 
+::: {style="font-size: 75%;"}
+```{r}
+#| echo: false
+#| eval: true
 head(pivot_real_data)  %>%
   kbl() %>%
   kable_styling()
 ```
+:::
 
 ## Tidyverse {.smaller}
 
@@ -693,6 +827,8 @@ ggplot(pivot_real_data, aes(x = Samples, y = Expression, fill = Samples)) +
 
 ## Tidyverse {.smaller}
 
+::: {style="font-size: 75%;"}
+
 Dplyr simplifies data manipulation
 
 ::: columns
@@ -726,7 +862,7 @@ pivot_table %>%
 ```
 :::
 :::
-
+:::
 
 
 ## Tidyverse {.smaller}
@@ -753,6 +889,7 @@ box
 ## Saving data to files  {.smaller}
 
 ### Tidyverse
+
 Saving a data frame to a files using the **readr** command **write_delim()**
 
 ```{r}
@@ -765,29 +902,4 @@ Saving a plot using the **ggplot2** command **ggsave**
 ```{r}
 #| echo: true
 ggsave(filename = "boxplot.png", plot = box, path = "data")
-```
-
-## Tidyverse  {.smaller}
-### Piping data
-![](images/magrittr.png){width="100"}
-Tidyverse uses an operator, %>%, that takes to out put from one command and uses it as the input for a subsequent command with out having to use intermediate variable names.
-
-
-## Tidyverse  {.smaller}
-### Piping data
-Log a series of numbers and round to one decimal place
-Base R
-```{r}
-#| echo: true
-# Base R
-number_vector <- c(23,43,76,93,72,58,45)
-round(log(number_vector), 1)
-```
-
-Tidyverse uses the pipe operator and it makes the code easier to read, especially when more than a couple of operations are performed on the data
-```{r}
-#| echo: true
-number_vector %>%
-  log() %>%
-  round(1)
 ```

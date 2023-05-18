@@ -9,6 +9,7 @@
 <link href="Session_4_DESeq2_Visualisation_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.2.269">
 
+  <meta name="author" content="Graham Hamilton">
   <title>Session 4: DESeq2-Visualisation</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -393,6 +394,11 @@
   <h1 class="title">Session 4: DESeq2-Visualisation</h1>
 
 <div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Graham Hamilton 
+</div>
+</div>
 </div>
 
 </section>
@@ -480,8 +486,8 @@
 <span id="cb3-9"><a href="#cb3-9"></a><span class="fu">git.load</span>(git.packages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="load-save-data" class="slide level2">
-<h2>Load Save Data</h2>
+<section id="load-saved-data" class="slide level2">
+<h2>Load Saved Data</h2>
 <p>Load the data from the previous R session</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">load</span>(<span class="st">"../Session_3/Session3.RData"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -758,7 +764,7 @@
 <h2>PCA Plots</h2>
 <p>Similar plot using the vsd expression values</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>pca <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(<span class="fu">t</span>(vsd_mat))</span>
+<div class="sourceCode cell-code" id="cb9" data-code-line-numbers="1-5|7|9-19|21-23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>pca <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(<span class="fu">t</span>(vsd_mat))</span>
 <span id="cb9-2"><a href="#cb9-2"></a>pca_data <span class="ot">&lt;-</span> pca<span class="sc">$</span>x <span class="sc">%&gt;%</span></span>
 <span id="cb9-3"><a href="#cb9-3"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb9-4"><a href="#cb9-4"></a>  <span class="fu">rownames_to_column</span>(<span class="at">var =</span> <span class="st">"Sample"</span>) <span class="sc">%&gt;%</span></span>
@@ -825,6 +831,7 @@
 <h2>Heatmap</h2>
 <p>Create a table of log transformed normalised read counts. Convert into Z-scores.</p>
 <p>Z-scores - Take the log of the read counts, subtract the mean for the gene then divide by the standard deviation for that gene.</p>
+<p><br></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r code-overflow-wrap number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>log2_de_genes <span class="ot">&lt;-</span> total_norm_counts  <span class="sc">%&gt;%</span></span>
 <span id="cb11-2"><a href="#cb11-2"></a>  <span class="fu">filter</span>(ensembl_gene_id <span class="sc">%in%</span> de_genes) <span class="sc">%&gt;%</span> <span class="co"># Filter the normalised counts data frame for rows with the ensembl id of the differentially expressed genes list</span></span>
@@ -1420,7 +1427,8 @@
 </div>
 </div></section><section id="volcano-plot" class="slide level2 smaller">
 <h2>Volcano Plot</h2>
-<p>Add a column to the resuts data frame stating that a gene is significantly either <strong>UP</strong> or <strong>DOWN</strong> regulated. <br></p>
+<p>Add a column to the resuts data frame stating that a gene is significantly either <strong>UP</strong> or <strong>DOWN</strong> regulated.</p>
+<p><br></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>contrast<span class="ot">&lt;-</span> contrast<span class="sc">%&gt;%</span></span>
 <span id="cb26-2"><a href="#cb26-2"></a>  <span class="fu">mutate</span>(<span class="at">Expression =</span> <span class="fu">case_when</span>(log2FoldChange <span class="sc">&gt;=</span> foldchange <span class="sc">&amp;</span>  padj <span class="sc">&lt;=</span> qvalueCutoff <span class="sc">~</span> <span class="st">"Up-regulated"</span>,</span>
@@ -1565,6 +1573,7 @@
 <section id="volcano-plot-1" class="slide level2 smaller">
 <h2>Volcano Plot</h2>
 <p>Plot the Log fold change against the log of the adjusted P value</p>
+<div style="font-size: 50%;">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>vp <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> contrast, <span class="fu">aes</span>(<span class="at">x =</span> log2FoldChange,<span class="at">y =</span> <span class="sc">-</span><span class="fu">log10</span>(padj))) <span class="sc">+</span></span>
 <span id="cb27-2"><a href="#cb27-2"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> Expression), <span class="at">size =</span> <span class="dv">3</span><span class="sc">/</span><span class="dv">5</span>)  <span class="sc">+</span></span>
@@ -1590,6 +1599,7 @@
 <span id="cb27-22"><a href="#cb27-22"></a>        <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>),</span>
 <span id="cb27-23"><a href="#cb27-23"></a>        <span class="at">legend.text=</span><span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">15</span>)) <span class="sc">+</span></span>
 <span id="cb27-24"><a href="#cb27-24"></a>  <span class="fu">guides</span>(<span class="at">colour =</span> <span class="fu">guide_legend</span>(<span class="at">override.aes =</span> <span class="fu">list</span>(<span class="at">size=</span><span class="fl">1.5</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </div>
 </section>
 <section id="volcano-plot-2" class="slide level2 smaller">
