@@ -1,8 +1,10 @@
 ---
 title: "DESeq2-Introduction"
 author: "Graham Hamilton"
-format: revealjs
-fontsize: 2em
+format:
+  revealjs:
+    slide-number: c/t
+    show-slide-number: all
 editor: source
 ---
 
@@ -22,7 +24,7 @@ The vast majority of RNASeq experiments are used to perform differential gene ex
 -   Differentail expression
 -   Saving data
 
-## Analysis Workflow
+## Analysis Workflow {.smaller}
 
 ::: columns
 ::: {.column width="\"60%"}
@@ -46,7 +48,7 @@ style id3 fill:#003865,stroke:#003865,stroke-width:4px,color:#fff
 :::
 :::
 
-## Analysis Workflow
+## Analysis Workflow {.smaller}
 
 ::: columns
 ::: {.column width="60%"}
@@ -70,7 +72,7 @@ style id6 fill:#003865,stroke:#003865,stroke-width:4px,color:#fff
 :::
 :::
 
-## Analysis Workflow
+## Analysis Workflow {.smaller}
 
 ::: columns
 ::: {.column width="\"60%"}
@@ -95,7 +97,7 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 :::
 
 
-## Counts matrix
+## Counts matrix {.smaller}
 
 -   DESeq2 requires a counts matrix of raw counts
 -   Each row is a gene or feature
@@ -108,7 +110,7 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 | ENSG00000141510 |    26611 |    27523 |    25209 |
 | ENSG00000083093 |     1428 |     1622 |     1289 |
 
-## Counts Matrix
+## Counts Matrix {.smaller}
 
 -   FeatureCounts, from the Rsubread package, produces a matrix of counts from the aligned BAM files
 
@@ -140,7 +142,7 @@ files %>%
   head(n = 6)
 ```
 
-## RNASeq Count Distribution
+## RNASeq Count Distribution {.smaller}
 
 To apply the appropriate statistical model we need information on the distribution of the counts
 
@@ -171,7 +173,7 @@ The plot shows common features of RNASeq counts data
 
 :::
 
-## Modelling Count Data
+## Modelling Count Data {.smaller}
 
 RNASeq data count data in general can be modelled with various distributions
 
@@ -225,7 +227,7 @@ DESeq2 normalises the counts taking account of the following
 -   Differences in the library size
 -   Differences in library composition
 
-## Library Size
+## Library Size {.smaller}
 
 ```{r}
 example_table <- read_tsv("./data/example_table.tsv") %>%
@@ -241,7 +243,7 @@ example_table%>%
 
 The difference in the number of reads is due to sequencing depth and not biology and needs to be accounted for in the normalisation.
 
-## Library Composition
+## Library Composition {.smaller}
 
 ```{r}
 example_table %>%
@@ -295,8 +297,7 @@ log_example_table %>%
 :::
 :::
 
-## Library Composition
-
+## Library Composition {.smaller}
 -   DESeq2 uses log~*e*~ (log base *e*), raise *e* to the log value to get the original count
 -   The log of a zero is **-Infinity**
 -   Adding **-Infinity** to a number always results in **-Infinity**
@@ -388,7 +389,7 @@ example_table %>%
   kable_styling() 
 ```
 
-## Required Files
+## Required Files {.smaller}
 
 -   Counts files, either matrix of counts or individual counts files
 -   Gene annotation file (gtf/gff) - **Ensembl**
@@ -400,7 +401,7 @@ Ensemb - select organism and download data from:
 http://www.ensembl.org
 :::
 
-## Sample Description File
+## Sample Description File {.smaller}
 
 You will need to generate this yourself and save it in tab seperated format
 
@@ -412,7 +413,7 @@ sample_table  %>%
   kable_styling() 
 ```
 
-## Comparisons File
+## Comparisons File {.smaller}
 
 You will need to generate this yourself and save it in tab seperated format
 
@@ -424,7 +425,7 @@ sample_table  %>%
   kable_styling() 
 ```
 
-## Experimental Design
+## Experimental Design {.smaller}
 
 -   Pairwise - Will be covered in this tutorial
 -   Batch effects
@@ -480,7 +481,7 @@ DESeq2Table <- DESeqDataSetFromMatrix(countData = feature_counts_table,
                                       design = ~  Batch + Condition)
 ```
 
-## Multifactorial
+## Multifactorial {.smaller}
 Unlike batch effects, multifactorial design doesn't just correct for background effects, it test whether a factor is "interacting" with the treatment.
 ```{r}
 mult <- read_tsv("./data/multifactorial_table.tsv", col_types = "fdff") %>%
@@ -507,7 +508,7 @@ ggplot(mult, aes(x = Names, y = Expression, colour = Names, shape = Genotype)) +
         panel.background = element_blank())
 ```
 
-## Multifactorial
+## Multifactorial {.smaller}
 
 ```{r}
 ggplot(mult, aes(x = Names, y = Expression, colour = Names, shape = Genotype)) +
@@ -575,7 +576,7 @@ DESeq2Table <- DESeqDataSetFromMatrix(countData = feature_counts_table,
 
 The interaction term added to the experimental design model **Genotype:Condition**, enables DESeq2 to account for the Condition (treatment), the background Genotype effect as well as the interaction between the different Genotypes and the Condition.
 
-## Time Course
+## Time Course {.smaller}
 ::: columns
 
 ::: {.column width="50%"}
@@ -632,7 +633,7 @@ ggplot(time, aes(x = Time,  y = Expression, fill = Condition)) +
 
 :::
 
-## Time Course
+## Time Course {.smaller}
 
 ### Likelihood Ratio Testing (LRT)
 Analyse all levels of a factor at once. LRT identifies genes that change expression across the different levels.
@@ -759,7 +760,7 @@ git.load(git.packages)
 
 # Analysis {style="text-align: center;"}
 
-## Set Up
+## Set Up {.smaller}
 
 ### Statistical cut off values
 
@@ -825,7 +826,7 @@ feature_counts_table %>%
   kable_styling()
 ```
 
-## Differential Expression
+## Differential Expression {.smaller}
 
 ### DESeq2 using feature counts table
 
@@ -849,7 +850,7 @@ total_norm_counts <- estimateSizeFactors(dds) %>%
 write_tsv(total_norm_counts,"normalised_read_counts.tsv")
 ```
 
-## Set Up
+## Set Up {.smaller}
 
 ### HtSeq-Count
 
@@ -874,7 +875,7 @@ sampleDataFrame %>%
   kable_styling()
 ```
 
-## Differential Expression
+## Differential Expression {.smaller}
 
 ### DESeq2 using htseq-count files
 
@@ -887,7 +888,7 @@ DESeq2Table <- DESeqDataSetFromHTSeqCount(sampleTable = sampleDataFrame,
 dds <- DESeq(DESeq2Table)
 ```
 
-## Saving Workspace
+## Saving Workspace {.smaller}
 Save the workspace so we can carry on tomorrow without having to run these steps again. To save the entire workspace use the save.image() command
 
 ```{r}

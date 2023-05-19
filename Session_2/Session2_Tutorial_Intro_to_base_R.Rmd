@@ -118,7 +118,7 @@ The code below reads in a space separated file, that has named columns,(hence th
 data_table <- read.table("data/example_table.txt", header = TRUE, sep = " ") # This will read in a space separated data table
 data_table
 ```
-Now try reading in th comma separated file in data/example-table.csv.
+Now try reading in th comma separated file in data/example_table.csv.
 ```{r}
 
 ```
@@ -132,8 +132,9 @@ Often we would want to perform a calculation on all values in the data frame
 ```{r}
 log(data_table)
 ```
+WARNING: This will produce an error!
 
-If you want to perform a calculation on the whole data frame all the values have to be of the same type, e.g.all numbers (either integer or double). The error above indicates that the Gene column does not contain numeric values. We can replace the numbered row names the the Gene name column from the data frame then delete it.
+If you want to perform a calculation on the whole data frame all the values have to be of the same type, e.g.all numbers (either integer or double). The error above indicates that the Gene column does not contain numeric values. We can replace the numbered row names with the Gene name column from the data frame then delete it. By default data frame rownames are set to numbers starting at 1.
 ```{r}
 rownames(data_table) <- data_table$Gene # replace the row names with the gene names
 data_table$Gene <- NULL # delete the Gene column
@@ -149,6 +150,7 @@ Writing data to a tab separated file using the write.table() function. We have s
 ```{r}
 write.table(log_table,"data/example_log_table.tsv", col.names = TRUE, quote = FALSE, sep = "\t")
 ```
+Check that the file has been saved to the data directory.
 
 Try for your self write the data to a comma separated file called "example_log_table.csv"
 ```{r}

@@ -424,7 +424,7 @@ Graham Hamilton
 <li>Saving data</li>
 </ul>
 </section>
-<section id="analysis-workflow" class="slide level2">
+<section id="analysis-workflow" class="slide level2 smaller">
 <h2>Analysis Workflow</h2>
 <div class="columns">
 <div class="column" style="width:&quot;60%;">
@@ -457,7 +457,7 @@ style id3 fill:#003865,stroke:#003865,stroke-width:4px,color:#fff
 </div>
 </div>
 </section>
-<section id="analysis-workflow-1" class="slide level2">
+<section id="analysis-workflow-1" class="slide level2 smaller">
 <h2>Analysis Workflow</h2>
 <div class="columns">
 <div class="column" style="width:60%;">
@@ -490,7 +490,7 @@ style id6 fill:#003865,stroke:#003865,stroke-width:4px,color:#fff
 </div>
 </div>
 </section>
-<section id="analysis-workflow-2" class="slide level2">
+<section id="analysis-workflow-2" class="slide level2 smaller">
 <h2>Analysis Workflow</h2>
 <div class="columns">
 <div class="column" style="width:&quot;60%;">
@@ -523,7 +523,7 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 </div>
 </div>
 </section>
-<section id="counts-matrix" class="slide level2">
+<section id="counts-matrix" class="slide level2 smaller">
 <h2>Counts matrix</h2>
 <ul>
 <li>DESeq2 requires a counts matrix of raw counts</li>
@@ -562,7 +562,7 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 </tbody>
 </table>
 </section>
-<section id="counts-matrix-1" class="slide level2">
+<section id="counts-matrix-1" class="slide level2 smaller">
 <h2>Counts Matrix</h2>
 <ul>
 <li>FeatureCounts, from the Rsubread package, produces a matrix of counts from the aligned BAM files</li>
@@ -636,7 +636,7 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 </div>
 </div>
 </section>
-<section id="rnaseq-count-distribution" class="slide level2">
+<section id="rnaseq-count-distribution" class="slide level2 smaller">
 <h2>RNASeq Count Distribution</h2>
 <p>To apply the appropriate statistical model we need information on the distribution of the counts</p>
 <div class="columns">
@@ -656,7 +656,7 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 </div>
 </div>
 </section>
-<section id="modelling-count-data" class="slide level2">
+<section id="modelling-count-data" class="slide level2 smaller">
 <h2>Modelling Count Data</h2>
 <p>RNASeq data count data in general can be modelled with various distributions</p>
 <ol type="1">
@@ -699,7 +699,7 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 <li>Differences in library composition</li>
 </ul>
 </section>
-<section id="library-size" class="slide level2">
+<section id="library-size" class="slide level2 smaller">
 <h2>Library Size</h2>
 <div class="cell">
 <div class="cell-output-display">
@@ -740,7 +740,7 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 </div>
 <p>The difference in the number of reads is due to sequencing depth and not biology and needs to be accounted for in the normalisation.</p>
 </section>
-<section id="library-composition" class="slide level2">
+<section id="library-composition" class="slide level2 smaller">
 <h2>Library Composition</h2>
 <div class="cell">
 <div class="cell-output-display">
@@ -901,7 +901,7 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 </div>
 </div>
 </section>
-<section id="library-composition-2" class="slide level2">
+<section id="library-composition-2" class="slide level2 smaller">
 <h2>Library Composition</h2>
 <ul>
 <li>DESeq2 uses log<sub><em>e</em></sub> (log base <em>e</em>), raise <em>e</em> to the log value to get the original count</li>
@@ -1117,7 +1117,7 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 </div>
 </div>
 </section>
-<section id="required-files" class="slide level2">
+<section id="required-files" class="slide level2 smaller">
 <h2>Required Files</h2>
 <ul>
 <li>Counts files, either matrix of counts or individual counts files</li>
@@ -1129,7 +1129,7 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 <aside><div>
 <p>Ensemb - select organism and download data from: http://www.ensembl.org</p>
 </div></aside></section>
-<section id="sample-description-file" class="slide level2">
+<section id="sample-description-file" class="slide level2 smaller">
 <h2>Sample Description File</h2>
 <p>You will need to generate this yourself and save it in tab seperated format</p>
 <div class="cell">
@@ -1173,7 +1173,7 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 </div>
 </div>
 </section>
-<section id="comparisons-file" class="slide level2">
+<section id="comparisons-file" class="slide level2 smaller">
 <h2>Comparisons File</h2>
 <p>You will need to generate this yourself and save it in tab seperated format</p>
 <div class="cell">
@@ -1197,7 +1197,7 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 </div>
 </div>
 </section>
-<section id="experimental-design" class="slide level2">
+<section id="experimental-design" class="slide level2 smaller">
 <h2>Experimental Design</h2>
 <ul>
 <li>Pairwise - Will be covered in this tutorial</li>
@@ -1302,12 +1302,12 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 <span id="cb3-3"><a href="#cb3-3"></a>                                      <span class="at">design =</span> <span class="sc">~</span>  Batch <span class="sc">+</span> Condition)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="multifactorial" class="slide level2">
+<section id="multifactorial" class="slide level2 smaller">
 <h2>Multifactorial</h2>
 <p>Unlike batch effects, multifactorial design doesn’t just correct for background effects, it test whether a factor is “interacting” with the treatment.</p>
 
 <img data-src="Session_3_DESeq2_Introduction_files/figure-revealjs/unnamed-chunk-24-1.png" width="960" class="r-stretch"></section>
-<section id="multifactorial-1" class="slide level2">
+<section id="multifactorial-1" class="slide level2 smaller">
 <h2>Multifactorial</h2>
 
 <img data-src="Session_3_DESeq2_Introduction_files/figure-revealjs/unnamed-chunk-25-1.png" width="960" class="r-stretch"></section>
@@ -1392,7 +1392,7 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 </div>
 <p>The interaction term added to the experimental design model <strong>Genotype:Condition</strong>, enables DESeq2 to account for the Condition (treatment), the background Genotype effect as well as the interaction between the different Genotypes and the Condition.</p>
 </section>
-<section id="time-course" class="slide level2">
+<section id="time-course" class="slide level2 smaller">
 <h2>Time Course</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -1412,7 +1412,7 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 </div>
 </div>
 </section>
-<section id="time-course-1" class="slide level2">
+<section id="time-course-1" class="slide level2 smaller">
 <h2>Time Course</h2>
 <h3 id="likelihood-ratio-testing-lrt">Likelihood Ratio Testing (LRT)</h3>
 <p>Analyse all levels of a factor at once. LRT identifies genes that change expression across the different levels.</p>
@@ -1496,7 +1496,7 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 <h1>Analysis</h1>
 
 </section>
-<section id="set-up" class="slide level2">
+<section id="set-up" class="slide level2 smaller">
 <h2>Set Up</h2>
 <h3 id="statistical-cut-off-values">Statistical cut off values</h3>
 <p>Create the cut off used for filtering results</p>
@@ -1659,7 +1659,7 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 </div>
 </div>
 </section>
-<section id="differential-expression" class="slide level2">
+<section id="differential-expression" class="slide level2 smaller">
 <h2>Differential Expression</h2>
 <h3 id="deseq2-using-feature-counts-table">DESeq2 using feature counts table</h3>
 <div class="cell">
@@ -1678,7 +1678,7 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 <span id="cb16-6"><a href="#cb16-6"></a><span class="fu">write_tsv</span>(total_norm_counts,<span class="st">"normalised_read_counts.tsv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="set-up-4" class="slide level2">
+<section id="set-up-4" class="slide level2 smaller">
 <h2>Set Up</h2>
 <h3 id="htseq-count">HtSeq-Count</h3>
 <p>Read in the feature counts for the counts files - HtSeq Counts</p>
@@ -1698,7 +1698,7 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 <span id="cb17-13"><a href="#cb17-13"></a>  <span class="fu">kable_styling</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="differential-expression-1" class="slide level2">
+<section id="differential-expression-1" class="slide level2 smaller">
 <h2>Differential Expression</h2>
 <h3 id="deseq2-using-htseq-count-files">DESeq2 using htseq-count files</h3>
 <div class="cell">
@@ -1708,7 +1708,7 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 <span id="cb18-4"><a href="#cb18-4"></a>dds <span class="ot">&lt;-</span> <span class="fu">DESeq</span>(DESeq2Table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="saving-workspace" class="slide level2">
+<section id="saving-workspace" class="slide level2 smaller">
 <h2>Saving Workspace</h2>
 <p>Save the workspace so we can carry on tomorrow without having to run these steps again. To save the entire workspace use the save.image() command</p>
 <div class="cell">
@@ -1770,7 +1770,7 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
         progress: true,
 
         // Display the page number of the current slide
-        slideNumber: false,
+        slideNumber: 'c/t',
 
         // 'all', 'print', or 'speaker'
         showSlideNumber: 'all',
