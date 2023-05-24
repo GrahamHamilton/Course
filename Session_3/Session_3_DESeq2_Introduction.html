@@ -528,7 +528,7 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 <ul>
 <li>DESeq2 requires a counts matrix of raw counts</li>
 <li>Each row is a gene or feature</li>
-<li>Each column is the number ofreads that align to that gene</li>
+<li>Each column is the number of reads that align to that gene</li>
 <li>The higher the number of reads that align to a gene relates to the level of expression</li>
 </ul>
 <table>
@@ -670,13 +670,16 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 <p>With RNASeq data there are a large number of genes and the probability of pulling out a particular gene very small. Appropriate distributions would be Poisson or negative binomial, choosing one depends the relationship between the mean and the variance in the data</p>
 <div class="columns">
 <div class="column" style="width:50%;">
+<div style="font-size: 75%;">
 <div class="cell">
 <div class="cell-output-display">
 <p><img data-src="Session_3_DESeq2_Introduction_files/figure-revealjs/unnamed-chunk-8-1.png" width="960"></p>
 </div>
 </div>
-<p>Each point represents a gene <br> ßRed line represents the mean</p>
+<p>Each point represents a gene <br> Red line represents the mean</p>
+</div>
 </div><div class="column" style="width:50%;">
+<div style="font-size: 75%;">
 <ol type="1">
 <li>Variance across the replicates tends to be greater than the mean</li>
 <li>Genes with low mean counts show more scatter</li>
@@ -688,6 +691,7 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 <li><p>May require more than 20 replicates.</p></li>
 </ul></li>
 </ul>
+</div>
 </div>
 </div>
 </section>
@@ -710,6 +714,7 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
    <th style="text-align:left;">   </th>
    <th style="text-align:right;"> Sample1 </th>
    <th style="text-align:right;"> Sample2 </th>
+   <th style="text-align:right;"> Sample3 </th>
   </tr>
  </thead>
 <tbody>
@@ -717,21 +722,25 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
    <td style="text-align:left;"> ENSG00000139618 </td>
    <td style="text-align:right;"> 522 </td>
    <td style="text-align:right;"> 336 </td>
+   <td style="text-align:right;"> 0 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> ENSG00000141510 </td>
    <td style="text-align:right;"> 26611 </td>
    <td style="text-align:right;"> 13523 </td>
+   <td style="text-align:right;"> 25209 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> ENSG00000083093 </td>
    <td style="text-align:right;"> 1428 </td>
    <td style="text-align:right;"> 722 </td>
+   <td style="text-align:right;"> 1289 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Total </td>
    <td style="text-align:right;"> 28561 </td>
    <td style="text-align:right;"> 14581 </td>
+   <td style="text-align:right;"> 26498 </td>
   </tr>
 </tbody>
 </table>
@@ -789,9 +798,9 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 <li>Accounting for read depth and library composition</li>
 </ul>
 </section>
-<section id="library-composition-1" class="slide level2 smaller">
-<h2>Library Composition</h2>
-<div style="font-size: 75%;">
+<section id="library-normalisation" class="slide level2 smaller">
+<h2>Library Normalisation</h2>
+<div style="font-size: 60%;">
 <div class="cell">
 <div class="cell-output-display">
 
@@ -901,17 +910,18 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 </div>
 </div>
 </section>
-<section id="library-composition-2" class="slide level2 smaller">
-<h2>Library Composition</h2>
+<section id="library-normalisation-1" class="slide level2 smaller">
+<h2>Library Normalisation</h2>
 <ul>
 <li>DESeq2 uses log<sub><em>e</em></sub> (log base <em>e</em>), raise <em>e</em> to the log value to get the original count</li>
 <li>The log of a zero is <strong>-Infinity</strong></li>
 <li>Adding <strong>-Infinity</strong> to a number always results in <strong>-Infinity</strong></li>
-<li>Geometric averages lessen the effect of outliers</li>
+<li>Geometric averages - lessen the effect of outliers</li>
 </ul>
 </section>
-<section id="library-composition-3" class="slide level2 smaller">
-<h2>Library Composition</h2>
+<section id="library-normalisation-2" class="slide level2 smaller">
+<h2>Library Normalisation</h2>
+<div style="font-size: 75%;">
 <p>Step 3. Remove genes with a geometric average value <strong><em>-Inf</em></strong></p>
 <div class="cell">
 <div class="cell-output-display">
@@ -944,7 +954,7 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 </div>
 </div>
 <p><br></p>
-<p>Step 4. Subtract the average log values from the log of the counts</p>
+<p>Step 4. Subtract the average log values, calculated in step 2, from the log of the counts</p>
 <div class="cell">
 <div class="cell-output-display">
 
@@ -975,9 +985,11 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 
 </div>
 </div>
+</div>
 </section>
-<section id="library-composition-4" class="slide level2 smaller">
-<h2>Library Composition</h2>
+<section id="library-normalisation-3" class="slide level2 smaller">
+<h2>Library Normalisation</h2>
+<div style="font-size: 75%;">
 <p>Step 5. Calculate the median of the ratios for each sample</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -1037,9 +1049,11 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 
 </div>
 </div>
+</div>
 </section>
-<section id="library-composition-5" class="slide level2 smaller">
-<h2>Library Composition</h2>
+<section id="library-normalisation-4" class="slide level2 smaller">
+<h2>Library Normalisation</h2>
+<div style="font-size: 75%;">
 <p>Step 7. Divide the original counts by the scaling factors</p>
 <h4 style="text-align: center;" id="original-read-counts">Original read counts</h4>
 <div class="cell">
@@ -1114,6 +1128,7 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 </tbody>
 </table>
 
+</div>
 </div>
 </div>
 </section>
@@ -1208,6 +1223,7 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 </section>
 <section id="pairwise" class="slide level2 smaller">
 <h2>Pairwise</h2>
+<div style="font-size: 75%;">
 <p>Sample description file</p>
 <table>
 <thead>
@@ -1249,9 +1265,11 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 <span id="cb2-2"><a href="#cb2-2"></a>                                      <span class="at">colData =</span> sample_table,</span>
 <span id="cb2-3"><a href="#cb2-3"></a>                                      <span class="at">design =</span> <span class="sc">~</span>  Condition)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
 </section>
 <section id="batch-effects" class="slide level2 smaller">
 <h2>Batch effects</h2>
+<div style="font-size: 75%;">
 <p>Sample description file</p>
 <table>
 <thead>
@@ -1301,17 +1319,9 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 <span id="cb3-2"><a href="#cb3-2"></a>                                      <span class="at">colData =</span> sample_table,</span>
 <span id="cb3-3"><a href="#cb3-3"></a>                                      <span class="at">design =</span> <span class="sc">~</span>  Batch <span class="sc">+</span> Condition)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
 </section>
 <section id="multifactorial" class="slide level2 smaller">
-<h2>Multifactorial</h2>
-<p>Unlike batch effects, multifactorial design doesn’t just correct for background effects, it test whether a factor is “interacting” with the treatment.</p>
-
-<img data-src="Session_3_DESeq2_Introduction_files/figure-revealjs/unnamed-chunk-24-1.png" width="960" class="r-stretch"></section>
-<section id="multifactorial-1" class="slide level2 smaller">
-<h2>Multifactorial</h2>
-
-<img data-src="Session_3_DESeq2_Introduction_files/figure-revealjs/unnamed-chunk-25-1.png" width="960" class="r-stretch"></section>
-<section id="multifactorial-2" class="slide level2 smaller">
 <h2>Multifactorial</h2>
 <p>Sample description file</p>
 <table>
@@ -1375,6 +1385,15 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 </tbody>
 </table>
 </section>
+<section id="multifactorial-1" class="slide level2 smaller">
+<h2>Multifactorial</h2>
+<p>Unlike batch effects, multifactorial design doesn’t just correct for background effects, it tests whether a factor is “interacting” with the treatment.</p>
+
+<img data-src="Session_3_DESeq2_Introduction_files/figure-revealjs/unnamed-chunk-24-1.png" width="960" class="r-stretch"></section>
+<section id="multifactorial-2" class="slide level2 smaller">
+<h2>Multifactorial</h2>
+
+<img data-src="Session_3_DESeq2_Introduction_files/figure-revealjs/unnamed-chunk-25-1.png" width="960" class="r-stretch"></section>
 <section id="multifactorial-3" class="slide level2 smaller">
 <h2>Multifactorial</h2>
 <p>Construct the model matrix using the code below</p>
@@ -1509,12 +1528,13 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 <section id="set-up-1" class="slide level2 smaller">
 <h2>Set Up</h2>
 <h3 id="samples">Samples</h3>
+<div style="font-size: 75%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12" data-code-line-numbers="1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>sample_table <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">"./data/sample_description.tsv"</span>,<span class="at">col_types =</span> <span class="st">"ff"</span>)</span>
-<span id="cb12-2"><a href="#cb12-2"></a>sample_table  <span class="sc">%&gt;%</span></span>
-<span id="cb12-3"><a href="#cb12-3"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">6</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-4"><a href="#cb12-4"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb12-5"><a href="#cb12-5"></a>  <span class="fu">kable_styling</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12" data-code-line-numbers="1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>sample_table <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">"./data/sample_description.tsv"</span>,<span class="at">col_types =</span> <span class="st">"ff"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p><br></p>
+<div class="cell">
 <div class="cell-output-display">
 
 <table class="table" style="margin-left: auto; margin-right: auto;">
@@ -1560,12 +1580,10 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 <h3 id="comparisons">Comparisons</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13" data-code-line-numbers="2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># Import comparisons files and set column type to factors, this is an example for a comparisons table with a sample name and treanment column.</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a>comparisons <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">"./data/comparisons.tsv"</span>,<span class="at">col_types =</span> <span class="st">"ff"</span>)</span>
-<span id="cb13-3"><a href="#cb13-3"></a>comparisons<span class="sc">%&gt;%</span></span>
-<span id="cb13-4"><a href="#cb13-4"></a>  as.data.frame<span class="sc">%&gt;%</span></span>
-<span id="cb13-5"><a href="#cb13-5"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">6</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb13-6"><a href="#cb13-6"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb13-7"><a href="#cb13-7"></a>  <span class="fu">kable_styling</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-2"><a href="#cb13-2"></a>comparisons <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">"./data/comparisons.tsv"</span>,<span class="at">col_types =</span> <span class="st">"ff"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<div class="cell">
 <div class="cell-output-display">
 
 <table class="table" style="margin-left: auto; margin-right: auto;">
@@ -1589,6 +1607,7 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 <section id="set-up-3" class="slide level2 smaller">
 <h2>Set Up</h2>
 <h3 id="feature-counts">Feature counts</h3>
+<div style="font-size: 75%;">
 <p>Read in the feature counts table -featurecounts, from Rsubread package</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14" data-code-line-numbers="1-7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>feature_counts_table <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">"./data/feature_counts_table.tsv"</span>) <span class="sc">%&gt;%</span></span>
@@ -1597,12 +1616,11 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 <span id="cb14-4"><a href="#cb14-4"></a></span>
 <span id="cb14-5"><a href="#cb14-5"></a><span class="co"># Ensure that the counts table is in the same order as the sample table</span></span>
 <span id="cb14-6"><a href="#cb14-6"></a>feature_counts_table <span class="ot">&lt;-</span> feature_counts_table <span class="sc">%&gt;%</span></span>
-<span id="cb14-7"><a href="#cb14-7"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">c</span>(sample_table<span class="sc">$</span>Sample))</span>
-<span id="cb14-8"><a href="#cb14-8"></a></span>
-<span id="cb14-9"><a href="#cb14-9"></a>feature_counts_table <span class="sc">%&gt;%</span></span>
-<span id="cb14-10"><a href="#cb14-10"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb14-11"><a href="#cb14-11"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb14-12"><a href="#cb14-12"></a>  <span class="fu">kable_styling</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-7"><a href="#cb14-7"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">c</span>(sample_table<span class="sc">$</span>Sample))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p><br></p>
+<div class="cell">
 <div class="cell-output-display">
 
 <table class="table" style="margin-left: auto; margin-right: auto;">
@@ -1665,7 +1683,7 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>DESeq2Table <span class="ot">&lt;-</span> <span class="fu">DESeqDataSetFromMatrix</span>(<span class="at">countData =</span> feature_counts_table,</span>
 <span id="cb15-2"><a href="#cb15-2"></a>                                      <span class="at">colData =</span> sample_table,</span>
-<span id="cb15-3"><a href="#cb15-3"></a>                                      <span class="at">design=</span> <span class="sc">~</span>  Condition)</span>
+<span id="cb15-3"><a href="#cb15-3"></a>                                      <span class="at">design =</span> <span class="sc">~</span>  Condition)</span>
 <span id="cb15-4"><a href="#cb15-4"></a>dds <span class="ot">&lt;-</span> <span class="fu">DESeq</span>(DESeq2Table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Write the normalised read counts to a file</p>
@@ -1681,21 +1699,53 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 <section id="set-up-4" class="slide level2 smaller">
 <h2>Set Up</h2>
 <h3 id="htseq-count">HtSeq-Count</h3>
+<div style="font-size: 75%;">
 <p>Read in the feature counts for the counts files - HtSeq Counts</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17" data-code-line-numbers="1-8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">"./data/htseq_counts/"</span>) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">"./data/htseq_counts/"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb17-3"><a href="#cb17-3"></a>  <span class="fu">rename</span>(<span class="at">Files =</span> <span class="st">"."</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb17-4"><a href="#cb17-4"></a>  <span class="fu">left_join</span>(<span class="fu">read_tsv</span>(<span class="st">"./data/sample_description.tsv"</span>))</span>
-<span id="cb17-5"><a href="#cb17-5"></a></span>
-<span id="cb17-6"><a href="#cb17-6"></a>sampleDataFrame <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">sampleName =</span> files<span class="sc">$</span>Sample,</span>
-<span id="cb17-7"><a href="#cb17-7"></a>                      <span class="at">fileName =</span> files<span class="sc">$</span>Files,</span>
-<span id="cb17-8"><a href="#cb17-8"></a>                      <span class="at">condition =</span> files<span class="sc">$</span>Condition)</span>
-<span id="cb17-9"><a href="#cb17-9"></a></span>
-<span id="cb17-10"><a href="#cb17-10"></a>sampleDataFrame <span class="sc">%&gt;%</span></span>
-<span id="cb17-11"><a href="#cb17-11"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb17-12"><a href="#cb17-12"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb17-13"><a href="#cb17-13"></a>  <span class="fu">kable_styling</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-4"><a href="#cb17-4"></a>  <span class="fu">mutate</span>(<span class="at">Samples =</span> Files) <span class="sc">%&gt;%</span></span>
+<span id="cb17-5"><a href="#cb17-5"></a>  <span class="fu">separate_wider_delim</span>(Samples, <span class="at">delim =</span> <span class="st">"."</span>, <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"Sample"</span>, <span class="cn">NA</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb17-6"><a href="#cb17-6"></a>  <span class="fu">left_join</span>(<span class="fu">read_tsv</span>(<span class="st">"./data/sample_description.tsv"</span>))</span>
+<span id="cb17-7"><a href="#cb17-7"></a></span>
+<span id="cb17-8"><a href="#cb17-8"></a>sampleDataFrame <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">sampleName =</span> files<span class="sc">$</span>Sample,</span>
+<span id="cb17-9"><a href="#cb17-9"></a>                      <span class="at">fileName =</span> files<span class="sc">$</span>Files,</span>
+<span id="cb17-10"><a href="#cb17-10"></a>                      <span class="at">condition =</span> files<span class="sc">$</span>Condition)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> sampleName </th>
+   <th style="text-align:left;"> fileName </th>
+   <th style="text-align:left;"> condition </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Control_1 </td>
+   <td style="text-align:left;"> Control_1.txt </td>
+   <td style="text-align:left;"> Control </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Control_2 </td>
+   <td style="text-align:left;"> Control_2.txt </td>
+   <td style="text-align:left;"> Control </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Control_3 </td>
+   <td style="text-align:left;"> Control_3.txt </td>
+   <td style="text-align:left;"> Control </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
 <section id="differential-expression-1" class="slide level2 smaller">
@@ -1704,7 +1754,7 @@ style id9 fill:#006630,stroke:#006630,stroke-width:4px,color:#fff
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>DESeq2Table <span class="ot">&lt;-</span> <span class="fu">DESeqDataSetFromHTSeqCount</span>(<span class="at">sampleTable =</span> sampleDataFrame,</span>
 <span id="cb18-2"><a href="#cb18-2"></a>                                           <span class="at">directory =</span> <span class="st">"./data/htseq_counts/"</span>,</span>
-<span id="cb18-3"><a href="#cb18-3"></a>                                           <span class="at">design=</span> <span class="sc">~</span>  condition)</span>
+<span id="cb18-3"><a href="#cb18-3"></a>                                           <span class="at">design =</span> <span class="sc">~</span>  condition)</span>
 <span id="cb18-4"><a href="#cb18-4"></a>dds <span class="ot">&lt;-</span> <span class="fu">DESeq</span>(DESeq2Table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>

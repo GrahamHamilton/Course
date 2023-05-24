@@ -420,10 +420,10 @@ Graham Hamilton
 <p>Download the latest stable release of R from<br>https://www.r-project.org, latest version is 4.2.3</p>
 <div class="quarto-layout-panel">
 <div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-layout-cell" style="flex-basis: 70.0%;justify-content: center;">
+<div class="quarto-layout-cell" style="flex-basis: 58.3%;justify-content: center;">
 <p><img data-src="images/R_home_screen.png"></p>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 30.0%;justify-content: center;">
+<div class="quarto-layout-cell" style="flex-basis: 41.7%;justify-content: center;">
 <p><img data-src="images/R_download_versions.png"></p>
 </div>
 </div>
@@ -489,7 +489,7 @@ Graham Hamilton
 <div class="column" style="width:60%;">
 <p><img data-src="images/RStudio_panels.png" style="width:100.0%"></p>
 </div><div class="column" style="width:40%;">
-<div style="font-size: 80%;">
+<div style="font-size: 60%;">
 <ul>
 <li><span style="color:red;">Source pane</span>
 <ul>
@@ -694,9 +694,9 @@ R packages contain:</p>
 <h2>Loading Packages</h2>
 <p>Loading packages within a function from Bioconductor</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10" data-code-line-numbers="|1|10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>biomart.packages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Rsubread"</span>)</span>
+<div class="sourceCode cell-code" id="cb10" data-code-line-numbers="|1|10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>bioconductor.packages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Rsubread"</span>)</span>
 <span id="cb10-2"><a href="#cb10-2"></a></span>
-<span id="cb10-3"><a href="#cb10-3"></a>biomart.load <span class="ot">&lt;-</span> <span class="cf">function</span>(pkg){</span>
+<span id="cb10-3"><a href="#cb10-3"></a>bioconductor.load <span class="ot">&lt;-</span> <span class="cf">function</span>(pkg){</span>
 <span id="cb10-4"><a href="#cb10-4"></a>        new.pkg <span class="ot">&lt;-</span> pkg[<span class="sc">!</span>(pkg <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[, <span class="st">"Package"</span>])]</span>
 <span id="cb10-5"><a href="#cb10-5"></a>        <span class="cf">if</span> (<span class="fu">length</span>(new.pkg)){</span>
 <span id="cb10-6"><a href="#cb10-6"></a>          <span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"BiocManager"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>))</span>
@@ -705,7 +705,7 @@ R packages contain:</p>
 <span id="cb10-9"><a href="#cb10-9"></a>        }</span>
 <span id="cb10-10"><a href="#cb10-10"></a>        <span class="fu">sapply</span>(pkg, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb10-11"><a href="#cb10-11"></a>}</span>
-<span id="cb10-12"><a href="#cb10-12"></a><span class="fu">biomart.load</span>(biomart.packages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-12"><a href="#cb10-12"></a><span class="fu">bioconductor.load</span>(bioconductor.packages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="tidyverse" class="slide level2 smaller">
@@ -978,11 +978,12 @@ R packages contain:</p>
 <div style="font-size: 75%;">
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>mpg <span class="ot">&lt;-</span> mpg <span class="sc">%&gt;%</span> <span class="fu">mutate_at</span>(<span class="fu">vars</span>(cyl), factor)</span>
-<span id="cb23-2"><a href="#cb23-2"></a></span>
-<span id="cb23-3"><a href="#cb23-3"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> cyl, <span class="at">y =</span> hwy, <span class="at">fill =</span> cyl)) <span class="sc">+</span></span>
-<span id="cb23-4"><a href="#cb23-4"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb23-5"><a href="#cb23-5"></a>  <span class="fu">scale_fill_viridis_d</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>mpg <span class="ot">&lt;-</span> mpg <span class="sc">%&gt;%</span> </span>
+<span id="cb23-2"><a href="#cb23-2"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(cyl), factor)</span>
+<span id="cb23-3"><a href="#cb23-3"></a></span>
+<span id="cb23-4"><a href="#cb23-4"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> cyl, <span class="at">y =</span> hwy, <span class="at">fill =</span> cyl)) <span class="sc">+</span></span>
+<span id="cb23-5"><a href="#cb23-5"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb23-6"><a href="#cb23-6"></a>  <span class="fu">scale_fill_viridis_d</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
 <p><img data-src="Session_2_RandRStudio_files/figure-revealjs/unnamed-chunk-20-1.png" width="768"></p>
@@ -1041,7 +1042,7 @@ R packages contain:</p>
 <li>Time consuming</li>
 <li>Packages supplied by the Tidyverse
 <ul>
-<li><p>Share an underlying grammer and styructure</p></li>
+<li><p>Share an underlying grammar and structure</p></li>
 <li><p>Standardises data tidying</p></li>
 </ul></li>
 <li>Tidy data has:

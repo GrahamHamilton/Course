@@ -26,7 +26,7 @@ Download the latest stable release of R from<br>https://www.r-project.org, lates
 ::: {layout-ncol="2"}
 ![](images/R_home_screen.png){width="70%"}
 
-![](images/R_download_versions.png){width="30%"}
+![](images/R_download_versions.png){width="50%"}
 :::
 
 ## RStudio
@@ -93,7 +93,7 @@ Set up Rstudio - Set options in **Tools** and **Global Options...**
 :::
 
 ::: {.column width="40%"}
-::: {style="font-size: 80%;"}
+::: {style="font-size: 60%;"}
 -   [Source pane]{style="color:red;"}
     -   Write R commands as R scripts or Notebooks\
 -   [Console Pane]{style="color:blue;"}
@@ -298,9 +298,9 @@ Loading packages within a function from Bioconductor
 #| echo: true
 #| eval: false
 #| code-line-numbers: "|1|10"
-biomart.packages <- c("Rsubread")
+bioconductor.packages <- c("Rsubread")
 
-biomart.load <- function(pkg){
+bioconductor.load <- function(pkg){
         new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
         if (length(new.pkg)){
           if (!requireNamespace("BiocManager", quietly = TRUE))
@@ -309,7 +309,7 @@ biomart.load <- function(pkg){
         }
         sapply(pkg, require, character.only = TRUE)
 }
-biomart.load(biomart.packages)
+bioconductor.load(bioconductor.packages)
 ```
 
 ## Tidyverse {.smaller}
@@ -523,7 +523,8 @@ Box plot
 #| fig-width: 8
 #| fig-height: 6
 #| output-location: column
-mpg <- mpg %>% mutate_at(vars(cyl), factor)
+mpg <- mpg %>% 
+  mutate_at(vars(cyl), factor)
 
 ggplot(mpg, aes(x = cyl, y = hwy, fill = cyl)) +
   geom_boxplot() +
@@ -642,7 +643,7 @@ void <- ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
 -   First steps cleaning and preparing data
 -   Time consuming
 -   Packages supplied by the Tidyverse
-    -   Share an underlying grammer and styructure
+    -   Share an underlying grammar and structure
 
     -   Standardises data tidying
 -   Tidy data has:
