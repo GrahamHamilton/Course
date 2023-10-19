@@ -776,6 +776,7 @@ Add a column to the resuts data frame stating that a gene is significantly eithe
 
 <br>
 
+::: {style="font-size: 85%;"}
 ```{r}
 #| echo: true
 #| eval: true
@@ -784,8 +785,11 @@ contrast<- contrast%>%
                                 log2FoldChange <= -foldchange &  padj <= qvalueCutoff ~ "Down-regulated",
                                 TRUE ~ "Unchanged"))
 ```
+:::
 
-::: {style="font-size: 40%;"}
+<br>
+
+::: {style="font-size: 45%;"}
 
 ```{r}
 #| echo: false
@@ -802,7 +806,7 @@ contrast%>%
 
 Plot the Log fold change against the log of the adjusted P value
 
-::: {style="font-size: 50%;"}
+::: {style="font-size: 75%;"}
 ```{r}
 #| echo: true
 #| eval: true
@@ -845,7 +849,6 @@ ggsave(filename = "volcano_plot.png",
        path = resultsFilePath)
 ```
 
-##
 ```{r}
 #| echo: false
 #| eval: false

@@ -100,7 +100,7 @@ After the differential expression analysis has run we can get a table of normali
 total_norm_counts <- estimateSizeFactors(dds) %>%
   counts(normalized = TRUE) %>%
   as.data.frame() %>%
-  rownames_to_column(var = "Ensembl_ID")
+  rownames_to_column(var = "ensembl_gene_id")
 
 write_tsv(total_norm_counts,"normalised_read_counts.tsv")
 ```

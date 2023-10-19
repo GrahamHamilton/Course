@@ -56,7 +56,7 @@ bioconductor.load(bioconductor.packages)
 
 ### Github Packages
 
-Install package fro GitHub
+Install package from GitHub
 
 ```{r Github}
 #| echo: true
@@ -77,10 +77,10 @@ git.load(git.packages)
 
 ## Load Save Data
 
-Load the data from the previous R session, session 3, the data should be in the /Session_3/ directory and called Session3.RData. Your working directory for today should be Session_4 so you could use the relative path "..//Session_3/Session3.RData". The "relative" path to the file is relative to the current working directory.
+Load the data from the previous R session, session 3, the data should be in the /Session_3/ directory and called Session3.RData. Your working directory for today should be Session_4 so you could use the relative path "../Session_3/Session3.RData". The "relative" path to the file is relative to the current working directory.
 
 ```{r read in previous days data}
-
+load("../Session_3/Session3.RData")
 ```
 
 ## Results Directory
@@ -249,7 +249,7 @@ searchDatasets(mart = ensembl, pattern = "Human")
 ```
 Try to find the mouse dataset name, you could probably guess what it is though!
 ```{r search mouse}
-searchDatasets(mart = ensembl, pattern = "")
+searchDatasets(mart = ensembl, pattern = "mouse")
 ```
 
 Biomart has a wide range of attributes that can be used to annotate your results, over 3,000, you can view the first 5 with the code below
@@ -265,7 +265,7 @@ searchAttributes(mart = ensembl, pattern = "hgnc")
 
 Try searching for Gene ontology attributes, go
 ```{r go attributes}
-
+searchAttributes(mart = ensembl, pattern = "go")
 ```
 
 ## Pairwise comparisons
@@ -296,7 +296,7 @@ Get the log2 normalised counts to add the results tables
 ```{r normalise }
 contrast_total_norm_counts <- total_norm_counts %>% 
   column_to_rownames(var = "ensembl_gene_id") %>%
-  dplyr::select(comparisonSampleNames) %>%
+  dplyr::select(all_of(comparisonSampleNames)) %>%
   rownames_to_column(var = "ensembl_gene_id")
 ```
 
@@ -304,7 +304,7 @@ Create the results table
 Add annotations and normalised read counts to the results table using the dplyr left_join command
 
 ```{r contrast results}
-contrast <- results(dds, contrast = c("Condition", test_condition, base_condition)) %>% # Get the pair se comparison results
+contrast <- results(dds, contrast = c("Condition", test_condition, base_condition)) %>% # Get the pairwise comparison results
   as.data.frame() %>% # Convert to dataframe
   rownames_to_column(var = "ensembl_gene_id") %>% # Create an ensembl gene id column
   left_join(annotations, by = "ensembl_gene_id")%>% # merge annotations by ensembl gene id
@@ -322,11 +322,19 @@ write_delim(contrast,
             delim = "\t")
 ```
 
-Adapt the code above to get the lof fold shrunk results. Use the command lfcShrink(dds, coef = ...,  type = ...).
+Adapt the code above to get the log fold shrunk results. Use the command lfcShrink(dds, coef = ...,  type = ...).
 Set the coef to the name of the contrast, you can find this from this command, resultsNames(dds)[2]
 Set the type to "apeglm"
 ```{r contrast lfc results}
-
+lfc_results <- lfcShrink(dds, 
+                         coef = ...,  
+                         type = ...) %>% # Get the pairwise comparison results
+  as.data.frame() %>% # Convert to dataframe
+  rownames_to_column(var = "ensembl_gene_id") %>% # Create an ensembl gene id column
+  left_join(annotations, by = "ensembl_gene_id")%>% # merge annotations by ensembl gene id
+  left_join(contrast_total_norm_counts, by = "ensembl_gene_id") %>% # Merge normalised counts by ensembl gene id
+  arrange(padj) %>% # Sort the dataframe by the p adjusted value ascending
+  replace_na(list(log2FoldChange = 0.001))
 ```
 
 View the results, HINT use the command head()
@@ -369,7 +377,7 @@ Now create and save an maplot for the lfc contrast results.
 ```
 
 Volcano plot.
-Below is a near complete code chunk for plotting a volcano plot of the unshrunkren results data. You will need to fill in the correct values wheere there are three dots (...).
+Below is a near complete code chunk for plotting a volcano plot of the unshrunkren results data. You will need to fill in the correct values where there are three dots (...).
 Hint you will be plotting log fold change against the adjusted p value (which needs to be negative log 1o transformed). The points should be coloured based on the up or down regulation of the expression, this is created in the first comand of the code chunk.
 
 ```{r volcano plot}
@@ -378,8 +386,8 @@ contrast<- contrast%>%
                                 log2FoldChange <= -foldchange &  padj <= qvalueCutoff ~ "Down-regulated",
                                 TRUE ~ "Unchanged"))
 
-vp <- ggplot(data =..., aes(x = ...,y = -log10(...))) +
-  geom_point(aes(color = ...), size = 3/5)  +
+vp <- ggplot(data = contrast, aes(x = log2FoldChange,y = -log10(padj))) +
+  geom_point(aes(color = Expression), size = 3/5)  +
   scale_color_manual(values = c("#003865", "#CCCCCC","#B30C00")) +
   xlab(expression("Log"[2]*" Fold Change")) +
   ylab(expression("-Log"[10]*~ ""~italic(P)~"value")) +
@@ -410,8 +418,4 @@ ggsave(filename = "volcano_plot.png",
        path = resultsFilePath)
 ```
 
-Now try a heat map for this contrast
-```{r contrast heatmap}
-
-```
 

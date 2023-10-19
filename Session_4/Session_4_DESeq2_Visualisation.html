@@ -1429,13 +1429,16 @@ Graham Hamilton
 <h2>Volcano Plot</h2>
 <p>Add a column to the resuts data frame stating that a gene is significantly either <strong>UP</strong> or <strong>DOWN</strong> regulated.</p>
 <p><br></p>
+<div style="font-size: 85%;">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>contrast<span class="ot">&lt;-</span> contrast<span class="sc">%&gt;%</span></span>
 <span id="cb26-2"><a href="#cb26-2"></a>  <span class="fu">mutate</span>(<span class="at">Expression =</span> <span class="fu">case_when</span>(log2FoldChange <span class="sc">&gt;=</span> foldchange <span class="sc">&amp;</span>  padj <span class="sc">&lt;=</span> qvalueCutoff <span class="sc">~</span> <span class="st">"Up-regulated"</span>,</span>
 <span id="cb26-3"><a href="#cb26-3"></a>                                log2FoldChange <span class="sc">&lt;=</span> <span class="sc">-</span>foldchange <span class="sc">&amp;</span>  padj <span class="sc">&lt;=</span> qvalueCutoff <span class="sc">~</span> <span class="st">"Down-regulated"</span>,</span>
 <span id="cb26-4"><a href="#cb26-4"></a>                                <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Unchanged"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div style="font-size: 40%;">
+</div>
+<p><br></p>
+<div style="font-size: 45%;">
 <div class="cell">
 <div class="cell-output-display">
 
@@ -1573,7 +1576,7 @@ Graham Hamilton
 <section id="volcano-plot-1" class="slide level2 smaller">
 <h2>Volcano Plot</h2>
 <p>Plot the Log fold change against the log of the adjusted P value</p>
-<div style="font-size: 50%;">
+<div style="font-size: 75%;">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>vp <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> contrast, <span class="fu">aes</span>(<span class="at">x =</span> log2FoldChange,<span class="at">y =</span> <span class="sc">-</span><span class="fu">log10</span>(padj))) <span class="sc">+</span></span>
 <span id="cb27-2"><a href="#cb27-2"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> Expression), <span class="at">size =</span> <span class="dv">3</span><span class="sc">/</span><span class="dv">5</span>)  <span class="sc">+</span></span>
@@ -1605,10 +1608,7 @@ Graham Hamilton
 <section id="volcano-plot-2" class="slide level2 smaller">
 <h2>Volcano Plot</h2>
 
-<img data-src="Session_4_DESeq2_Visualisation_files/figure-revealjs/unnamed-chunk-36-1.png" width="960" class="r-stretch"></section>
-<section id="section" class="slide level2">
-<h2></h2>
-<div class="cell">
+<img data-src="Session_4_DESeq2_Visualisation_files/figure-revealjs/unnamed-chunk-36-1.png" width="960" class="r-stretch"><div class="cell">
 
 </div>
 <div class="footer footer-default">

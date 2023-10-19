@@ -1,0 +1,339 @@
+---
+title: "Session_5_Tutorial"
+output: html_document
+---
+## Instal & Load Required Pacakges
+### CRAN packages
+Install CRAN packages
+
+```{r}
+cran.packages <- c("tidyverse",
+                   "ggrepel",
+                   "kableExtra",
+                   "ggupset")
+
+cran.load <- function(pkg){
+        new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+        if (length(new.pkg)){
+          install.packages(new.pkg, dependencies = TRUE)
+          }
+        sapply(pkg, require, character.only = TRUE)
+}
+cran.load(cran.packages)
+```
+
+### Bioconductor Packages
+Install Biocondustor packages
+
+```{r}
+bioconductor.packages <- c("org.Hs.eg.db",
+                           "clusterProfiler",
+                           "enrichplot",
+                           "pathview")
+
+bioconductor.load <- function(pkg){
+        new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+        if (length(new.pkg)){
+          if (!requireNamespace("BiocManager", quietly = TRUE))
+            install.packages("BiocManager")
+            BiocManager::install(new.pkg)
+        }
+        sapply(pkg, require, character.only = TRUE)
+}
+bioconductor.load(bioconductor.packages)
+```
+
+```{r}
+pvalueCutoff <- 0.05 # P value
+qvalueCutoff <- 0.1 # Adjusted P value
+foldchange <- 1 # Fold change, usually fold change is log2
+```
+
+
+## Load Save Data
+Load the pairwise results file from the previous session, session 4, the data should be in the ../Session_4/DESeq2/Treatment_vs_Control_results/ directory and called "Treatment_vs_Control.genes.tsv" or the shrunken data would be called "lfc.Treatment_vs_Control.genes.tsv". Your working directory for today should be Session_5 so you could use the relative path "../Session_4/DESeq2/Treatment_vs_Control_results/Treatment_vs_Control.genes.tsv". The "relative" path to the file is relative to the current working directory. Use the variable name "de_results". Complete the code chunk below.
+If you don't have the results file then you can get a copy from the data directory in this Session.
+
+```{r read in previous days results file}
+de_results <- read_delim("../Session_4/DESeq2/Treatment_vs_Control_results/Treatment_vs_Control.genes.tsv", delim = "\t")
+
+head(de_results)
+```
+
+Now repeat the reading in of the results file with the other file either Treatment_vs_Control.genes.tsv or lfc.Treatment_vs_Control.genes.tsv 
+
+```{r read in previous days results file}
+lfc_de_results <- read_delim("../Session_4/DESeq2/Treatment_vs_Control_results/lfc.Treatment_vs_Control.genes.tsv", delim = "\t")
+
+head(lfc_de_results)
+```
+
+## Results Directory
+Create a results directory for the ClusterProfiler results files, I would call it "ClusterProfiler", but you can call it whatever you would like. 
+HINT: You created a similar directory in yesterdays session. Complete the code chunk below 
+```{r}
+results_directory <- "ClusterProfiler"
+dir.create(results_directory, showWarnings = FALSE)
+```
+
+## Filtering
+Filter the results table for genes that have a p adjusted value of 0.1 and a log fold change of 1.
+NOTE: The use of the absolute value for the log2 fold change. Complete the code chunk below
+
+```{r}
+filtered_de_results <- de_results %>%
+  filter(padj < qvalueCutoff,
+         abs(log2FoldChange) > foldchange) %>% # Filter on p adjusted and log fold change values
+  drop_na() # Remove any NA values
+
+head(filtered_de_results)
+```
+
+Now filter the lfc results. Complete the code chunk below
+
+```{r}
+lfc_filtered_de_results <- lfc_de_results %>%
+  filter(padj < qvalueCutoff,
+         abs(log2FoldChange) > foldchange) %>% # Filter on p adjusted and log fold change values
+  drop_na() # Remove any NA values
+
+head(lfc_filtered_de_results)
+```
+
+
+## Gene Ontology Analysis
+Over representation Analysis
+List of entrez ids for the differentially expressed genes, de_results. Use the pull() command from dplyr. Complete the code chunk below
+
+```{r}
+de_genes <- filtered_de_results %>%
+  pull(entrezgene_id)
+
+head(de_genes)
+```
+
+
+Over representation analysis
+```{r}
+go_ora <- enrichGO(gene = de_genes,
+                   OrgDb = org.Hs.eg.db,
+                   ont = "CC", # Can choose "BP","CC", "MF" or "ALL"
+                   pAdjustMethod = "BH", # Can choose "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none"
+                   pvalueCutoff = 0.01,
+                   qvalueCutoff = 0.05,
+                   readable = TRUE)
+
+head(go_ora)
+```
+
+
+
+List of entrez ids for the log fold shrunken differentially expressed genes, lfc_filtered_de_results. Use the pull() command from dplyr. Complete the code chunk below
+
+```{r}
+lfc_de_genes <- filtered_de_results %>%
+  pull(entrezgene_id)
+
+head(lfc_de_genes)
+```
+
+
+Repeat over representation analysis with the lfc results. 
+```{r}
+go_ora_lfc <- enrichGO(gene = lfc_de_genes,
+                   OrgDb = org.Hs.eg.db,
+                   ont = "CC", # Can choose "BP","CC", "MF" or "ALL"
+                   pAdjustMethod = "BH", # Can choose "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none"
+                   pvalueCutoff = 0.01,
+                   qvalueCutoff = 0.05,
+                   readable = TRUE)
+
+head(go_ora_lfc)
+```
+
+Have a look at the results for the GO analyses to se if they differ.
+
+## Gene Set enrichment Analysis
+
+Input is a named vector of log fold changes with entrez ids as the names, sorted
+```{r}
+gsea_gene_list <- filtered_de_results$log2FoldChange # Get the log fold values in a character vector
+names(gsea_gene_list) <- filtered_de_results$entrezgene_id # Add the entrez gene ids as the names for the log fold changes
+gsea_gene_list <- sort(gsea_gene_list, decreasing = TRUE) # Sort the character vector bym logo fold change, for lowest to highest
+
+head(gsea_gene_list)
+```
+
+Gene set enrichment analysis
+
+```{r}
+#| echo: true
+#| eval: true
+go_gsea <- gseGO(gene = gsea_gene_list, # Add the gene list here
+                 OrgDb = org.Hs.eg.db,
+                 ont = "CC", # Can choose BP,CC, MF or ALL
+                 pAdjustMethod = "BH", # Can choose "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none"
+                 minGSSize    = 100,
+                 maxGSSize    = 500,
+                 pvalueCutoff = 0.01)
+
+head(go_gsea)
+```
+
+Now try using the lfc_filtered_de_results
+
+```{r}
+gsea_lfc_gene_list <- lfc_filtered_de_results$log2FoldChange # Get the log fold values in a character vector
+names(gsea_lfc_gene_list) <- lfc_filtered_de_results$entrezgene_id # Add the entrez gene ids as the names for the log fold changes
+gsea_lfc_gene_list <- sort(gsea_lfc_gene_list, decreasing = TRUE) # Sort the character vector bym logo fold change, for lowest to highest
+
+head(gsea_lfc_gene_list)
+```
+
+Repeat geneset enrichment analysis with the lfc results.
+
+```{r}
+go_gsea_lfc <- gseGO(gene = gsea_lfc_gene_list, # Add the gene list here
+                 OrgDb = org.Hs.eg.db,
+                 ont = "CC", # Can choose BP,CC, MF or ALL
+                 pAdjustMethod = "BH", # Can choose "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none"
+                 minGSSize    = 100,
+                 maxGSSize    = 500,
+                 pvalueCutoff = 0.01)
+
+head(go_gsea_lfc)
+```
+
+
+Now save the Gene Ontology results to a file. You will need to convert the results into the format of a data frame, as.data.frame() command. Use the write_delim() command and save to the results directory created earlier.
+
+```{r}
+write_delim(as.data.frame(go_ora), 
+            file = file.path(results_directory, "go_ora_enriched.tsv"), 
+            delim = "\t")
+
+write_delim(as.data.frame(go_ora_lfc), 
+            file = file.path(results_directory, "go_ora_lfc_enriched.tsv"), 
+            delim = "\t")
+
+write_delim(as.data.frame(go_gsea), 
+            file = file.path(results_directory, "go_gsea_enriched.tsv"), 
+            delim = "\t")
+
+write_delim(as.data.frame(go_gsea_lfc), 
+            file = file.path(results_directory, "go_gsea_lfc_enriched.tsv"), 
+            delim = "\t")
+```
+
+
+Now using the dotplot() command visualise the GO analysis results, You can limit the number of results using the parameter showCategory=10. Also try visualising using the barplot() command. Or you could also visualise the lfc results.
+
+```{r}
+dotplot(go_gsea_lfc)
+```
+
+These visualisations are ggplot2 objects and can be saved using ggsave like the other plots we have created.
+
+## Pathway Analysis
+Over representation analysis
+
+```{r}
+kegg_ora <- enrichKEGG(gene = de_genes,
+                       organism = 'hsa',
+                       pvalueCutoff = 0.01)
+
+head(kegg_ora)
+```
+
+Save the pathway analysis to file
+
+```{r}
+kegg_ora %>%
+  as.data.frame() %>%
+  write_delim(file = file.path(results_directory, "ora_pathway.tsv"),
+              delim = "\t")
+```
+
+Now try using the lfc_de_genes list
+
+```{r}
+kegg_ora_lfc <- enrichKEGG(gene = lfc_de_genes,
+                       organism = 'hsa',
+                       pvalueCutoff = 0.01)
+
+head(kegg_ora_lfc)
+```
+
+Save the pathway analysis to file
+
+```{r}
+kegg_ora_lfc %>%
+  as.data.frame() %>%
+  write_delim(file = file.path(results_directory, "lfc_ora_pathway.tsv"),
+              delim = "\t")
+```
+
+## Pathway Analysis
+Gene set enrichment analysis
+
+```{r}
+kegg_gsea <- gseKEGG(geneList = gsea_gene_list,
+                     organism = 'hsa',
+                     minGSSize = 10,
+                     pvalueCutoff = 0.05)
+
+head(kegg_gsea)
+```
+
+Save the pathway analysis to file
+
+```{r}
+kegg_gsea %>%
+  as.data.frame() %>%
+  write_delim(file = file.path(results_directory, "gsea_pathway.tsv"),
+              delim = "\t")
+```
+
+
+Now try using the gsea_lfc_gene_list 
+
+```{r}
+kegg_lfc_gsea <- gseKEGG(geneList = gsea_lfc_gene_list,
+                     organism = 'hsa',
+                     minGSSize = 10,
+                     pvalueCutoff = 0.05)
+
+head(kegg_lfc_gsea)
+```
+
+## Pathway Analysis Visualisation
+
+Create a function to retrieve the KEG pathways
+
+```{r}
+# Pathway visulaisation function
+kegg_pathview <- function(kegg_pathway_id){ 
+  pathview(gene.data = gsea_gene_list, # Named list of fold changes
+        pathway.id = kegg_pathway_id, # KEGG pathway id
+        species = "hsa", # KEG species id
+        gene.idtype = "KEGG",
+        kegg.native = TRUE) 
+}
+
+# List of KEGG pathway ids
+kegg_gsea_list <- kegg_gsea %>%
+  as.data.frame() %>%
+  pull(ID) 
+
+# Iterate over the list of pathway ids and apply the data to the pathway
+lapply(kegg_gsea_list, kegg_pathview)
+```
+
+Tidy up the files
+```{r}
+results.files <- list.files(path = ".", pattern = "pathview.png") %>% # list all pathview files
+  file.copy(results_directory) # Copy pathway files to results directory
+# Delete results files
+remove_files <- list.files(path = ".", pattern = "hsa") %>% # List all files dowloaded from KEGG
+  file.remove() # Delete the files
+```
