@@ -27,18 +27,25 @@ data_frame <- list.files(path = ".", pattern = ".csv$") %>%
   rename(User_Name = "Name_(Original_Name)") %>%
   rename(Duration = "Duration_(Minutes)") %>%
   filter(!User_Name %in% polyomics_staff) %>%
-  filter(Duration > 50) %>%
+  # filter(Duration > 50) %>%
   mutate_all(.funs=toupper) %>%
   arrange(User_Name,Join_Time) %>%
   distinct(User_Name, Join_Time, .keep_all = TRUE) %>%
   dplyr::select(User_Name,Join_Time,Duration) %>%
   mutate(Day = wday(mdy_hms(Join_Time), label=TRUE, abbr = FALSE)) %>%
-  arrange(Day)
+  arrange(Day) %>%
+  mutate(Duration = as.integer(Duration))
   
     
 ggplot(data_frame, aes(Day)) +
-  geom_bar( )
+  geom_bar( ) +
+  theme_classic()
 
-
+ggplot(data_frame, aes(x = Day, y = Duration)) +
+  geom_boxplot() +
+  geom_point(aes(colour = User_Name)) +
+  scale_colour_viridis_d() +
+  theme_classic() +
+  theme(legend.position = "none")
 ```
 
