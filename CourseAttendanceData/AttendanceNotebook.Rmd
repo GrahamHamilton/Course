@@ -49,3 +49,18 @@ ggplot(data_frame, aes(x = Day, y = Duration)) +
   theme(legend.position = "none")
 ```
 
+```{r}
+bioconductor.packages <- c("biomaRt")
+
+bioconductor.load <- function(pkg){
+        new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+        if (length(new.pkg)){
+          if (!requireNamespace("BiocManager", quietly = TRUE))
+            install.packages("BiocManager")
+            BiocManager::install(new.pkg)
+        }
+        sapply(pkg, require, character.only = TRUE)
+}
+bioconductor.load(bioconductor.packages)
+```
+
