@@ -80,7 +80,7 @@ git.load(git.packages)
 Load the data from the previous R session, session 3, the data should be in the /Session_3/ directory and called Session3.RData. Your working directory for today should be Session_4 so you could use the relative path "../Session_3/Session3.RData". The "relative" path to the file is relative to the current working directory.
 
 ```{r read in previous days data}
-load("../Session_3/Session3.RData")
+load("...")
 ```
 
 ## Results Directory
