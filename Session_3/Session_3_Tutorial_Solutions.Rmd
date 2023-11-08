@@ -59,7 +59,7 @@ This file containing the sample/replicate names along with the treatment group f
 Import the Sample description file sample_description.tsv from the data directory using the read_tsv command from the readr package. It is a time saver if you can set the column data type at the same time as importing the data. DESeq2 prefers data to be set as factors, discrete values rather than continuous. You can do this using the col_types parameter in read_tsv. HINT: look at the help by typing ?read_tsv in the Console pane.
 
 ```{r}
-sample_table <- 
+sample_table <- read_tsv("./data/sample_description.tsv", col_types = "ff")
 ```
 
 ### Comparisons
@@ -68,14 +68,15 @@ The file contains the pairwise comparisons we would like to perform. In this exa
 
 Import the comparisons file comparisons.tsv from the data directory using the read_tsv command from the readr package. Again, it is a time saver if you can set the column data type at the same time as importing the data. DESeq2 prefers data to be set as factors, discrete values rather than continuous. You can do this using the col_types parameter in read_tsv. HINT: look at the help by typing ?read_tsv in the Console pane.
 ```{r}
-comparisons <- 
+comparisons <- read_tsv("./data/comparisons.tsv", col_types = "ff")
 ```
 
 ### Counts Data
 
 Read in the counts data from the file feature_counts_table.tsv in the data directory using the read_tsv command from the readr package. You will notice when reading the package in that the Ensembl gene ids are a column. DESeq2 requires these identifiers to be set as the row names. I would suggest using the command column_to_rownames, part of the tidyverse tibble package, and set the var, which defines the column to use as the rownames, colnames(.[,1]), which is R for the first column in the data frame. HINT: look at the help by typing ?column_to_rownames in the Console pane.
 ```{r}
-feature_counts_table <- 
+feature_counts_table <- read_tsv("./data/feature_counts_table.tsv") %>%
+  column_to_rownames(var = colnames(.[,1]))
 
 feature_counts_table <- feature_counts_table %>%
   dplyr::select(c(sample_table$Sample))
@@ -86,9 +87,9 @@ feature_counts_table <- feature_counts_table %>%
 Now we have imported the data we can run the DESeq2 command to perform the differential expression. Fill in the variable names, replace the three dots(...) for the counts data, the samples description table and the treatment name for the countData, colData and design respectively in the DESeqDataSetFromMatrix command.
 ```{r}
 #| echo: true
-DESeq2Table <- DESeqDataSetFromMatrix(countData = ...,
-                                      colData = ...,
-                                      design= ~  ...)
+DESeq2Table <- DESeqDataSetFromMatrix(countData = feature_counts_table,
+                                      colData = sample_table,
+                                      design= ~  Condition)
 dds <- DESeq(DESeq2Table)
 ```
 
@@ -102,32 +103,6 @@ total_norm_counts <- estimateSizeFactors(dds) %>%
   rownames_to_column(var = "ensembl_gene_id")
 
 write_tsv(total_norm_counts,"normalised_read_counts.tsv")
-```
-
-### HtSeq-Count
-Read in the feature counts for the counts files - HtSeq Counts
-```{r}
-files <- list.files("./data/htseq_counts") %>% # Read in the contents for the htseq_count directory
-  as.data.frame() %>% # Convert to a data frame
-  dplyr::rename(Files = ".") %>% # rename the only column to "Files"
-  cbind(read_tsv("./data/sample_description.tsv")) # Merge the counts file names with the sample table
-
-# Create a data frame formatted for DESeq2
-sampleDataFrame <- data.frame(sampleName = files$Sample,
-                      fileName = files$Files,
-                      condition = files$Condition)
-
-# View the new sample data frame
-sampleDataFrame
-```
-
-### Differential Expression
-DESeq2 for Htseq-count
-```{r}
-DESeq2Table <- DESeqDataSetFromHTSeqCount(sampleTable = sampleDataFrame,
-                                           directory = "./data/htseq_counts/",
-                                           design= ~  condition)
-dds <- DESeq(DESeq2Table)
 ```
 
 ## Saving Workspace

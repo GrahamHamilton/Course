@@ -3,21 +3,39 @@ title: "Attendance Notebook"
 output: html_notebook
 ---
 
+```{r}
+cran.packages <- c("tidyverse")
 
+cran.load <- function(pkg){
+        new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+        if (length(new.pkg)){
+          install.packages(new.pkg, dependencies = TRUE)
+          }
+        sapply(pkg, require, character.only = TRUE)
+}
+cran.load(cran.packages)
+```
 
 ```{r}
 polyomics_staff <- c("Graham Hamilton", "David Mcguinness")
 
-list.files(path = ".", pattern = ".csv$")
-file <- read_delim("zoomus_meeting_report_87259876351.csv", delim = ",", col_types = "ccccdc") %>%
-  select_all(~gsub("\\s+|\\.", "_", .)) %>%
+data_frame <- list.files(path = ".", pattern = ".csv$") %>%
+  map_dfr(.x = ., ~read_delim(.x, , delim = ",", col_types = "ccccdccc")) %>%
+  select_all(~gsub("\\s+|\\.", "_", .x)) %>%
+  rename(User_Name = "Name_(Original_Name)") %>%
+  rename(Duration = "Duration_(Minutes)") %>%
   filter(!User_Name %in% polyomics_staff) %>%
+  filter(Duration > 50) %>%
   mutate_all(.funs=toupper) %>%
-  arrange(desc("Duration(Minutes)"))
-  distinct(User_Name, .keep_all = TRUE) %>%
-  dplyr::select(User_Name,Join_time,"Duration(Minutes)") %>%
-  mutate(Day = wday(mdy_hms(Join_time), label=TRUE, abbr = FALSE))
-file
+  arrange(User_Name,Join_Time) %>%
+  distinct(User_Name, Join_Time, .keep_all = TRUE) %>%
+  dplyr::select(User_Name,Join_Time,Duration) %>%
+  mutate(Day = wday(mdy_hms(Join_Time), label=TRUE, abbr = FALSE)) %>%
+  arrange(Day)
+  
+    
+ggplot(data_frame, aes(Day)) +
+  geom_bar( )
 
 
 ```
