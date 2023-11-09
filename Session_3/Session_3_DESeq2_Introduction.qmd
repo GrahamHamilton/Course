@@ -470,6 +470,36 @@ DESeq2Table <- DESeqDataSetFromMatrix(countData = feature_counts_table,
 ```
 :::
 
+## Pairwise {.smaller}
+
+::: {style="font-size: 75%;"}
+
+Sample description file
+
+| Sample      | Condition |
+|:------------|-----------|
+|Control_1|Control|
+|Control_2|Control|
+|Control_3|Control|
+|Treatment_1|Treatment1|
+|Treatment_2|Treatment1|
+|Treatment_3|Treatment1|
+|Treatment_4|Treatment2|
+|Treatment_5|Treatment2|
+|Treatment_6|Treatment2|
+
+<br>
+Differential expression command
+
+```{r}
+#| echo: true
+#| eval: false
+DESeq2Table <- DESeqDataSetFromMatrix(countData = feature_counts_table,
+                                      colData = sample_table,
+                                      design = ~ 0 + Condition)
+```
+:::
+
 ## Batch effects {.smaller}
 
 ::: {style="font-size: 75%;"}

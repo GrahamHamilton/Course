@@ -524,7 +524,7 @@ Box plot
 #| fig-height: 6
 #| output-location: column
 mpg <- mpg %>% 
-  mutate_at(vars(cyl), factor)
+  mutate(cyl = as.factor(cyl))
 
 ggplot(mpg, aes(x = cyl, y = hwy, fill = cyl)) +
   geom_boxplot() +
